@@ -10,5 +10,9 @@ class tester1 {
 	void test() {
 			fail();
 	}
+	@Test
+	void gitTest() {
+		return;
+	}
 
 }
