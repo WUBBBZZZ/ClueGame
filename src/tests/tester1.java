@@ -12,7 +12,7 @@ class tester1 {
 	}
 	@Test
 	void gitTest() {
-		return;
+		fail();
 	}
 
 }
