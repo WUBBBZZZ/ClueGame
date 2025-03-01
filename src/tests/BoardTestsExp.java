@@ -2,6 +2,7 @@ package tests;
 
 import org.junit.Test;
 import org.junit.jupiter.api.BeforeEach;
+import static org.junit.jupiter.api.Assertions.*;
 
 import experiment.TestBoardCell;
 import experiment.TestBoard;
@@ -31,39 +32,39 @@ public class BoardTestsExp {
     @Test
     void testAdjacencyTopLeftCorner() {
         TestBoardCell cell = board[0][0];
-        Set<TestBoardCell> adjList = cell.getAdjList();
-        assertEquals(2, adjList.size());
-        assertTrue(adjList.contains(board[0][1]));
-        assertTrue(adjList.contains(board[1][0]));
+        Set<TestBoardCell> adjacencyList = cell.getAdjList();
+        assertEquals(2, adjacencyList.size());
+        assertTrue(adjacencyList.contains(board[0][1]));
+        assertTrue(adjacencyList.contains(board[1][0]));
     }
 
     @Test
     void testAdjacencyBottomRightCorner() {
         TestBoardCell cell = board[3][3];
-        Set<TestBoardCell> adjList = cell.getAdjList();
-        assertEquals(2, adjList.size());
-        assertTrue(adjList.contains(board[3][2]));
-        assertTrue(adjList.contains(board[2][3]));
+        Set<TestBoardCell> adjacencyList = cell.getAdjList();
+        assertEquals(2, adjacencyList.size());
+        assertTrue(adjacencyList.contains(board[3][2]));
+        assertTrue(adjacencyList.contains(board[2][3]));
     }
 
     @Test
     void testAdjacencyRightEdge() {
         TestBoardCell cell = board[1][3];
-        Set<TestBoardCell> adjList = cell.getAdjList();
-        assertEquals(3, adjList.size());
-        assertTrue(adjList.contains(board[0][3]));
-        assertTrue(adjList.contains(board[2][3]));
-        assertTrue(adjList.contains(board[1][2]));
+        Set<TestBoardCell> adjacencyList = cell.getAdjList();
+        assertEquals(3, adjacencyList.size());
+        assertTrue(adjacencyList.contains(board[0][3]));
+        assertTrue(adjacencyList.contains(board[2][3]));
+        assertTrue(adjacencyList.contains(board[1][2]));
     }
 
     @Test
     void testAdjacencyLeftEdge() {
         TestBoardCell cell = board[3][0];
-        Set<TestBoardCell> adjList = cell.getAdjList();
-        assertEquals(3, adjList.size());
-        assertTrue(adjList.contains(board[2][0]));
-        assertTrue(adjList.contains(board[3][1]));
-        assertTrue(adjList.contains(board[3][1]));
+        Set<TestBoardCell> adjacencyList = cell.getAdjList();
+        assertEquals(3, adjacencyList.size());
+        assertTrue(adjacencyList.contains(board[2][0]));
+        assertTrue(adjacencyList.contains(board[3][1]));
+        assertTrue(adjacencyList.contains(board[3][1]));
     }
 
     @Test
@@ -108,5 +109,5 @@ public class BoardTestsExp {
                 exploreTargets(adj, steps - 1, visited);
             }
         }
-	
+    }
 }

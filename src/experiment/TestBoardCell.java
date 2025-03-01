@@ -11,34 +11,40 @@ public class TestBoardCell {
 	private boolean isOccupied;
 	
 	public TestBoardCell(int row, int col) {
+		//initialize row, col, and adjacencyList
 		this.row = row;
 		this.col = col;
-		this.adjacencyList = new HashSet<>();
+		adjacencyList = new HashSet<>();
 	}
 	
 	public void addAdjacency(TestBoardCell cell) {
-        adjacencyList.add(cell);
+        //adds cell to adjacencyList
+		
     }
 	
 	public Set<TestBoardCell> getAdjList() {
-		return adjacencyList;
+		//gets adjacency list of cell
+		return null;
 	}
 	
 	public boolean getRoom() {
-		return isRoom;
+		//gets isRoom
+		return true;
 	}
 	
 	public void setRoom(boolean isRoom) {
-		this.isRoom = isRoom;
+		//sets isRoom
+		return;
 	}
 	
 	public boolean getOccupied() {
-		return isOccupied;
+		//gets isOccupied
+		return true;
 	}
 	
 	public void setOccupied(boolean isOccupied) {
-		this.isOccupied= isOccupied;
+		//sets isOccupied
+		return;
 	}
-	
 	
 }
