@@ -46,5 +46,9 @@ public class TestBoardCell {
 		//sets isOccupied
 		return;
 	}
+
+	public boolean isOccupied() {
+		return false;
+	}
 	
 }

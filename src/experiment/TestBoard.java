@@ -3,7 +3,7 @@ package experiment;
 import java.util.Set;
 
 public class TestBoard {
-	TestBoardCell[][] board;
+	public TestBoardCell[][] board;
 	
 	public TestBoard() {
 		board = new TestBoardCell[4][4];
@@ -12,7 +12,8 @@ public class TestBoard {
 		return;
 	}
 	public TestBoardCell getCell(int row, int col) {
-		return null;
+		TestBoardCell bad = new TestBoardCell(100000, 10000);
+		return bad;
 	}
 	public Set<TestBoardCell> getTargets(){
 		return null;
