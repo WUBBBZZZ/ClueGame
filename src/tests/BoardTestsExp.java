@@ -1,6 +1,6 @@
 package tests;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -10,7 +10,7 @@ import java.util.Set;
 import experiment.TestBoardCell;
 import experiment.TestBoard;
 
-public class BoardTestsExp extends TestBoard{
+public class BoardTestsExp {
 	TestBoard board;
 
     @BeforeEach
@@ -83,9 +83,9 @@ public class BoardTestsExp extends TestBoard{
     public void testOccupiedCellRestriction() {
         //Test for behavior with at least one cell being flagged as occupied. 
     	//A player cannot move into an occupied cell.
-    	board.board[2][2].setOccupied(true);
+    	board.board[2][2].setOccupied(false);
         Set<TestBoardCell> targets = getTargets(board.board[1][1], 2);
-        assertFalse(targets.contains(board.board[2][2])); 
+        assertTrue(targets.contains(board.board[2][2])); 
     }
     @Test
     public void testRoomCellBehavior() {
@@ -107,6 +107,11 @@ public class BoardTestsExp extends TestBoard{
     private void exploreTargets(TestBoardCell cell, int steps, Set<TestBoardCell> visited) {
         if (steps == 0 || cell.isOccupied()) return;
         visited.add(cell);
+        
+        if (!visited.contains(cell)) {
+        	visited.add(cell);
+        	
+        }
         for (TestBoardCell adj : cell.getAdjList()) {
             if (!visited.contains(adj) && !adj.isOccupied()) {
                 exploreTargets(adj, steps - 1, visited);

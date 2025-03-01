@@ -7,6 +7,7 @@ public class TestBoardCell {
 	private int row;
 	private int col;
 	private Set<TestBoardCell> adjacencyList;
+	private Set<TestBoardCell> exList = new HashSet<>();
 	private boolean isRoom;
 	private boolean isOccupied;
 	
@@ -15,16 +16,19 @@ public class TestBoardCell {
 		this.row = row;
 		this.col = col;
 		adjacencyList = new HashSet<>();
+		this.isRoom = false;
+		this.isOccupied = false;
 	}
 	
 	public void addAdjacency(TestBoardCell cell) {
         //adds cell to adjacencyList
+		adjacencyList.add(cell);
 		
     }
 	
 	public Set<TestBoardCell> getAdjList() {
 		//gets adjacency list of cell
-		return null;
+		return exList;
 	}
 	
 	public boolean getRoom() {
@@ -44,7 +48,7 @@ public class TestBoardCell {
 	
 	public void setOccupied(boolean isOccupied) {
 		//sets isOccupied
-		return;
+		
 	}
 
 	public boolean isOccupied() {
