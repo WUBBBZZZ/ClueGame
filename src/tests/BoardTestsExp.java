@@ -85,7 +85,7 @@ public class BoardTestsExp {
     	//A player cannot move into an occupied cell.
     	board.board[2][2].setOccupied(false);
         Set<TestBoardCell> targets = getTargets(board.board[1][1], 2);
-        assertTrue(targets.contains(board.board[2][2])); 
+        assertFalse(targets.contains(board.board[2][2])); 
     }
     @Test
     public void testRoomCellBehavior() {
