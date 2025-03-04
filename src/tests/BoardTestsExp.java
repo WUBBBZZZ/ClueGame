@@ -47,70 +47,52 @@ public class BoardTestsExp {
 
     @Test
     public void testAdjacencyRightEdge() {
-        TestBoardCell cell = grid.getBoard()[1][3];
+        TestBoardCell cell = grid.getBoard()[3][1];
         Set<TestBoardCell> adjacencyList = cell.getAdjList();
         assertEquals(3, adjacencyList.size());
-        assertTrue(adjacencyList.contains(grid.getBoard()[0][3]));
-        assertTrue(adjacencyList.contains(grid.getBoard()[2][3]));
-        assertTrue(adjacencyList.contains(grid.getBoard()[1][2]));
+        assertTrue(adjacencyList.contains(grid.getBoard()[3][0]));
+        assertTrue(adjacencyList.contains(grid.getBoard()[2][1]));
+        assertTrue(adjacencyList.contains(grid.getBoard()[3][2]));
     }
 
     @Test
     public void testAdjacencyLeftEdge() {
-        TestBoardCell cell = grid.getBoard()[3][0];
+        TestBoardCell cell = grid.getBoard()[0][2];
         Set<TestBoardCell> adjacencyList = cell.getAdjList();
         assertEquals(3, adjacencyList.size());
-        assertTrue(adjacencyList.contains(grid.getBoard()[2][0]));
-        assertTrue(adjacencyList.contains(grid.getBoard()[3][1]));
-        assertTrue(adjacencyList.contains(grid.getBoard()[3][1]));
+        assertTrue(adjacencyList.contains(grid.getBoard()[0][1]));
+        assertTrue(adjacencyList.contains(grid.getBoard()[1][2]));
+        assertTrue(adjacencyList.contains(grid.getBoard()[0][3]));
     }
 
     @Test
     public void testEmptyBoardTargets() {
         //Test for behavior on empty 4x4 board.
-    	Set<TestBoardCell> targets = getTargets(grid.getBoard()[1][1], 2);
-        assertTrue(targets.contains(grid.getBoard()[1][3]));
-        assertTrue(targets.contains(grid.getBoard()[3][1]));
-        assertEquals(6, targets.size()); 
+    	grid.calcTargets(grid.getBoard()[1][1], 2);
+    	Set<TestBoardCell> result = grid.getTargets();
+        assertTrue(result.contains(grid.getBoard()[1][3]));
+        assertTrue(result.contains(grid.getBoard()[3][1]));
+        assertEquals(6, result.size()); 
     }
     
     @Test
     public void testOccupiedCellRestriction() {
         //Test for behavior with at least one cell being flagged as occupied. 
     	//A player cannot move into an occupied cell.
-    	grid.getBoard()[2][2].setOccupied(false);
-        Set<TestBoardCell> targets = getTargets(grid.getBoard()[1][1], 2);
-        assertFalse(targets.contains(grid.getBoard()[2][2])); 
+    	grid.getBoard()[2][2].setOccupied(true);
+    	grid.calcTargets(grid.getBoard()[1][1], 2);
+    	Set<TestBoardCell> result = grid.getTargets();
+        assertFalse(result.contains(grid.getBoard()[2][2])); 
     }
     @Test
     public void testRoomCellBehavior() {
         //Test for behavior with at least one cell being flagged as a room.  
     	//A player used up all movement points upon entering a room.
-    	grid.getBoard()[2][2].setRoom(true);
-        Set<TestBoardCell> targets = getTargets(grid.getBoard()[1][1], 2);
-        assertTrue(targets.contains(grid.getBoard()[2][2])); 
-        assertFalse(targets.contains(grid.getBoard()[3][2])); 
+    	grid.getBoard()[1][2].setRoom(true);
+    	grid.calcTargets(grid.getBoard()[1][1], 2);
+    	Set<TestBoardCell> result = grid.getTargets();
+        assertTrue(result.contains(grid.getBoard()[1][2])); 
+        assertEquals(7, result.size()); 
     }
 
-    //helper functions
-    private Set<TestBoardCell> getTargets(TestBoardCell startCell, int steps) {
-        Set<TestBoardCell> visited = new HashSet<>();
-        exploreTargets(startCell, steps, visited);
-        return visited;
-    }
-
-    private void exploreTargets(TestBoardCell cell, int steps, Set<TestBoardCell> visited) {
-        if (steps == 0 || cell.isOccupied()) return;
-        visited.add(cell);
-        
-        if (!visited.contains(cell)) {
-        	visited.add(cell);
-        	
-        }
-        for (TestBoardCell adj : cell.getAdjList()) {
-            if (!visited.contains(adj) && !adj.isOccupied()) {
-                exploreTargets(adj, steps - 1, visited);
-            }
-        }
-    }
 }

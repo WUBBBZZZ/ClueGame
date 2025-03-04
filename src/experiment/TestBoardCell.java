@@ -28,6 +28,14 @@ public class TestBoardCell {
 		return adjacencyList;
 	}
 	
+	public int getRow() {
+		return row;
+	}
+	
+	public int getCol() {
+		return col;
+	}
+	
 	public boolean getRoom() {
 		//gets isRoom
 		return isRoom;
