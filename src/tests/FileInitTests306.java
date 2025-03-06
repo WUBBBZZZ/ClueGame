@@ -61,6 +61,10 @@ public class FileInitTests306 {
 	@Test
 	public void FourDoorDirections() {
 		BoardCell cell = board.getCell(8, 7);
+		if (cell == null) {
+			assertTrue(false);
+			return;
+		}
 		assertTrue(cell.isDoorway());
 		assertEquals(DoorDirection.LEFT, cell.getDoorDirection());
 		cell = board.getCell(7, 12);
