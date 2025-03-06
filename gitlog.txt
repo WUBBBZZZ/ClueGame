@@ -1,0 +1,137 @@
+commit 6a34ceedeb25e71145bccef6502dfa17e543f798
+Author: WUBBBZZZ <112722551+WUBBBZZZ@users.noreply.github.com>
+Date:   Thu Mar 6 12:47:48 2025 -0700
+
+    fixed error in fourdoordirections test
+    
+    fixed code to solve compile error that was occuring when test should fail
+
+commit f6e1b3988c70a72ce9dbb8a4318f4eb875eb0fda
+Author: WUBBBZZZ <112722551+WUBBBZZZ@users.noreply.github.com>
+Date:   Mon Mar 3 22:24:39 2025 -0700
+
+    init 1 completed
+    
+    finished init 1 will add test.txt file to submission but not adding it to repo
+
+commit eb16b56739ebf94019b52be95c8cc73a9d0a70b1
+Author: WUBBBZZZ <112722551+WUBBBZZZ@users.noreply.github.com>
+Date:   Mon Mar 3 21:59:58 2025 -0700
+
+    start of init 1
+    
+    me and my partners first commit for init 1
+
+commit a8b5ac77752f1d1c53c865eff25035c9369b1707
+Author: TristanKarno <tristan_karno@mines.edu>
+Date:   Mon Mar 3 19:30:09 2025 -0700
+
+    Both of us were working on this project together, pair programming style, for this final commit. We were able to resolve several vestigial bugs in the code, cleaning the last 4 test cases, in addition to finishing the calcTargets() method. Certification is as follows:I, Tristan Karno, certify that I participated equitably in the creation of assignment C13A-2, dated 3/3/25.
+    I, Michael Hargraves, certify that I participated equitably in the creation of this assignment C13A-2, dated 3/3/25.
+
+commit 74fe51b1844fd2aa2d8f74a4e37a372478a74d2c
+Author: TristanKarno <tristan_karno@mines.edu>
+Date:   Mon Mar 3 09:05:30 2025 -0700
+
+    nevermind the arraylist of arraylists idea. As long as board size initialization happens in its home class, there's no need for dynamic sizing. Also: I modified the code involvng the TestBoard, and now the first 4 classes pass. The two methods unfinished as before still need to be completed.
+
+commit 7dfdf6993e54ab5332d7e819c6c699884bca3d34
+Author: TristanKarno <tristan_karno@mines.edu>
+Date:   Sun Mar 2 22:43:00 2025 -0700
+
+    A few things. First: I modified both classes 'TestBoard' and 'TestBoardCell', now 'TestBoardCell' has all methods defined. 'TestBoard' still needs 'calcTargets' and 'getTargets'. I would also require us to change 'TestBoardCell[][] board' to 'List<List<TestBoardCell>> board' for easier dynamic allocation of the board size outside of its constructor. Besides this, most work needs to be done in 'calcTargets', and when these tasks are complete, this assignment is complete.
+
+commit 1f88a8ac568d7c564b7693ba38baabac38d7fe63
+Author: TristanKarno <tristan_karno@mines.edu>
+Date:   Sat Mar 1 00:09:05 2025 -0700
+
+    Finalized test cases. All return false, and all errors have been eliminated.
+
+commit 3910d4e6c44a1a13b0df74cc8ddfdb6b10c53456
+Author: WUBBBZZZ <112722551+WUBBBZZZ@users.noreply.github.com>
+Date:   Fri Feb 28 23:15:41 2025 -0700
+
+    adding gitlog for partner who made the test cases then fixed errors to do with missing module and class variable acces
+
+commit 8c0900250f37f53ff26a7d01b03d9e6a630a0bbc
+Author: WUBBBZZZ <112722551+WUBBBZZZ@users.noreply.github.com>
+Date:   Fri Feb 28 23:15:07 2025 -0700
+
+    adding gitlog for partner, and fixed errors in code regarding the access to class variables
+
+commit 7c5aa8e0aba19925fe5992ac00d438cc2c3a6301
+Merge: 8c30cb1 7f3aa78
+Author: TristanKarno <tristan_karno@mines.edu>
+Date:   Fri Feb 28 17:13:41 2025 -0700
+
+    Most of the code is done. just need to fix a few more errors.
+
+commit 7f3aa783353fa35989c4fd9c8b3d119d0ca061f7
+Author: WUBBBZZZ <112722551+WUBBBZZZ@users.noreply.github.com>
+Date:   Fri Feb 28 10:48:09 2025 -0700
+
+    updated TestBoard
+    
+    updated test board becuase it was not included in initial push
+
+commit c782d3c35f536d45db37ce2e1d123d20472f94e5
+Author: WUBBBZZZ <112722551+WUBBBZZZ@users.noreply.github.com>
+Date:   Fri Feb 28 10:46:17 2025 -0700
+
+    Update gitlog.txt
+
+commit dc345ee7b6bcaa76644b702fad893ba9dcc19308
+Author: WUBBBZZZ <112722551+WUBBBZZZ@users.noreply.github.com>
+Date:   Fri Feb 28 10:45:58 2025 -0700
+
+    created testboard.java, testBoardCell and BoardTestsEXP
+
+commit 8c30cb13b9350ed7bedadee9e7dc939ed6888c5d
+Author: TristanKarno <tristan_karno@mines.edu>
+Date:   Thu Feb 27 21:31:53 2025 -0700
+
+    Created all tests (subject to change) based off of assignment specifications. Also created basic functionality for the classes from which the tests will be run on. Code is subject to errors, and revision is anticipated.
+
+commit bb49952c55e62d3c4ee1684f1f1c95af9994b7c1
+Author: WUBBBZZZ <112722551+WUBBBZZZ@users.noreply.github.com>
+Date:   Thu Feb 27 13:15:26 2025 -0700
+
+    Create gitlog.txt
+
+commit 6968e46cf06dbb19471b80569798d12f144046ae
+Author: WUBBBZZZ <112722551+WUBBBZZZ@users.noreply.github.com>
+Date:   Thu Feb 27 13:01:47 2025 -0700
+
+    creating gitlog.txt
+
+commit 2cdb430bdb34ead18f8ca6047605255d94ea015e
+Author: WUBBBZZZ <112722551+WUBBBZZZ@users.noreply.github.com>
+Date:   Thu Feb 27 12:55:29 2025 -0700
+
+    gitlog test
+    
+    test to see how to make gitlog
+
+commit a81110f3bf864f82daef3c1a2b82f3259ae350c3
+Author: WUBBBZZZ <112722551+WUBBBZZZ@users.noreply.github.com>
+Date:   Thu Feb 27 12:51:23 2025 -0700
+
+    git test
+
+commit 081fbfadba65e5be1141ce7cfb508b799ff7c047
+Author: WUBBBZZZ <112722551+WUBBBZZZ@users.noreply.github.com>
+Date:   Thu Feb 27 12:49:06 2025 -0700
+
+    help
+
+commit a59baabcd1a04761f750567f096ff3b4e39e234d
+Author: WUBBBZZZ <112722551+WUBBBZZZ@users.noreply.github.com>
+Date:   Thu Feb 27 12:47:03 2025 -0700
+
+    initialize files
+
+commit 56d47e33dbc4aff29655c0688efbaff3d77b7c18
+Author: WUBBBZZZ <112722551+WUBBBZZZ@users.noreply.github.com>
+Date:   Thu Feb 27 12:45:50 2025 -0700
+
+    Initial commit
