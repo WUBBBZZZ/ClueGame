@@ -18,14 +18,19 @@ public class Room {
 	}
 
 	public BoardCell getLabelCell() {
-		// TODO Auto-generated method stub
-		return null;
+		return labelCell;
 	}
 
 	public BoardCell getCenterCell() {
-		// TODO Auto-generated method stub
-		return null;
+		return centerCell;
+	}
+	public void setLabelCell(BoardCell labelCell) {
+		this.labelCell = labelCell;
+	}
+	public void setCenterCell(BoardCell centerCell) {
+		this.centerCell = centerCell;
 	}
 
 
 }
+

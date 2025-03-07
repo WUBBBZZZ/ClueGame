@@ -1,63 +1,54 @@
 package experiment;
-import java.util.Set;
-import java.util.HashSet;
+import java.util.*;
 
 public class TestBoardCell {
-
 	private int row, col;
-	private Set<TestBoardCell> adjacencyList;
-	private boolean isRoom, isOccupied;
+	private Boolean isRoom, isOccupied;
+	Set<TestBoardCell> adjList;
 	
+	
+	// Constructor with row and col inputs
 	public TestBoardCell(int row, int col) {
-		//initialize row, col, and adjacencyList
-		this.row = row;
-		this.col = col;
-		adjacencyList = new HashSet<>();
-		this.isRoom = false;
-		this.isOccupied = false;
+	    super();
+	    this.row = row;
+	    this.col = col;
+	    adjList = new HashSet<TestBoardCell>();
 	}
+
 	
+	// Adds an adjacent cell to this cells adjacency list
 	public void addAdjacency(TestBoardCell cell) {
-        //adds cell to adjacencyList
-		adjacencyList.add(cell);
-		
-    }
-	
-	public Set<TestBoardCell> getAdjList() {
-		//gets adjacency list of cell
-		return adjacencyList;
+	    this.adjList.add(cell);
+	}
+
+	// Returns the adjacency list for the cell
+	public Set<TestBoardCell> getAdjList(){
+		return adjList;
 	}
 	
-	public int getRow() {
-		return row;
+	// Setter for creating a room cell
+	public void setRoom(boolean cell) {
+		this.isRoom = cell;;
 	}
 	
-	public int getCol() {
-		return col;
-	}
-	
+	// Getter for if a space is a room cell
 	public boolean getRoom() {
-		//gets isRoom
 		return isRoom;
 	}
 	
-	public void setRoom(boolean isRoom) {
-		//sets isRoom
-		this.isRoom = isRoom;
+	
+	// Setter for indicating if a cell is occupied by another player
+	public void setOccupied(boolean cell) {
+		this.isOccupied = cell;;
 	}
 	
+	// Getter for indicating if a cell is occupied by another player
 	public boolean getOccupied() {
-		//gets isOccupied
 		return isOccupied;
 	}
-	
-	public void setOccupied(boolean isOccupied) {
-		//sets isOccupied
-		this.isOccupied = isOccupied;
-	}
 
-	public boolean isOccupied() {
-		return false;
-	}
+
+
 	
 }
+

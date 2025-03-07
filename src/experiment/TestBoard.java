@@ -1,62 +1,87 @@
 package experiment;
-
-import java.util.Set;
-import java.util.HashSet;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class TestBoard {
-	private TestBoardCell[][] board;	//holds the board cells in a grid
-	private Set<TestBoardCell> targets;			//holds the resulting targets from TargetCalc()
-	private Set<TestBoardCell> visited;			//holds the visited list
-	//Constants for grid size:
-	private final static int COLS = 4;
-	private final static int ROWS = 4;
+	private TestBoardCell[][] grid;
+	private Set<TestBoardCell> targets;
+	private Set<TestBoardCell> visited;
+	final static int COLS = 4;
+	final static int ROWS = 4;
 	
 	public TestBoard() {
-		//Initializes testboard
-		board = new TestBoardCell[ROWS][COLS];
-		for (int row = 0; row < ROWS; row++) {
-            for (int col = 0; col < COLS; col++) {
-                board[row][col] = new TestBoardCell(row, col);
-            }
-        }
-		targets = new HashSet<>();
-		visited = new HashSet<>();
-	}
-	public void calcTargets(TestBoardCell startCell, int pathLength) {
-		//calculates legal targets for a move from startCell of length pathLength
+        super();
+        grid = new TestBoardCell[ROWS][COLS];
+        
+        // Initialize cells
+        for(int i = 0;i < COLS ;i++) {
+			for(int j = 0;j < ROWS;j++) {
+				grid[i][j] = new TestBoardCell(i, j);
+				grid[i][j].setOccupied(false);
+				grid[i][j].setRoom(false);
+			}
+		}
+        
+        // Initialize adjacent cells
+		for(int i = 0;i < COLS;i++) {
+			for(int j = 0;j<ROWS;j++) {
+				if (i > 0){
+					grid[i][j].addAdjacency(grid[i-1][j]);
+				}
+				if (j > 0){
+					grid[i][j].addAdjacency(grid[i][j-1]);
+				}
+				if (i < COLS - 1){
+					grid[i][j].addAdjacency(grid[i+1][j]);
+				}
+				if (j < ROWS - 1){
+					grid[i][j].addAdjacency(grid[i][j+1]);
+				}
+			}
+		}
+        
+        targets = new HashSet<TestBoardCell>();
+        visited = new HashSet<TestBoardCell>();
+    }
+	
+	// Calculates targets for a move from startCell of length pathlength.
+	public void calcTargets(TestBoardCell startCell, int pathlength) {
+		targets.clear();
+		visited.clear();
 		visited.add(startCell);
-
-	    for (TestBoardCell neighbor : startCell.getAdjList()) {
-	        if (visited.contains(neighbor) || neighbor.getOccupied()) {
-	            continue;
-	        }
-	        //room check
-	        if (neighbor.getRoom()) {
-	        	targets.add(neighbor);
-	        }
-
-	        if (pathLength == 1) {
-	            targets.add(neighbor);
-	        } else {
-	            calcTargets(neighbor, pathLength - 1);
-	        }
-	    }
-
-	    visited.remove(startCell);
-		
-	}
-	public TestBoardCell getCell(int row, int col) {
-		return board[row][col];
+		this.findAllTargets(startCell, pathlength);
 	}
 	
+	
+	public void findAllTargets(TestBoardCell cell, int pathlength){
+		for(TestBoardCell adj:cell.adjList) {
+			if(visited.contains(adj) || adj.getOccupied()){
+				continue;
+			}
+			
+			visited.add(adj);
+			if (pathlength == 1||adj.getRoom()){
+				targets.add(adj);
+			} else {
+				this.findAllTargets(adj, pathlength - 1);
+			}
+			
+			visited.remove(adj);
+		}
+	} 
+
+	
+	// Returns the cell from the board at row, col
+	public TestBoardCell getCell(int row, int col) {
+	    return grid[row][col];
+	}
+
+	
+	// Gets the targets last created by calcTargets()
 	public Set<TestBoardCell> getTargets(){
 		return targets;
 	}
 	
-	public TestBoardCell[][] getBoard() {
-		return board;
-	}
-
+	
+	
 }
+
