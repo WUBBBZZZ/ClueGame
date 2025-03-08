@@ -8,7 +8,7 @@ package tests;
 // Assert.assertEquals
 import static org.junit.Assert.*;
 
-import org.junit.Assert;
+import org.junit.Assert.*;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
@@ -101,7 +101,7 @@ public class FileInitTests {
 		@Test
 		public void testRooms() {
 			// just test a standard room location
-			BoardCell cell = board.getCell( 23, 23);
+			BoardCell cell = board.getCell( 21, 21);
 			Room room = board.getRoom( cell ) ;
 			assertTrue( room != null );
 			assertEquals( room.getName(), "Kitchen" ) ;
@@ -126,7 +126,7 @@ public class FileInitTests {
 			assertTrue( room.getCenterCell() == cell );
 			
 			// this is a secret passage test
-			cell = board.getCell(7, 22);
+			cell = board.getCell(7, 21);
 			room = board.getRoom( cell ) ;
 			assertTrue( room != null );
 			assertEquals( room.getName(), "Closet" ) ;
@@ -142,7 +142,7 @@ public class FileInitTests {
 			assertFalse( cell.isLabel() );
 			
 			// test a unused cell
-			cell = board.getCell(23, 13);
+			cell = board.getCell(21, 13);
 			room = board.getRoom( cell ) ;
 			assertTrue( room != null );
 			assertEquals( room.getName(), "Unused" ) ;

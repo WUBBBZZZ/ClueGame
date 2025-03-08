@@ -6,7 +6,7 @@ public class BadConfigFormatException extends Exception{
 		super(specialMessage);
 		FileWriter file;
 		try {
-			file = new FileWriter("logfile.txt");
+			file = new FileWriter("logfile.txt", true);
 			PrintWriter out = new PrintWriter(file);
 			out.print(specialMessage);
 			out.close();
@@ -18,9 +18,8 @@ public class BadConfigFormatException extends Exception{
 	// Default constructor that throws an error message and then will write to a log file
 	public BadConfigFormatException() {
 		super("Error bad config format, please fix and try again, if problem continues please send us your logfile");
-		FileWriter file;
 		try {
-			file = new FileWriter("logfile.txt");
+			FileWriter file = new FileWriter("logfile.txt", true);
 			PrintWriter out = new PrintWriter(file);
 			out.print("Error bad config format, please fix and try again, if problem continues please send us your logfile");
 			out.close();

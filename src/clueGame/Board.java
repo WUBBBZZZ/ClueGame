@@ -118,29 +118,34 @@ public class Board {
 			
 			// Read from setupConfigFile
 			while(setupScanner.hasNext()) {
-				String line = new String(setupScanner.nextLine());
-				String[] parts = line.split(", ");
+				String line = new String(setupScanner.nextLine().trim());
+				String[] parts = line.split(",\\s*");
+				
+				// Skip empty lines or comments
+	            if (line.isEmpty() || line.startsWith("//")) {
+	                continue;
+	            }
 				
 				// Check each line for rooms and spaces
-				if(line.matches("^Room.*$")) {
+				if(line.startsWith("Room")) {
 					if(parts.length != 3) {
 						String message = "Invalidformat, expecting a name and symbol for each room, bad line: \" " + line + "\".";
 						throw new BadConfigFormatException(message);
 					}
 					
-					String roomName = parts[1].substring(0);
+					String roomName = parts[1].trim();
 					Room newRoom = new Room(roomName);				
-					String symbol = parts[2].substring(0);
+					String symbol = parts[2].trim();
 					roomMap.put(symbol.charAt(0), newRoom);
 					
-				} else if(line.matches("^Space.*$")) {
+				} else if(line.startsWith("Space")) {
 					if(parts.length != 3) {
 						String message = "Invalid format, expecting aname and symbol for each type of space, bad line: \" " + line + "\".";
 						throw new BadConfigFormatException(message);
 					}
 					
-					String spaceName = parts[1].substring(0);
-					String spaceSymbol = parts[2].substring(0);
+					String spaceName = parts[1].trim();
+					String spaceSymbol = parts[2].trim();
 					Room newRoom = new Room(spaceName);
 					roomMap.put(spaceSymbol.charAt(0), newRoom);
 					cellMap.put(spaceSymbol.charAt(0), spaceName);
@@ -164,22 +169,22 @@ public class Board {
 			for(int j = 0;j<numColumns;j++) {
 				if (grid[i][j].isRoom() == false) {
 					if (i > 0){
-						if (grid[i - 1][j].getInitial() == 'W' || grid[i - 1][j].isDoorway() == true) {
+						if (grid[i - 1][j].getInitial() == 'W' || grid[i - 1][j].isDoorway()) {
 							grid[i][j].addAdjacency(grid[i-1][j]);
 						}					
 					}
 					if (j > 0){
-						if (grid[i][j-1].getInitial() == 'W' || grid[i][j-1].isDoorway() == true) {
+						if (grid[i][j-1].getInitial() == 'W' || grid[i][j-1].isDoorway()) {
 							grid[i][j].addAdjacency(grid[i][j-1]);
 						}
 					}
 					if (i < numColumns - 1){
-						if (grid[i + 1][j].getInitial() == 'W' || grid[i + 1][j].isDoorway() == true) {
+						if (grid[i + 1][j].getInitial() == 'W' || grid[i + 1][j].isDoorway()) {
 							grid[i][j].addAdjacency(grid[i+1][j]);
 						}		
 					}
 					if (j < numColumns - 1){
-						if (grid[i][j+1].getInitial() == 'W' || grid[i][j+1].isDoorway() == true) {
+						if (grid[i][j+1].getInitial() == 'W' || grid[i][j+1].isDoorway()) {
 							grid[i][j].addAdjacency(grid[i][j+1]);
 						}		
 					}
@@ -200,9 +205,10 @@ public class Board {
 			boolean firstRow = true;
 			while(test.hasNext()) {
 				// Read the next line from the layout file
-				String line = new String(test.nextLine());
+				String line = new String(test.nextLine().trim());
+				if(line.isEmpty()) continue;
 				// Split the line into parts using a comma as a delimiter
-				String[] spaces = line.split(",");
+				String[] spaces = line.split(",\\s*");
 				if(firstRow) { 
 					numCols = spaces.length; 
 					firstRow = false;
@@ -225,13 +231,14 @@ public class Board {
 			for(int i = 0; i < boardLayout.size();i++) {
 				for(int j = 0; j < boardLayout.get(i).length; j++) {
 					String[] arr = boardLayout.get(i);
-					if(roomMap.containsKey(arr[j].charAt(0)) && !cellMap.containsKey(arr[j].charAt(0))) {
+					char symbol = arr[j].charAt(0);
+					if(roomMap.containsKey(symbol) && !cellMap.containsKey(symbol)) {
 						this.getCell(i, j).setRoom(true);
 						
 					}
 					
 					if(roomMap.containsKey(arr[j].charAt(0))) {
-						this.getCell(i, j).setInitial(arr[j].charAt(0));
+						this.getCell(i, j).setInitial(symbol);
 						if(arr[j].length() != 1) {
 							switch(arr[j].charAt(1)) {
 							
@@ -257,12 +264,12 @@ public class Board {
 								
 							case '*':
 								this.getCell(i, j).setCenter(true);
-								roomMap.get(arr[j].charAt(0)).setCenterCell(this.getCell(i, j));
+								roomMap.get(symbol).setCenterCell(this.getCell(i, j));
 								break;
 								
 							case '#':
 								this.getCell(i, j).setLabel(true);
-								roomMap.get(arr[j].charAt(0)).setLabelCell(this.getCell(i, j));
+								roomMap.get(symbol).setLabelCell(this.getCell(i, j));
 								break;
 								
 							default:

@@ -39,6 +39,9 @@ public class BoardCell {
 			case 'R':
 				this.direction = DoorDirection.RIGHT;
 				break;
+			default:
+                this.direction = DoorDirection.NONE;
+                break;
 		}
 		return;
 	}
