@@ -51,15 +51,31 @@ public class Board {
 			if(visited.contains(adj) || adj.getOccupied()){
 				continue;
 			}
+			
+			//walkways can only add other walkways to targets
+			if (!cell.isRoom() && !cell.isDoorway() && !adj.isRoom()) {
+				visited.add(adj);
+				if (pathlength == 1){
+					targets.add(adj);
+				} else {
+					this.findAllTargets(adj, pathlength - 1);
+				}
 
-			visited.add(adj);
-			if (pathlength == 1||adj.isRoom()){
-				targets.add(adj);
-			} else {
-				this.findAllTargets(adj, pathlength - 1);
+				visited.remove(adj);
 			}
 
-			visited.remove(adj);
+			//Doorways can also connect to room centers
+			if (cell.isDoorway() && !adj.isRoom()) {
+				visited.add(adj);
+				if (pathlength == 1){
+					targets.add(adj);
+				} else {
+					this.findAllTargets(adj, pathlength - 1);
+				}
+
+				visited.remove(adj);
+			}
+	
 		}
 	} 
 	

@@ -1,3 +1,25 @@
+commit 3193948e17de1a0a70ba2cbd8b16f5b3e6f90775
+Author: TristanKarno <tristan_karno@mines.edu>
+Date:   Fri Mar 7 19:10:02 2025 -0700
+
+    Tried to fix all the errors, but nothing's been working. While I was modifying code I cleaned up a lot of it at least
+
+commit e5463a015f64152a15a523557f6c3f30b3bdbecb
+Author: WUBBBZZZ <112722551+WUBBBZZZ@users.noreply.github.com>
+Date:   Fri Mar 7 13:22:23 2025 -0700
+
+    started init 2
+    
+    started init 2 tests some errors still in fileinittests and exceptiontests306
+
+commit 4a54d6021d62267f76d1dbe123c8fc64be66ff32
+Author: WUBBBZZZ <112722551+WUBBBZZZ@users.noreply.github.com>
+Date:   Thu Mar 6 13:00:49 2025 -0700
+
+    added gitlog
+    
+    added gitlog to repo
+
 commit 6a34ceedeb25e71145bccef6502dfa17e543f798
 Author: WUBBBZZZ <112722551+WUBBBZZZ@users.noreply.github.com>
 Date:   Thu Mar 6 12:47:48 2025 -0700
