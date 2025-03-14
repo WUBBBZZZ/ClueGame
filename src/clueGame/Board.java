@@ -161,6 +161,7 @@ public class Board {
 					String symbol = parts[2].trim();
 					roomMap.put(symbol.charAt(0), newRoom);
 					
+					
 				} else if(line.startsWith("Space")) {
 					if(parts.length != 3) {
 						String message = "Invalid format, expecting aname and symbol for each type of space, bad line: \" " + line + "\".";
@@ -297,8 +298,11 @@ public class Board {
 								
 							default:
 								if (roomMap.containsKey(arr[j].charAt(1))) {
-									this.getCell(i, j).setSecretPassage(arr[j].charAt(1));
-									
+									if (arr[j].charAt(0) != 'S') {
+										this.getCell(i, j).setSecretPassage(arr[j].charAt(0));
+									} else {
+										this.getCell(i, j).setSecretPassage(arr[j].charAt(1));
+									}
 									break;
 								}
 								// Handle invalid second character in the layout
