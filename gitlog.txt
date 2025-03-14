@@ -1,3 +1,9 @@
+commit bc51e1bedcca0a31cf00988c4d90e2cdc8daa307
+Author: TristanKarno <tristan_karno@mines.edu>
+Date:   Fri Mar 7 23:12:34 2025 -0700
+
+    Started working on C15A-2, and made progress in the calcTargets() method. Some tests still fail, and cannot proceed until C15A-1 is complete. Will finish later.
+
 commit 3193948e17de1a0a70ba2cbd8b16f5b3e6f90775
 Author: TristanKarno <tristan_karno@mines.edu>
 Date:   Fri Mar 7 19:10:02 2025 -0700

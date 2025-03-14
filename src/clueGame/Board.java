@@ -8,8 +8,8 @@ public class Board {
 	private BoardCell[][] grid;
 	private int numRows, numColumns;
 	private String layoutConfigFile, setupConfigFile;
-	private Map<Character, Room> roomMap;
-	private Map<Character, String> cellMap = new HashMap<Character, String>();
+	private Map<Character, Room> roomMap; 
+	private Map<Character, String> cellMap; 
 	private Set<BoardCell> targets;
 	private Set<BoardCell> visited;
 
@@ -22,6 +22,7 @@ public class Board {
 	private Board() {
 		super() ;
 		roomMap = new HashMap<Character, Room>();
+		cellMap = new HashMap<Character, String>();
 	}
 
 	// This method returns the only Board
@@ -31,6 +32,12 @@ public class Board {
 		}
 		return theInstance;
 	}
+	
+	//This method is only used for testing purposes, to reset the Board instance per successive test.
+	public static void resetInstance() {
+        theInstance = null;
+    }
+	
 	public Set<BoardCell> getAdjList(int row, int col){
 		BoardCell cell = this.getCell(row, col);
 		
@@ -134,8 +141,8 @@ public class Board {
 			
 			// Read from setupConfigFile
 			while(setupScanner.hasNext()) {
-				String line = new String(setupScanner.nextLine().trim());
-				String[] parts = line.split(",\\s*");
+				String line = setupScanner.nextLine().trim();
+				String[] parts = line.split("\\s*,\\s*");
 				
 				// Skip empty lines or comments
 	            if (line.isEmpty() || line.startsWith("//")) {
