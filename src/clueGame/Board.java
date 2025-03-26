@@ -231,10 +231,11 @@ public class Board {
 					for (int k = 0; k < cells.size(); k++) {
 						grid[i][j].addAdjacency(cells.get(k));
 					}
-					if (this.getRoom(grid[i][j]).getPassBool() == true) {
-						grid[i][j].addAdjacency(this.getRoom(grid[i][j]).getPass());
+					if (grid[i][j].getSecretPassage() != 0) {
+						BoardCell adjac = this.getRoom(grid[i][j].getSecretPassage()).getCenterCell();
+						//System.out.println(adjac);
+						grid[i][j].addAdjacency(adjac);
 					}
-					
 				}
 			}
 		}
@@ -280,8 +281,7 @@ public class Board {
 					char symbol = arr[j].charAt(0);
 					if(roomMap.containsKey(symbol) && !cellMap.containsKey(symbol)) {
 						this.getCell(i, j).setRoom(true);
-						this.getCell(i,  j).setInitial(symbol);
-						
+						this.getCell(i, j).setInitial(symbol);
 					}
 					
 					if(roomMap.containsKey(arr[j].charAt(0))) {
@@ -292,7 +292,6 @@ public class Board {
 							case '<':
 								this.getCell(i, j).setDirection('L');
 								this.getCell(i, j).setDoorway(true);
-								//this.getRoom(this.getCell(i, j- 1)).setDoorCell(this.getCell(i, j));
 								break;
 								
 							case '^':
@@ -303,13 +302,11 @@ public class Board {
 							case '>':
 								this.getCell(i, j).setDirection('R');
 								this.getCell(i, j).setDoorway(true);
-								//this.getRoom(this.getCell(i, j + 1)).setDoorCell(this.getCell(i, j));
 								break;
 								
 							case 'v':
 								this.getCell(i, j).setDirection('D');
 								this.getCell(i, j).setDoorway(true);
-								//this.getRoom(this.getCell(i - 1, j)).setDoorCell(this.getCell(i, j));
 								break;
 								
 							case '*':
@@ -325,11 +322,11 @@ public class Board {
 							default:
 								if (roomMap.containsKey(arr[j].charAt(1))) {
 									if (arr[j].charAt(0) != 'S') {
-										this.getCell(i, j).setSecretPassage(arr[j].charAt(0));
-										//this.getRoom(this.getCell(i, j)).setPassBool(true, arr[j].charAt(0));
+										//this.getCell(i, j).setSecretPassage(arr[j].charAt(1));
+										this.getRoom(this.getCell(i, j)).setPassBool(true, arr[j].charAt(1));
 									} else {
-										this.getCell(i, j).setSecretPassage(arr[j].charAt(1));
-										//this.getRoom(this.getCell(i, j)).setPassBool(true, arr[j].charAt(1));
+										//this.getCell(i, j).setSecretPassage(arr[j].charAt(1));
+										this.getRoom(this.getCell(i, j)).setPassBool(true, arr[j].charAt(1));
 									}
 									break;
 								}
@@ -350,6 +347,31 @@ public class Board {
 		
 		catch (FileNotFoundException e){
 			System.out.println("File not found.");
+		}
+		for (int i = 0; i < grid.length; i++) {
+			for (int j = 0; j < grid[i].length; j++) {
+				if (this.getCell(i, j).isRoom() == true) {
+					if(this.getRoom(this.getCell(i, j)).getPassBool() == true) {
+						Room start = this.getRoom(this.getCell(i, j));
+						//Room end = this.getRoom(start.getConnection());
+						this.getCell(i, j).setSecretPassage(start.getConnection());
+					}
+				}
+				if (this.getCell(i, j).isDoorway()) {
+					if (this.getCell(i, j).getDoorDirection() == DoorDirection.DOWN) {
+						this.getRoom(this.getCell(i + 1, j)).setDoorCell(this.getCell(i, j));
+					}
+					if (this.getCell(i, j).getDoorDirection() == DoorDirection.UP) {
+						this.getRoom(this.getCell(i - 1, j)).setDoorCell(this.getCell(i, j));
+					}
+					if (this.getCell(i, j).getDoorDirection() == DoorDirection.LEFT) {
+						this.getRoom(this.getCell(i, j - 1)).setDoorCell(this.getCell(i, j));
+					}
+					if (this.getCell(i, j).getDoorDirection() == DoorDirection.RIGHT) {
+						this.getRoom(this.getCell(i, j + 1)).setDoorCell(this.getCell(i, j));
+					}
+				}
+			}
 		}
 	}
 

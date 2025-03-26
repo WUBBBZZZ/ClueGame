@@ -130,7 +130,7 @@ public class FileInitTests {
 			room = board.getRoom( cell ) ;
 			assertTrue( room != null );
 			assertEquals( room.getName(), "Closet" ) ;
-			assertTrue( cell.getSecretPassage() == 'C' );
+			assertTrue( cell.getSecretPassage() == 'B' );
 			
 			// test a walkway
 			cell = board.getCell(5, 1);

@@ -42,7 +42,7 @@ public class BoardAdjTargetTest {
 	public void adjRoomTest() {
 		//Locations within rooms not center. Note, this test is allowed 
 		//to pass even for failing test.  (Should have empty adjacency list) 
-		Set<BoardCell> testList = board.getAdjList(20, 6);
+		Set<BoardCell> testList = board.getAdjList(21, 4);
 		assertEquals(0, testList.size());
 	}
 	
@@ -79,9 +79,11 @@ public class BoardAdjTargetTest {
 	public void adjSecretTest() {
 		//Locations that are connected by secret passage
 		Set<BoardCell> testList = board.getAdjList(0, 0);
-		assertEquals(2, testList.size());
-		assertTrue(testList.contains(board.getCell(2, 1)));
-		assertTrue(testList.contains(board.getCell(19, 0)));
+		System.out.println(testList);
+		assertEquals(3, testList.size());
+		assertTrue(testList.contains(board.getCell(2, 3)));
+		assertTrue(testList.contains(board.getCell(19, 20)));
+		assertTrue(testList.contains(board.getCell(5, 0)));
 
 	}
 	

@@ -47,8 +47,15 @@ public class BoardCell {
 	}
 	
 	// Adds an adjacent cell to this cells adjacency list
-	public void addAdjacency(BoardCell grid) {
-	    this.adjList.add(grid);
+	public void addAdjacency(BoardCell cell) {
+		//System.out.println(cell);
+	    this.adjList.add(cell);
+	}
+	public void addAdjacencyCheck(BoardCell cell) {
+		int r = cell.getRow();
+		int c = cell.getCol();
+		System.out.println(String.format("Cell: %s, %s added Cell %s, %s", row, col, r, c));
+	    this.adjList.add(cell);
 	}
 	// Returns the adjacency list for the cell
 	public Set<BoardCell> getAdjList(){
@@ -117,6 +124,13 @@ public class BoardCell {
 	public void setSecretPassage(char s) {
 		this.secretPassage = s;
 	}
+	public int getRow() {
+		return this.row;
+	}
+	public int getCol() {
+		return this.col;
+	}
+	
 	@Override
 	public String toString() {
 		return String.format("Cell: %s, %s", row, col);
