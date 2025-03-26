@@ -1,3 +1,4 @@
+//TODO add class string
 package clueGame;
 import java.util.*;
 
@@ -54,11 +55,11 @@ public class Board {
 
 	// Calls calcTargets recursively
 	public void findAllTargets(BoardCell cell, int pathlength){
-		for(BoardCell adj:cell.adjList) {
+		Set<BoardCell> adjList = cell.getAdjList();
+		for(BoardCell adj:adjList) {
 			if(visited.contains(adj) || adj.getOccupied()){
 				continue;
 			}
-			
 			//walkways can only add other walkways to targets
 			if (!cell.isRoom() && !cell.isDoorway() && !adj.isRoom()) {
 				visited.add(adj);
@@ -77,12 +78,12 @@ public class Board {
 				if (pathlength == 1){
 					targets.add(adj);
 				} else {
-					this.findAllTargets(adj, pathlength - 1);
+					this.findAllTargets(adj, pathlength);
 				}
 
 				visited.remove(adj);
 			}
-	
+			
 		}
 	} 
 	
@@ -189,8 +190,21 @@ public class Board {
 	
 	
 	public void makeAdjList() {
+		//BoardCell cell = new BoardCell(-1, -1);
 		for(int i = 0;i<numRows;i++) {
 			for(int j = 0;j<numColumns;j++) {
+				if (grid[i][j].isDoorway() == true) {
+					DoorDirection dir = grid[i][j].getDoorDirection();
+					if (dir == DoorDirection.UP) {
+						grid[i][j].addAdjacency(this.getRoom(grid[i-1][j]).getCenterCell());
+					} else if (dir == DoorDirection.DOWN) {
+						grid[i][j].addAdjacency(this.getRoom(grid[i+1][j]).getCenterCell());
+					} else if (dir == DoorDirection.RIGHT) {
+						grid[i][j].addAdjacency(this.getRoom(grid[i][j+1]).getCenterCell());
+					} else if (dir == DoorDirection.LEFT) {
+						grid[i][j].addAdjacency(this.getRoom(grid[i][j-1]).getCenterCell());
+					}
+				}
 				if (grid[i][j].isRoom() == false) {
 					if (i > 0){
 						if (grid[i - 1][j].getInitial() == 'W' || grid[i - 1][j].isDoorway()) {
@@ -212,8 +226,16 @@ public class Board {
 							grid[i][j].addAdjacency(grid[i][j+1]);
 						}		
 					}
-				}  //from here we need to figure out how to identify doorways to the the cell if it is a room
-				//as well as account for secret passageways
+				} else {
+					ArrayList<BoardCell> cells = this.getRoom(grid[i][j]).getDoorCell();
+					for (int k = 0; k < cells.size(); k++) {
+						grid[i][j].addAdjacency(cells.get(k));
+					}
+					if (this.getRoom(grid[i][j]).getPassBool() == true) {
+						grid[i][j].addAdjacency(this.getRoom(grid[i][j]).getPass());
+					}
+					
+				}
 			}
 		}
 	}
@@ -258,6 +280,7 @@ public class Board {
 					char symbol = arr[j].charAt(0);
 					if(roomMap.containsKey(symbol) && !cellMap.containsKey(symbol)) {
 						this.getCell(i, j).setRoom(true);
+						this.getCell(i,  j).setInitial(symbol);
 						
 					}
 					
@@ -269,6 +292,7 @@ public class Board {
 							case '<':
 								this.getCell(i, j).setDirection('L');
 								this.getCell(i, j).setDoorway(true);
+								//this.getRoom(this.getCell(i, j- 1)).setDoorCell(this.getCell(i, j));
 								break;
 								
 							case '^':
@@ -279,11 +303,13 @@ public class Board {
 							case '>':
 								this.getCell(i, j).setDirection('R');
 								this.getCell(i, j).setDoorway(true);
+								//this.getRoom(this.getCell(i, j + 1)).setDoorCell(this.getCell(i, j));
 								break;
 								
 							case 'v':
 								this.getCell(i, j).setDirection('D');
 								this.getCell(i, j).setDoorway(true);
+								//this.getRoom(this.getCell(i - 1, j)).setDoorCell(this.getCell(i, j));
 								break;
 								
 							case '*':
@@ -300,8 +326,10 @@ public class Board {
 								if (roomMap.containsKey(arr[j].charAt(1))) {
 									if (arr[j].charAt(0) != 'S') {
 										this.getCell(i, j).setSecretPassage(arr[j].charAt(0));
+										//this.getRoom(this.getCell(i, j)).setPassBool(true, arr[j].charAt(0));
 									} else {
 										this.getCell(i, j).setSecretPassage(arr[j].charAt(1));
+										//this.getRoom(this.getCell(i, j)).setPassBool(true, arr[j].charAt(1));
 									}
 									break;
 								}

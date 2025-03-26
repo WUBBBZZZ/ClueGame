@@ -8,15 +8,15 @@ import experiment.TestBoardCell;
 public class BoardCell {
 	private int row, col;
 	private Boolean isRoom, isOccupied, doorway, roomCenter, label;
-	char type, roomInitial;
-	Set<BoardCell> adjList;
-	DoorDirection direction;
-	char secretPassage;
+	private char type, roomInitial;
+	private Set<BoardCell> adjList;
+	private DoorDirection direction;
+	private char secretPassage;
 	// Constructor with row and col inputs
-	public BoardCell(int row, int col) {
+	public BoardCell(int r, int c) {
 	    super();
-	    this.row = row;
-	    this.col = col;
+	    this.row = r;
+	    this.col = c;
 	    adjList = new HashSet<BoardCell>();
 	    isRoom = false;
 	    isOccupied = false;
@@ -104,7 +104,7 @@ public class BoardCell {
 	}
 	
 	public char getSecretPassage() {
-		return secretPassage;
+		return this.secretPassage;
 	}
 	
 	public char getInitial() {
@@ -116,5 +116,9 @@ public class BoardCell {
 	}
 	public void setSecretPassage(char s) {
 		this.secretPassage = s;
+	}
+	@Override
+	public String toString() {
+		return String.format("Cell: %s, %s", row, col);
 	}
 }
