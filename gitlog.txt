@@ -1,3 +1,57 @@
+commit 1dab5a2c450fa8ff9bca5f86cfe344382ca22bc2
+Author: WUBBBZZZ <112722551+WUBBBZZZ@users.noreply.github.com>
+Date:   Tue Mar 25 22:25:29 2025 -0600
+
+    fixed test logic and faulty csv file
+    
+    errors in file were causing tests to fail
+
+commit 79a01698329e61c7a08fd1470708a413e31f2f39
+Author: WUBBBZZZ <112722551+WUBBBZZZ@users.noreply.github.com>
+Date:   Tue Mar 25 20:50:25 2025 -0600
+
+    major changes to logic around generating adj list
+    
+    me and tristan worked together on this on the same machine to get the logic for calculating adjencies correct and we fixed a bad file for our input
+
+commit 3606270741e18470b3ad49456f66edb666dc2b83
+Author: WUBBBZZZ <112722551+WUBBBZZZ@users.noreply.github.com>
+Date:   Tue Mar 25 12:35:23 2025 -0600
+
+    Update logfile.txt
+
+commit 1b6ca11181e8eff5ec3082ee6255db9d1ff12df0
+Author: TristanKarno <tristan_karno@mines.edu>
+Date:   Tue Mar 25 10:45:34 2025 -0600
+
+    Finished BoardAdjTargetTest file. Also updated the excel sheet. More sophisticated tests are needed, needs to be updated soon.
+
+commit 7c20fba64276c67b448b6c887cc569d577c4bf0a
+Author: TristanKarno <tristan_karno@mines.edu>
+Date:   Mon Mar 24 12:25:34 2025 -0600
+
+    Added test file BoardAdjTargetTest. Need to complete all test implementations and then create code to allow the tests to pass.
+
+commit 721847f94f0a9b22ad83e48c450f6849318dd0dd
+Author: TristanKarno <tristan_karno@mines.edu>
+Date:   Thu Mar 13 22:59:19 2025 -0600
+
+    All tests have been passed, both individually and concurrently. Code needed only minor modification; slightly reworked tests to better match our excel board, and secretpassage test saw the use of a if statement in Board class. IMPORTANT: All tests have passed, but assignment still needs slight alteration. Still need to do a the git diff part and refactor the code.
+
+commit e87b4dde11366c00333efc93b30f62baf24f8191
+Author: TristanKarno <tristan_karno@mines.edu>
+Date:   Thu Mar 13 18:18:24 2025 -0600
+
+    Exceptiontests306 is complete, all failures have been purged. The issue - incomplete memory clearing between instances of the board. Still need to complete FileInitTests, and then finish BoardAdjtargetTest306 for the next assignment.
+
+commit e4d0230fac0f7b0fec9d2d728a798efd110d36e3
+Author: WUBBBZZZ <112722551+WUBBBZZZ@users.noreply.github.com>
+Date:   Thu Mar 13 12:40:47 2025 -0600
+
+    added updated data files
+    
+    clue board was slightly incorrect and required a couple changes so  I added the new changes to our data file so both partners can access it
+
 commit bc51e1bedcca0a31cf00988c4d90e2cdc8daa307
 Author: TristanKarno <tristan_karno@mines.edu>
 Date:   Fri Mar 7 23:12:34 2025 -0700
