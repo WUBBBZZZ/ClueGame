@@ -64,7 +64,7 @@ public class BoardCell {
 	
 	// Setter for creating a room cell
 	public void setRoom(boolean cell) {
-		this.isRoom = cell;;
+		this.isRoom = cell;
 	}
 	
 	// Getter for if a space is a room cell

@@ -262,7 +262,7 @@ public class BoardAdjTargetTest306 {
 		board.calcTargets(board.getCell(13, 7), 4);
 		board.getCell(15, 7).setOccupied(false);
 		Set<BoardCell> targets = board.getTargets();
-		System.out.print(targets);
+		//System.out.print(targets);
 		assertEquals(13, targets.size());
 		assertTrue(targets.contains(board.getCell(14, 2)));
 		assertTrue(targets.contains(board.getCell(15, 9)));
@@ -277,7 +277,9 @@ public class BoardAdjTargetTest306 {
 		board.getCell(12, 20).setOccupied(false);
 		board.getCell(8, 18).setOccupied(false);
 		targets= board.getTargets();
+		System.out.println(targets);
 		assertEquals(3, targets.size());
+		
 		assertTrue(targets.contains(board.getCell(7, 17)));	
 		assertTrue(targets.contains(board.getCell(8, 16)));	
 		assertTrue(targets.contains(board.getCell(12, 20)));	
