@@ -52,24 +52,46 @@ public class Board {
 		visited.add(startCell);
 		this.findAllTargets(startCell, pathlength);
 	}
-
 	// Calls calcTargets recursively
 	public void findAllTargets(BoardCell cell, int pathlength){
+		if (pathlength < 1) {return;}
 		cell = this.getCellC(cell);
 		Set<BoardCell> adjList = cell.getAdjList();
-		
-		//System.out.println(cell.isDoorway());
-		//System.out.println(cell.isRoom());
 		for(BoardCell adj:adjList) {
-			System.out.println(cell.isDoorway());
 			if(visited.contains(adj) || adj.getOccupied()){
-				continue;
+				if (cell.isDoorway() && adj.isRoom() && !visited.contains(adj)) {//if room is occupied but not visited then we can enter it 
+					targets.add(this.getRoom(adj).getCenterCell());
+					//System.out.print("room added ");
+					//System.out.println(adj);
+				} else {
+					//visited.add(adj);
+					//System.out.println(adj);
+					continue;
+				}
 			}
+			if (cell.isDoorway() && adj.isRoom()) {
+				targets.add(this.getRoom(adj).getCenterCell());
+			}
+			
 			//walkways can only add other walkways to targets
 			if (!cell.isRoom() && !cell.isDoorway() && !adj.isRoom()) {
 				visited.add(adj);
 				if (pathlength == 1){
 					targets.add(adj);
+					/*if (adj.isDoorway() && !adj.getOccupied()) { DO NOT DELETE THIS CODE
+						DoorDirection temp = adj.getDoorDirection();
+						int r = adj.getRow();
+						int c = adj.getCol();
+						if (temp == DoorDirection.UP) {
+							targets.add(this.getRoom(this.getCell(r - 1, c).getInitial()).getCenterCell());
+						}else if (temp == DoorDirection.DOWN) {
+							targets.add(this.getRoom(this.getCell(r + 1, c).getInitial()).getCenterCell());
+						}else if (temp == DoorDirection.RIGHT) {
+							targets.add(this.getRoom(this.getCell(r, c + 1).getInitial()).getCenterCell());
+						}else if (temp == DoorDirection.LEFT) {
+							targets.add(this.getRoom(this.getCell(r, c - 1).getInitial()).getCenterCell());
+						}
+					}*/
 				} else {
 					this.findAllTargets(adj, pathlength - 1);
 				}
@@ -77,22 +99,15 @@ public class Board {
 				visited.remove(adj);
 			} else if (!cell.isRoom() && !adj.isRoom()) {
 				visited.add(adj);
-				if (pathlength == 1) {
-					if (pathlength == 1){
-						targets.add(adj);
-					} else {
-						this.findAllTargets(adj, pathlength - 1);
-					}
-
-					visited.remove(adj);
+				if (pathlength == 1){
+					targets.add(adj);
 				} else {
-					targets.add(this.getRoom(adj).getCenterCell());
+					this.findAllTargets(adj, pathlength - 1);
 				}
 				visited.remove(adj);
-			} else if (!cell.isRoom()) {
-				targets.add(this.getRoom(adj).getCenterCell());
-			} else {
+			} else if (cell.isRoom()){
 				for (BoardCell door : this.getRoom(cell).getDoorCell()) {
+					if(door.getOccupied()) continue; // Skip blocked doorways
 					visited.add(door);
 					visited.add(cell);
 					if (pathlength == 1) {
@@ -100,8 +115,18 @@ public class Board {
 					} else {
 						this.findAllTargets(door, pathlength - 1);
 					}
+					visited.remove(door);
+					visited.remove(cell);
 				}
-			}	
+			} else if (adj.isDoorway()) {
+				visited.add(adj);
+				if (pathlength == 1) {
+					targets.add(adj);
+				} else {
+					this.findAllTargets(adj, pathlength - 1);
+				}
+				visited.remove(adj);
+			}
 			if (adj.getSecretPassage() != 0) {
 				targets.add(this.getRoom(adj.getInitial()).getCenterCell());
 			}
