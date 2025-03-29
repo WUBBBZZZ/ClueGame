@@ -12,6 +12,8 @@ public class BoardCell {
 	private Set<BoardCell> adjList;
 	private DoorDirection direction;
 	private char secretPassage;
+	public static final char NO_SECRET_PASSAGE = 0;
+
 	// Constructor with row and col inputs
 	public BoardCell(int r, int c) {
 	    super();
@@ -130,7 +132,9 @@ public class BoardCell {
 	public int getCol() {
 		return this.col;
 	}
-	
+	public boolean hasSecretPassage() {
+	    return secretPassage != Board.NO_SECRET_PASSAGE;
+	}
 	@Override
 	public String toString() {
 		return String.format("Cell: %s, %s", row, col);
