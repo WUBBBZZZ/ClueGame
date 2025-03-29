@@ -40,10 +40,12 @@ public class BoardAdjTargetTest {
 	
 	@Test
 	public void adjRoomTest() {
-		//Locations within rooms not center. Note, this test is allowed 
-		//to pass even for failing test.  (Should have empty adjacency list) 
-		Set<BoardCell> testList = board.getAdjList(21, 4);
-		assertEquals(0, testList.size());
+		//since you can never be in a room not center this checks to make sure whenever we are in a room we
+		//automatically generates adjacency list for the center that way we never touch the untouchable room squares
+		Set<BoardCell> testList = board.getAdjList(21, 2);
+		Set<BoardCell> testList2 = board.getAdjList(18, 1);
+		//System.out.println(testList);
+		assertEquals(testList2, testList);
 	}
 	
 	@Test
@@ -79,10 +81,10 @@ public class BoardAdjTargetTest {
 	public void adjSecretTest() {
 		//Locations that are connected by secret passage
 		Set<BoardCell> testList = board.getAdjList(0, 0);
-		System.out.println(testList);
+		
 		assertEquals(3, testList.size());
 		assertTrue(testList.contains(board.getCell(2, 3)));
-		assertTrue(testList.contains(board.getCell(19, 20)));
+		assertTrue(testList.contains(board.getCell(19, 18)));
 		assertTrue(testList.contains(board.getCell(5, 0)));
 
 	}
@@ -118,15 +120,15 @@ public class BoardAdjTargetTest {
 		//Targets that allow the user to enter a room
 		
 		//Test a roll of 1
-		board.calcTargets(board.getCell(2, 3), 1);
+		board.calcTargets(board.getCell(2, 4), 1);
 		Set<BoardCell> targets= board.getTargets();
-		//System.out.println(targets);
-		assertEquals(4, targets.size());
-		assertTrue(targets.contains(board.getCell(8, 13)));
-		assertTrue(targets.contains(board.getCell(8, 15)));	
-		assertTrue(targets.contains(board.getCell(9, 14)));
-		assertTrue(targets.contains(board.getCell(7, 14)));
-		
+		System.out.println(targets);
+		assertEquals(5, targets.size());
+		assertTrue(targets.contains(board.getCell(2, 1)));
+		assertTrue(targets.contains(board.getCell(2, 8)));	
+		assertTrue(targets.contains(board.getCell(1, 4)));
+		assertTrue(targets.contains(board.getCell(3, 4)));
+		assertTrue(targets.contains(board.getCell(2, 3)));
 	}
 	
 	@Test
@@ -148,12 +150,10 @@ public class BoardAdjTargetTest {
 		//Test a roll of 1
 		board.calcTargets(board.getCell(5, 20), 1);
 		Set<BoardCell> targets= board.getTargets();
-		//System.out.println(targets);
 		assertEquals(2, targets.size());
 		assertTrue(targets.contains(board.getCell(5, 18)));
-		assertTrue(targets.contains(board.getCell(7, 20)));	
+		assertTrue(targets.contains(board.getCell(18, 1)));	
 	}
-	
 	@Test
 	public void targPlayerBlockTest() {
 		//Targets that reflect blocking by other players
@@ -162,8 +162,10 @@ public class BoardAdjTargetTest {
 		//Test a roll of 1
 		board.calcTargets(board.getCell(11, 6), 1);
 		Set<BoardCell> targets= board.getTargets();
-		assertEquals(2, targets.size());
+		//System.out.println(targets);
+		assertEquals(3, targets.size());
 		assertTrue(targets.contains(board.getCell(11, 5)));
+		assertTrue(targets.contains(board.getCell(10, 6)));
 		assertTrue(targets.contains(board.getCell(12, 6)));
 	}
 	

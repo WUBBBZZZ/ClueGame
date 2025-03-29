@@ -55,8 +55,13 @@ public class Board {
 
 	// Calls calcTargets recursively
 	public void findAllTargets(BoardCell cell, int pathlength){
+		cell = this.getCellC(cell);
 		Set<BoardCell> adjList = cell.getAdjList();
+		
+		//System.out.println(cell.isDoorway());
+		//System.out.println(cell.isRoom());
 		for(BoardCell adj:adjList) {
+			System.out.println(cell.isDoorway());
 			if(visited.contains(adj) || adj.getOccupied()){
 				continue;
 			}
@@ -70,20 +75,36 @@ public class Board {
 				}
 
 				visited.remove(adj);
-			}
-
-			//Doorways can also connect to room centers
-			if (cell.isDoorway() && !adj.isRoom()) {
+			} else if (!cell.isRoom() && !adj.isRoom()) {
 				visited.add(adj);
-				if (pathlength == 1){
-					targets.add(adj);
-				} else {
-					this.findAllTargets(adj, pathlength);
-				}
+				if (pathlength == 1) {
+					if (pathlength == 1){
+						targets.add(adj);
+					} else {
+						this.findAllTargets(adj, pathlength - 1);
+					}
 
+					visited.remove(adj);
+				} else {
+					targets.add(this.getRoom(adj).getCenterCell());
+				}
 				visited.remove(adj);
+			} else if (!cell.isRoom()) {
+				targets.add(this.getRoom(adj).getCenterCell());
+			} else {
+				for (BoardCell door : this.getRoom(cell).getDoorCell()) {
+					visited.add(door);
+					visited.add(cell);
+					if (pathlength == 1) {
+						targets.add(door);
+					} else {
+						this.findAllTargets(door, pathlength - 1);
+					}
+				}
+			}	
+			if (adj.getSecretPassage() != 0) {
+				targets.add(this.getRoom(adj.getInitial()).getCenterCell());
 			}
-			
 		}
 	} 
 	
@@ -194,6 +215,7 @@ public class Board {
 		for(int i = 0;i<numRows;i++) {
 			for(int j = 0;j<numColumns;j++) {
 				if (grid[i][j].isDoorway() == true) {
+					//System.out.println(grid[i][j]);
 					DoorDirection dir = grid[i][j].getDoorDirection();
 					if (dir == DoorDirection.UP) {
 						grid[i][j].addAdjacency(this.getRoom(grid[i-1][j]).getCenterCell());
@@ -357,7 +379,9 @@ public class Board {
 						this.getCell(i, j).setSecretPassage(start.getConnection());
 					}
 				}
+				
 				if (this.getCell(i, j).isDoorway()) {
+					//System.out.println(this.getCell(i, j));
 					if (this.getCell(i, j).getDoorDirection() == DoorDirection.DOWN) {
 						this.getRoom(this.getCell(i + 1, j)).setDoorCell(this.getCell(i, j));
 					}
@@ -405,7 +429,11 @@ public class Board {
 
 	}
 
-
+	public BoardCell getCellC(BoardCell cell) {
+		int r = cell.getRow();
+		int c = cell.getCol();
+		return this.grid[r][c];
+	}
 
 
 }
