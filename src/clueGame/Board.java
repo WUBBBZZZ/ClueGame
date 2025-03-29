@@ -13,7 +13,16 @@ public class Board {
 	private Map<Character, String> cellMap; 
 	private Set<BoardCell> targets;
 	private Set<BoardCell> visited;
+	private static final char WALKWAY_INITIAL = 'W';
+	private static final char SECRET_PASSAGE_IDENTIFIER = 'S';
+	private static final int NO_SECRET_PASSAGE = 0;
 
+	private static final char DOOR_LEFT = '<';
+	private static final char DOOR_UP = '^';
+	private static final char DOOR_RIGHT = '>';
+	private static final char DOOR_DOWN = 'v';
+	private static final char ROOM_CENTER = '*';
+	private static final char ROOM_LABEL = '#';
 	/*
 	 * variable and methods used for singleton pattern
 	 */
@@ -127,7 +136,7 @@ public class Board {
 				}
 				visited.remove(adj);
 			}
-			if (adj.getSecretPassage() != 0) {
+			if (adj.getSecretPassage() != NO_SECRET_PASSAGE) {
 				targets.add(this.getRoom(adj.getInitial()).getCenterCell());
 			}
 		}
@@ -254,22 +263,22 @@ public class Board {
 				}
 				if (grid[i][j].isRoom() == false) {
 					if (i > 0){
-						if (grid[i - 1][j].getInitial() == 'W' || grid[i - 1][j].isDoorway()) {
+						if (grid[i - 1][j].getInitial() == WALKWAY_INITIAL || grid[i - 1][j].isDoorway()) {
 							grid[i][j].addAdjacency(grid[i-1][j]);
 						}					
 					}
 					if (j > 0){
-						if (grid[i][j-1].getInitial() == 'W' || grid[i][j-1].isDoorway()) {
+						if (grid[i][j-1].getInitial() == WALKWAY_INITIAL || grid[i][j-1].isDoorway()) {
 							grid[i][j].addAdjacency(grid[i][j-1]);
 						}
 					}
 					if (i < numColumns - 1){
-						if (grid[i + 1][j].getInitial() == 'W' || grid[i + 1][j].isDoorway()) {
+						if (grid[i + 1][j].getInitial() == WALKWAY_INITIAL || grid[i + 1][j].isDoorway()) {
 							grid[i][j].addAdjacency(grid[i+1][j]);
 						}		
 					}
 					if (j < numColumns - 1){
-						if (grid[i][j+1].getInitial() == 'W' || grid[i][j+1].isDoorway()) {
+						if (grid[i][j+1].getInitial() == WALKWAY_INITIAL || grid[i][j+1].isDoorway()) {
 							grid[i][j].addAdjacency(grid[i][j+1]);
 						}		
 					}
@@ -336,39 +345,39 @@ public class Board {
 						if(arr[j].length() != 1) {
 							switch(arr[j].charAt(1)) {
 							
-							case '<':
+							case DOOR_LEFT:
 								this.getCell(i, j).setDirection('L');
 								this.getCell(i, j).setDoorway(true);
 								break;
 								
-							case '^':
+							case DOOR_UP:
 								this.getCell(i, j).setDirection('U');
 								this.getCell(i, j).setDoorway(true);
 								break;
 								
-							case '>':
+							case DOOR_RIGHT:
 								this.getCell(i, j).setDirection('R');
 								this.getCell(i, j).setDoorway(true);
 								break;
 								
-							case 'v':
+							case DOOR_DOWN:
 								this.getCell(i, j).setDirection('D');
 								this.getCell(i, j).setDoorway(true);
 								break;
 								
-							case '*':
+							case ROOM_CENTER:
 								this.getCell(i, j).setCenter(true);
 								roomMap.get(symbol).setCenterCell(this.getCell(i, j));
 								break;
 								
-							case '#':
+							case ROOM_LABEL:
 								this.getCell(i, j).setLabel(true);
 								roomMap.get(symbol).setLabelCell(this.getCell(i, j));
 								break;
 								
 							default:
 								if (roomMap.containsKey(arr[j].charAt(1))) {
-									if (arr[j].charAt(0) != 'S') {
+									if (arr[j].charAt(0) != SECRET_PASSAGE_IDENTIFIER) {
 										//this.getCell(i, j).setSecretPassage(arr[j].charAt(1));
 										this.getRoom(this.getCell(i, j)).setPassBool(true, arr[j].charAt(1));
 									} else {
