@@ -15,7 +15,7 @@ public class Board {
 	private Set<BoardCell> visited;
 	private static final char WALKWAY_INITIAL = 'W';
 	private static final char SECRET_PASSAGE_IDENTIFIER = 'S';
-	private static final int NO_SECRET_PASSAGE = 0;
+	public static final int NO_SECRET_PASSAGE = 0;
 
 	private static final char DOOR_LEFT = '<';
 	private static final char DOOR_UP = '^';
@@ -64,19 +64,12 @@ public class Board {
 	// Calls calcTargets recursively
 	public void findAllTargets(BoardCell cell, int pathlength){
 		if (pathlength < 1) {return;}
-		//cell = this.getCell(cell);
 		Set<BoardCell> adjList = cell.getAdjList();
 		for(BoardCell adj:adjList) {
 			if(visited.contains(adj) || adj.getOccupied()){
 				if (cell.isDoorway() && adj.isRoom() && !visited.contains(adj)) {//if room is occupied but not visited then we can enter it 
 					targets.add(this.getRoom(adj).getCenterCell());
-					//System.out.print("room added ");
-					//System.out.println(adj);
-				} else {
-					//visited.add(adj);
-					//System.out.println(adj);
-					continue;
-				}
+				} else {continue;}
 			}
 			if (cell.isDoorway() && adj.isRoom()) {
 				targets.add(this.getRoom(adj).getCenterCell());
@@ -87,7 +80,7 @@ public class Board {
 				visited.add(adj);
 				if (pathlength == 1){
 					targets.add(adj);
-					/*if (adj.isDoorway() && !adj.getOccupied()) { DO NOT DELETE THIS CODE
+					/*if (adj.isDoorway() && !adj.getOccupied()) { DO NOT DELETE THIS CODE it is the logic for entering rooms but is not required yet
 						DoorDirection temp = adj.getDoorDirection();
 						int r = adj.getRow();
 						int c = adj.getCol();
