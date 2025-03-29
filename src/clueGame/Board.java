@@ -297,140 +297,126 @@ public class Board {
 		}
 	}
 
-	
-	
-	public void loadLayoutConfig() throws BadConfigFormatException {
-		String finishedLayout = "./data/" + layoutConfigFile;
-		try(Scanner test = new Scanner(new File(finishedLayout))){
-			ArrayList<String[]> boardLayout = new ArrayList<String[]>();
-			int numCols = 0;
-			int numRows = 0;
-			boolean firstRow = true;
-			while(test.hasNext()) {
-				// Read the next line from the layout file
-				String line = new String(test.nextLine().trim());
-				if(line.isEmpty()) continue;
-				// Split the line into parts using a comma as a delimiter
-				String[] spaces = line.split(",\\s*");
-				if(firstRow) { 
-					numCols = spaces.length; 
-					firstRow = false;
-				} else {
-					if(numCols != spaces.length) {
-						
-						// Check if the number of columns in each row is consistent
-	                    String message = "Column mismatch. column numbers aren't correctly counted between rows. Error is on line " + (numRows + 1) + " of " + finishedLayout;
-	                    throw new BadConfigFormatException(message);
-					}
-				}
-				
-				numRows++;
-				boardLayout.add(spaces);
-			}
-			
-			this.numColumns = numCols;
-			this.numRows = numRows;
-			this.setupBoard();
-			for(int i = 0; i < boardLayout.size();i++) {
-				for(int j = 0; j < boardLayout.get(i).length; j++) {
-					String[] arr = boardLayout.get(i);
-					char symbol = arr[j].charAt(0);
-					if(roomMap.containsKey(symbol) && !cellMap.containsKey(symbol)) {
-						this.getCell(i, j).setRoom(true);
-						this.getCell(i, j).setInitial(symbol);
-					}
-					
-					if(roomMap.containsKey(arr[j].charAt(0))) {
-						this.getCell(i, j).setInitial(symbol);
-						if(arr[j].length() != 1) {
-							switch(arr[j].charAt(1)) {
-							
-							case DOOR_LEFT:
-								this.getCell(i, j).setDirection('L');
-								this.getCell(i, j).setDoorway(true);
-								break;
-								
-							case DOOR_UP:
-								this.getCell(i, j).setDirection('U');
-								this.getCell(i, j).setDoorway(true);
-								break;
-								
-							case DOOR_RIGHT:
-								this.getCell(i, j).setDirection('R');
-								this.getCell(i, j).setDoorway(true);
-								break;
-								
-							case DOOR_DOWN:
-								this.getCell(i, j).setDirection('D');
-								this.getCell(i, j).setDoorway(true);
-								break;
-								
-							case ROOM_CENTER:
-								this.getCell(i, j).setCenter(true);
-								roomMap.get(symbol).setCenterCell(this.getCell(i, j));
-								break;
-								
-							case ROOM_LABEL:
-								this.getCell(i, j).setLabel(true);
-								roomMap.get(symbol).setLabelCell(this.getCell(i, j));
-								break;
-								
-							default:
-								if (roomMap.containsKey(arr[j].charAt(1))) {
-									if (arr[j].charAt(0) != SECRET_PASSAGE_IDENTIFIER) {
-										//this.getCell(i, j).setSecretPassage(arr[j].charAt(1));
-										this.getRoom(this.getCell(i, j)).setPassBool(true, arr[j].charAt(1));
-									} else {
-										//this.getCell(i, j).setSecretPassage(arr[j].charAt(1));
-										this.getRoom(this.getCell(i, j)).setPassBool(true, arr[j].charAt(1));
-									}
-									break;
-								}
-								// Handle invalid second character in the layout
-	                            String message = "Invalid second character on cell,  Row: " + i + " Column: " + j + " Character: " + (arr[j].charAt(1)) + ".";
-	                            throw new BadConfigFormatException(message);
-							}
-						}
+	private List<String[]> readLayoutFile(String filePath) throws BadConfigFormatException {
+	    List<String[]> layoutLines = new ArrayList<>();
+	    try (Scanner scanner = new Scanner(new File(filePath))) {
+	        int expectedCols = -1;
+	        while (scanner.hasNextLine()) {
+	            String line = scanner.nextLine().trim();
+	            if (line.isEmpty()) continue;
 
-					} else {
-						// Handle cases where the character in the layout is not in the setup
-	                    String message = "Character is in our Layout and is not in our Setup  " + arr[j] + " .";
-	                    throw new BadConfigFormatException(message);
-					}
-				}
-			}
-		}
-		
-		catch (FileNotFoundException e){
-			System.out.println("File not found.");
-		}
-		for (int i = 0; i < grid.length; i++) {
-			for (int j = 0; j < grid[i].length; j++) {
-				if (this.getCell(i, j).isRoom() == true) {
-					if(this.getRoom(this.getCell(i, j)).getPassBool() == true) {
-						Room start = this.getRoom(this.getCell(i, j));
-						//Room end = this.getRoom(start.getConnection());
-						this.getCell(i, j).setSecretPassage(start.getConnection());
-					}
-				}
-				
-				if (this.getCell(i, j).isDoorway()) {
-					//System.out.println(this.getCell(i, j));
-					if (this.getCell(i, j).getDoorDirection() == DoorDirection.DOWN) {
-						this.getRoom(this.getCell(i + 1, j)).setDoorCell(this.getCell(i, j));
-					}
-					if (this.getCell(i, j).getDoorDirection() == DoorDirection.UP) {
-						this.getRoom(this.getCell(i - 1, j)).setDoorCell(this.getCell(i, j));
-					}
-					if (this.getCell(i, j).getDoorDirection() == DoorDirection.LEFT) {
-						this.getRoom(this.getCell(i, j - 1)).setDoorCell(this.getCell(i, j));
-					}
-					if (this.getCell(i, j).getDoorDirection() == DoorDirection.RIGHT) {
-						this.getRoom(this.getCell(i, j + 1)).setDoorCell(this.getCell(i, j));
-					}
-				}
-			}
-		}
+	            String[] tokens = line.split(",\\s*");
+	            if (expectedCols == -1) expectedCols = tokens.length;
+	            else if (tokens.length != expectedCols) {
+	                throw new BadConfigFormatException("Column mismatch in layout file.");
+	            }
+
+	            layoutLines.add(tokens);
+	        }
+	    } catch (FileNotFoundException e) {
+	        throw new BadConfigFormatException("Layout file not found: " + filePath);
+	    }
+	    return layoutLines;
+	}
+	private void buildGridFromLayout(List<String[]> layoutLines) throws BadConfigFormatException {
+	    numRows = layoutLines.size();
+	    numColumns = layoutLines.get(0).length;
+	    setupBoard(); // Initializes grid[][]
+
+	    for (int i = 0; i < numRows; i++) {
+	        for (int j = 0; j < numColumns; j++) {
+	            String cellCode = layoutLines.get(i)[j];
+	            initializeCell(cellCode, i, j);
+	        }
+	    }
+	}
+	private void initializeCell(String code, int row, int col) throws BadConfigFormatException {
+	    char symbol = code.charAt(0);
+	    if (!roomMap.containsKey(symbol)) {
+	        throw new BadConfigFormatException("Symbol not found in room map: " + symbol);
+	    }
+
+	    BoardCell cell = getCell(row, col);
+	    cell.setInitial(symbol);
+	    Room room = roomMap.get(symbol);
+
+	    if (!cellMap.containsKey(symbol)) {
+	        cell.setRoom(true);
+	    }
+
+	    if (code.length() > 1) {
+	        char marker = code.charAt(1);
+	        switch (marker) {
+	            case DOOR_LEFT -> {
+	                cell.setDirection('L');
+	                cell.setDoorway(true);
+	            }
+	            case DOOR_RIGHT -> {
+	                cell.setDirection('R');
+	                cell.setDoorway(true);
+	            }
+	            case DOOR_UP -> {
+	                cell.setDirection('U');
+	                cell.setDoorway(true);
+	            }
+	            case DOOR_DOWN -> {
+	                cell.setDirection('D');
+	                cell.setDoorway(true);
+	            }
+	            case ROOM_CENTER -> {
+	                cell.setCenter(true);
+	                room.setCenterCell(cell);
+	            }
+	            case ROOM_LABEL -> {
+	                cell.setLabel(true);
+	                room.setLabelCell(cell);
+	            }
+	            default -> {
+	                if (roomMap.containsKey(marker)) {
+	                    room.setPassBool(true, marker);
+	                } else {
+	                    throw new BadConfigFormatException("Invalid marker in cell: " + code);
+	                }
+	            }
+	        }
+	    }
+	}
+	private void updateDoorwaysAndSecretPassages() {
+	    for (int i = 0; i < getNumRows(); i++) {
+	        for (int j = 0; j < getNumColumns(); j++) {
+	            BoardCell cell = getCell(i, j);
+
+	            // Handle secret passages
+	            if (cell.isRoom()) {
+	                Room room = getRoom(cell);
+	                if (room.getPassBool()) {
+	                    cell.setSecretPassage(room.getConnection());
+	                }
+	            }
+
+	            // Handle doorways
+	            if (cell.isDoorway()) {
+	                int row = cell.getRow();
+	                int col = cell.getCol();
+	                DoorDirection dir = cell.getDoorDirection();
+
+	                switch (dir) {
+	                    case UP -> getRoom(getCell(row - 1, col)).setDoorCell(cell);
+	                    case DOWN -> getRoom(getCell(row + 1, col)).setDoorCell(cell);
+	                    case LEFT -> getRoom(getCell(row, col - 1)).setDoorCell(cell);
+	                    case RIGHT -> getRoom(getCell(row, col + 1)).setDoorCell(cell);
+	                }
+	            }
+	        }
+	    }
+	}
+
+
+	public void loadLayoutConfig() throws BadConfigFormatException {
+	    String finishedLayout = "./data/" + layoutConfigFile;
+	    List<String[]> layoutLines = readLayoutFile(finishedLayout);
+	    buildGridFromLayout(layoutLines);
+	    updateDoorwaysAndSecretPassages();
 	}
 
 
