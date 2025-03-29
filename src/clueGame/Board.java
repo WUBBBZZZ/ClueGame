@@ -245,57 +245,50 @@ public class Board {
 	
 	
 	public void makeAdjList() {
-		//BoardCell cell = new BoardCell(-1, -1);
-		for(int i = 0;i<numRows;i++) {
-			for(int j = 0;j<numColumns;j++) {
-				if (getCell(i, j).isDoorway() == true) {
-					//System.out.println(grid[i][j]);
-					DoorDirection dir = getCell(i, j).getDoorDirection();
-					if (dir == DoorDirection.UP) {
-						getCell(i, j).addAdjacency(this.getRoom(getCell(i-1, j)).getCenterCell());
-					} else if (dir == DoorDirection.DOWN) {
-						getCell(i, j).addAdjacency(this.getRoom(getCell(i+1, j)).getCenterCell());
-					} else if (dir == DoorDirection.RIGHT) {
-						getCell(i, j).addAdjacency(this.getRoom(getCell(i, j+1)).getCenterCell());
-					} else if (dir == DoorDirection.LEFT) {
-						getCell(i, j).addAdjacency(this.getRoom(getCell(i, j-1)).getCenterCell());
-					}
-				}
-				if (getCell(i, j).isRoom() == false) {
-					if (i > 0){
-						if (getCell(i-1, j).getInitial() == WALKWAY_INITIAL || getCell(i-1, j).isDoorway()) {
-							getCell(i, j).addAdjacency(getCell(i-1, j));
-						}					
-					}
-					if (j > 0){
-						if (getCell(i, j-1).getInitial() == WALKWAY_INITIAL || getCell(i, j-1).isDoorway()) {
-							getCell(i, j).addAdjacency(getCell(i, j-1));
-						}
-					}
-					if (i < numColumns - 1){
-						if (getCell(i+1, j).getInitial() == WALKWAY_INITIAL || getCell(i+1, j).isDoorway()) {
-							getCell(i, j).addAdjacency(getCell(i+1, j));
-						}		
-					}
-					if (j < numColumns - 1){
-						if (getCell(i, j+1).getInitial() == WALKWAY_INITIAL || getCell(i, j+1).isDoorway()) {
-							getCell(i, j).addAdjacency(getCell(i, j+1));
-						}		
-					}
-				} else {
-					ArrayList<BoardCell> cells = this.getRoom(getCell(i, j)).getDoorCell();
-					for (int k = 0; k < cells.size(); k++) {
-						getCell(i, j).addAdjacency(cells.get(k));
-					}
-					if (getCell(i, j).getSecretPassage() != 0) {
-						BoardCell adjac = this.getRoom(getCell(i, j).getSecretPassage()).getCenterCell();
-						//System.out.println(adjac);
-						getCell(i, j).addAdjacency(adjac);
-					}
-				}
-			}
-		}
+	    for (int i = 0; i < numRows; i++) {
+	        for (int j = 0; j < numColumns; j++) {
+	            BoardCell cell = getCell(i, j);
+
+	            if (cell.isDoorway()) {
+	                DoorDirection dir = cell.getDoorDirection();
+	                switch (dir) {
+	                    case UP -> cell.addAdjacency(getRoom(getCell(i - 1, j)).getCenterCell());
+	                    case DOWN -> cell.addAdjacency(getRoom(getCell(i + 1, j)).getCenterCell());
+	                    case LEFT -> cell.addAdjacency(getRoom(getCell(i, j - 1)).getCenterCell());
+	                    case RIGHT -> cell.addAdjacency(getRoom(getCell(i, j + 1)).getCenterCell());
+	                }
+	            }
+
+	            if (!cell.isRoom()) {
+	                if (i > 0) {
+	                    BoardCell up = getCell(i - 1, j);
+	                    if (up.getInitial() == WALKWAY_INITIAL || up.isDoorway()) cell.addAdjacency(up);
+	                }
+	                if (j > 0) {
+	                    BoardCell left = getCell(i, j - 1);
+	                    if (left.getInitial() == WALKWAY_INITIAL || left.isDoorway()) cell.addAdjacency(left);
+	                }
+	                if (i < numRows - 1) {
+	                    BoardCell down = getCell(i + 1, j);
+	                    if (down.getInitial() == WALKWAY_INITIAL || down.isDoorway()) cell.addAdjacency(down);
+	                }
+	                if (j < numColumns - 1) {
+	                    BoardCell right = getCell(i, j + 1);
+	                    if (right.getInitial() == WALKWAY_INITIAL || right.isDoorway()) cell.addAdjacency(right);
+	                }
+	            } else {
+	                Room room = getRoom(cell);
+	                for (BoardCell door : room.getDoorCell()) {
+	                    cell.addAdjacency(door);
+	                }
+	                if (cell.getSecretPassage() != NO_SECRET_PASSAGE) {
+	                    cell.addAdjacency(getRoom(cell.getSecretPassage()).getCenterCell());
+	                }
+	            }
+	        }
+	    }
 	}
+
 
 	private List<String[]> readLayoutFile(String filePath) throws BadConfigFormatException {
 	    List<String[]> layoutLines = new ArrayList<>();
@@ -321,15 +314,16 @@ public class Board {
 	private void buildGridFromLayout(List<String[]> layoutLines) throws BadConfigFormatException {
 	    numRows = layoutLines.size();
 	    numColumns = layoutLines.get(0).length;
-	    setupBoard(); // Initializes grid[][]
+	    setupBoard();
 
 	    for (int i = 0; i < numRows; i++) {
 	        for (int j = 0; j < numColumns; j++) {
-	            String cellCode = layoutLines.get(i)[j];
-	            initializeCell(cellCode, i, j);
+	            String code = layoutLines.get(i)[j];
+	            initializeCell(code, i, j); // Already uses getCell(i, j) once internally
 	        }
 	    }
 	}
+
 	private void initializeCell(String code, int row, int col) throws BadConfigFormatException {
 	    char symbol = code.charAt(0);
 	    if (!roomMap.containsKey(symbol)) {
@@ -386,7 +380,7 @@ public class Board {
 	        for (int j = 0; j < getNumColumns(); j++) {
 	            BoardCell cell = getCell(i, j);
 
-	            // Handle secret passages
+	            // Secret Passage setup
 	            if (cell.isRoom()) {
 	                Room room = getRoom(cell);
 	                if (room.getPassBool()) {
@@ -394,17 +388,14 @@ public class Board {
 	                }
 	            }
 
-	            // Handle doorways
+	            // Doorway to Room linkage
 	            if (cell.isDoorway()) {
-	                int row = cell.getRow();
-	                int col = cell.getCol();
 	                DoorDirection dir = cell.getDoorDirection();
-
 	                switch (dir) {
-	                    case UP -> getRoom(getCell(row - 1, col)).setDoorCell(cell);
-	                    case DOWN -> getRoom(getCell(row + 1, col)).setDoorCell(cell);
-	                    case LEFT -> getRoom(getCell(row, col - 1)).setDoorCell(cell);
-	                    case RIGHT -> getRoom(getCell(row, col + 1)).setDoorCell(cell);
+	                    case UP -> getRoom(getCell(i - 1, j)).setDoorCell(cell);
+	                    case DOWN -> getRoom(getCell(i + 1, j)).setDoorCell(cell);
+	                    case LEFT -> getRoom(getCell(i, j - 1)).setDoorCell(cell);
+	                    case RIGHT -> getRoom(getCell(i, j + 1)).setDoorCell(cell);
 	                }
 	            }
 	        }
