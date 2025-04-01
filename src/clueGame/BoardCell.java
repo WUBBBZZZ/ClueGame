@@ -27,6 +27,7 @@ public class BoardCell {
 	    label = false;
 	}
 	
+	// Sets the direction variable to be what the direction symbol means for the specified door
 	public void setDirection(char c) {
 		switch(c) {
 			case 'U':
@@ -84,57 +85,77 @@ public class BoardCell {
 		return isOccupied;
 	}
 	
+	// Setter for the center of room
 	public void setCenter(boolean x) {
 		this.roomCenter = x;
 	}
 	
+	// Setter for a label
 	public void setLabel(boolean x) {
 		this.label = x;
 	}
 	
+	// setter for doorway type of walkway
 	public void setDoorway(boolean x) {
 		this.doorway = x;
 	}
 	
+	// getter for whether a tile is a room center
 	public boolean isRoomCenter() {
 		return roomCenter;
 	}
 	
+	// getter for if a walkway is a doorway
 	public boolean isDoorway() {
 		return doorway;
 	}
 	
+	// getter for the direction of a door
 	public DoorDirection getDoorDirection() {
 		return this.direction;
 	}
 	
+	// getter for a label
 	public boolean isLabel() {
 		return label;
 	}
 	
+	// getter for a secretPassage tile
 	public char getSecretPassage() {
 		return this.secretPassage;
 	}
 	
+	// getter for a specific room initial
 	public char getInitial() {
 		return this.roomInitial;
 	}
 	
+	// setter for a room initial
 	public void setInitial(char character) {
 		this.roomInitial = character;
 	}
+	
+	// setter for a secret passage room tile type
 	public void setSecretPassage(char s) {
 		this.secretPassage = s;
 	}
+	
+	// getter for the row of a tile
 	public int getRow() {
 		return this.row;
 	}
+	
+	// getter for the column of a tile
 	public int getCol() {
 		return this.col;
 	}
+	
+	// method for seeing if the board has a secret passage of the char defined 
 	public boolean hasSecretPassage() {
 	    return secretPassage != Board.NO_SECRET_PASSAGE;
 	}
+	
+	// toString method, labeling a cell which the BoardCell object refers to
 	@Override
 	public String toString() {
 		return String.format("Cell: %s, %s", row, col);

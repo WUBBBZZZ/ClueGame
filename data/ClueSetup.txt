@@ -11,4 +11,18 @@ Room, Bathroom, T
 //other spaces on board
 Space, Unused, X
 Space, Walkway, W
-
+//-----------------------
+//People and weapons: 
+//-----------------------
+Person, Genji
+Person, Sombra
+Person, Reinhardt
+Person, Doomfist
+Person, Mercy
+Person, Moira
+Weapon, SawCleaver
+Weapon, RiversOfBlood
+Weapon, BFG-10000
+Weapon, DaedricMace
+Weapon, NanoBlade
+Weapon, DiamondSword

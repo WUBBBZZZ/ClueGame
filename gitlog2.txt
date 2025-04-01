@@ -1,0 +1,311 @@
+commit 3c7974db264ed0049b836b84a25fccc1180bc271
+Merge: 1dc8e8d 7402d50
+Author: TristanKarno <tristan_karno@mines.edu>
+Date:   Fri Mar 28 21:30:54 2025 -0600
+
+    Added extensive commenting throughout Board.java and BoardCell.java
+
+commit 7402d5065df066f108cca42c7a64553f8da0a546
+Author: WUBBBZZZ <112722551+WUBBBZZZ@users.noreply.github.com>
+Date:   Fri Mar 28 20:38:48 2025 -0600
+
+    code snippet
+    
+    added code snippet to readme so we partner can do final submission
+
+commit 2443c70f06dedd495c74a9cd277335ad974810cd
+Author: WUBBBZZZ <112722551+WUBBBZZZ@users.noreply.github.com>
+Date:   Fri Mar 28 20:34:30 2025 -0600
+
+    refactor #7
+    
+    makeadjlist() was also doing too much in one function so we split it into a smaller function with several helper functions taking care of building specific adjacencies
+
+commit fecd607132ce13543bbc1f6a95cce16cafca9c5d
+Author: WUBBBZZZ <112722551+WUBBBZZZ@users.noreply.github.com>
+Date:   Fri Mar 28 20:31:06 2025 -0600
+
+    refactor #5
+    
+    cleaned up some commented code cluttering our calctargets function
+
+commit b2ee67f7015e5e0933fe6ea6d0b2f4e5ea76c6e0
+Author: WUBBBZZZ <112722551+WUBBBZZZ@users.noreply.github.com>
+Date:   Fri Mar 28 20:05:21 2025 -0600
+
+    refactor 4
+    
+    refactored the code logic to create variables at the start of functions so we only called the getters and setters once per function making code easier to read and more efficient
+
+commit a90e67f1d0e337f7a153156a8ea69ff45d0a6df4
+Author: WUBBBZZZ <112722551+WUBBBZZZ@users.noreply.github.com>
+Date:   Fri Mar 28 19:48:41 2025 -0600
+
+    refactor #3
+    
+    loadlayoutconfig() was doing  way too many things in one function so we changed it so it has multiple helper functions each doing a seperate thing
+
+commit a5908394903a298f4829a250550d0acafda56bab
+Author: WUBBBZZZ <112722551+WUBBBZZZ@users.noreply.github.com>
+Date:   Fri Mar 28 19:42:40 2025 -0600
+
+    refactor 2
+    
+    changed all grid access other than creating board to getCell(row, col) function for consistancy
+
+commit 4d68d4ffacf6606451ce6afbef2696c37a7d3263
+Author: WUBBBZZZ <112722551+WUBBBZZZ@users.noreply.github.com>
+Date:   Fri Mar 28 19:32:20 2025 -0600
+
+    Refactor #1
+    
+    changed magic values such as secret_passage = 0 and walkway = 'w' to static final values so the code is easier to read
+
+commit 1dc8e8dad3b8ac2f2496441d390bbf833cdc3ae9
+Merge: 0bca30e d08837a
+Author: TristanKarno <tristan_karno@mines.edu>
+Date:   Fri Mar 28 18:54:33 2025 -0600
+
+    gits being stupid I have to merge for some reason
+
+commit e05bba762e22ec4e9e379e1a524bfe725fe83d2f
+Author: WUBBBZZZ <112722551+WUBBBZZZ@users.noreply.github.com>
+Date:   Fri Mar 28 16:15:06 2025 -0600
+
+    ALL TESTS PASS
+    
+    made all tests pass however it appears that room entry will be added later as a movement option
+
+commit 0bca30e8a642e49e87f5458c9a3dc7e2dc5ea993
+Author: TristanKarno <tristan_karno@mines.edu>
+Date:   Thu Mar 27 15:08:34 2025 -0600
+
+    Made changes to the readme
+
+commit d08837a2fccb89e65300a3990fbc08cb94aa84c3
+Author: WUBBBZZZ <koolerkat02@gmail.com>
+Date:   Thu Mar 27 14:29:13 2025 -0600
+
+    got most tests passing
+    
+    last todo is to get calc targets to work when adding rooms when a door is avialable to land on
+
+commit 1dab5a2c450fa8ff9bca5f86cfe344382ca22bc2
+Author: WUBBBZZZ <112722551+WUBBBZZZ@users.noreply.github.com>
+Date:   Tue Mar 25 22:25:29 2025 -0600
+
+    fixed test logic and faulty csv file
+    
+    errors in file were causing tests to fail
+
+commit 79a01698329e61c7a08fd1470708a413e31f2f39
+Author: WUBBBZZZ <112722551+WUBBBZZZ@users.noreply.github.com>
+Date:   Tue Mar 25 20:50:25 2025 -0600
+
+    major changes to logic around generating adj list
+    
+    me and tristan worked together on this on the same machine to get the logic for calculating adjencies correct and we fixed a bad file for our input
+
+commit 3606270741e18470b3ad49456f66edb666dc2b83
+Author: WUBBBZZZ <112722551+WUBBBZZZ@users.noreply.github.com>
+Date:   Tue Mar 25 12:35:23 2025 -0600
+
+    Update logfile.txt
+
+commit 1b6ca11181e8eff5ec3082ee6255db9d1ff12df0
+Author: TristanKarno <tristan_karno@mines.edu>
+Date:   Tue Mar 25 10:45:34 2025 -0600
+
+    Finished BoardAdjTargetTest file. Also updated the excel sheet. More sophisticated tests are needed, needs to be updated soon.
+
+commit 7c20fba64276c67b448b6c887cc569d577c4bf0a
+Author: TristanKarno <tristan_karno@mines.edu>
+Date:   Mon Mar 24 12:25:34 2025 -0600
+
+    Added test file BoardAdjTargetTest. Need to complete all test implementations and then create code to allow the tests to pass.
+
+commit 721847f94f0a9b22ad83e48c450f6849318dd0dd
+Author: TristanKarno <tristan_karno@mines.edu>
+Date:   Thu Mar 13 22:59:19 2025 -0600
+
+    All tests have been passed, both individually and concurrently. Code needed only minor modification; slightly reworked tests to better match our excel board, and secretpassage test saw the use of a if statement in Board class. IMPORTANT: All tests have passed, but assignment still needs slight alteration. Still need to do a the git diff part and refactor the code.
+
+commit e87b4dde11366c00333efc93b30f62baf24f8191
+Author: TristanKarno <tristan_karno@mines.edu>
+Date:   Thu Mar 13 18:18:24 2025 -0600
+
+    Exceptiontests306 is complete, all failures have been purged. The issue - incomplete memory clearing between instances of the board. Still need to complete FileInitTests, and then finish BoardAdjtargetTest306 for the next assignment.
+
+commit e4d0230fac0f7b0fec9d2d728a798efd110d36e3
+Author: WUBBBZZZ <112722551+WUBBBZZZ@users.noreply.github.com>
+Date:   Thu Mar 13 12:40:47 2025 -0600
+
+    added updated data files
+    
+    clue board was slightly incorrect and required a couple changes so  I added the new changes to our data file so both partners can access it
+
+commit bc51e1bedcca0a31cf00988c4d90e2cdc8daa307
+Author: TristanKarno <tristan_karno@mines.edu>
+Date:   Fri Mar 7 23:12:34 2025 -0700
+
+    Started working on C15A-2, and made progress in the calcTargets() method. Some tests still fail, and cannot proceed until C15A-1 is complete. Will finish later.
+
+commit 3193948e17de1a0a70ba2cbd8b16f5b3e6f90775
+Author: TristanKarno <tristan_karno@mines.edu>
+Date:   Fri Mar 7 19:10:02 2025 -0700
+
+    Tried to fix all the errors, but nothing's been working. While I was modifying code I cleaned up a lot of it at least
+
+commit e5463a015f64152a15a523557f6c3f30b3bdbecb
+Author: WUBBBZZZ <112722551+WUBBBZZZ@users.noreply.github.com>
+Date:   Fri Mar 7 13:22:23 2025 -0700
+
+    started init 2
+    
+    started init 2 tests some errors still in fileinittests and exceptiontests306
+
+commit 4a54d6021d62267f76d1dbe123c8fc64be66ff32
+Author: WUBBBZZZ <112722551+WUBBBZZZ@users.noreply.github.com>
+Date:   Thu Mar 6 13:00:49 2025 -0700
+
+    added gitlog
+    
+    added gitlog to repo
+
+commit 6a34ceedeb25e71145bccef6502dfa17e543f798
+Author: WUBBBZZZ <112722551+WUBBBZZZ@users.noreply.github.com>
+Date:   Thu Mar 6 12:47:48 2025 -0700
+
+    fixed error in fourdoordirections test
+    
+    fixed code to solve compile error that was occuring when test should fail
+
+commit f6e1b3988c70a72ce9dbb8a4318f4eb875eb0fda
+Author: WUBBBZZZ <112722551+WUBBBZZZ@users.noreply.github.com>
+Date:   Mon Mar 3 22:24:39 2025 -0700
+
+    init 1 completed
+    
+    finished init 1 will add test.txt file to submission but not adding it to repo
+
+commit eb16b56739ebf94019b52be95c8cc73a9d0a70b1
+Author: WUBBBZZZ <112722551+WUBBBZZZ@users.noreply.github.com>
+Date:   Mon Mar 3 21:59:58 2025 -0700
+
+    start of init 1
+    
+    me and my partners first commit for init 1
+
+commit a8b5ac77752f1d1c53c865eff25035c9369b1707
+Author: TristanKarno <tristan_karno@mines.edu>
+Date:   Mon Mar 3 19:30:09 2025 -0700
+
+    Both of us were working on this project together, pair programming style, for this final commit. We were able to resolve several vestigial bugs in the code, cleaning the last 4 test cases, in addition to finishing the calcTargets() method. Certification is as follows:I, Tristan Karno, certify that I participated equitably in the creation of assignment C13A-2, dated 3/3/25.
+    I, Michael Hargraves, certify that I participated equitably in the creation of this assignment C13A-2, dated 3/3/25.
+
+commit 74fe51b1844fd2aa2d8f74a4e37a372478a74d2c
+Author: TristanKarno <tristan_karno@mines.edu>
+Date:   Mon Mar 3 09:05:30 2025 -0700
+
+    nevermind the arraylist of arraylists idea. As long as board size initialization happens in its home class, there's no need for dynamic sizing. Also: I modified the code involvng the TestBoard, and now the first 4 classes pass. The two methods unfinished as before still need to be completed.
+
+commit 7dfdf6993e54ab5332d7e819c6c699884bca3d34
+Author: TristanKarno <tristan_karno@mines.edu>
+Date:   Sun Mar 2 22:43:00 2025 -0700
+
+    A few things. First: I modified both classes 'TestBoard' and 'TestBoardCell', now 'TestBoardCell' has all methods defined. 'TestBoard' still needs 'calcTargets' and 'getTargets'. I would also require us to change 'TestBoardCell[][] board' to 'List<List<TestBoardCell>> board' for easier dynamic allocation of the board size outside of its constructor. Besides this, most work needs to be done in 'calcTargets', and when these tasks are complete, this assignment is complete.
+
+commit 1f88a8ac568d7c564b7693ba38baabac38d7fe63
+Author: TristanKarno <tristan_karno@mines.edu>
+Date:   Sat Mar 1 00:09:05 2025 -0700
+
+    Finalized test cases. All return false, and all errors have been eliminated.
+
+commit 3910d4e6c44a1a13b0df74cc8ddfdb6b10c53456
+Author: WUBBBZZZ <112722551+WUBBBZZZ@users.noreply.github.com>
+Date:   Fri Feb 28 23:15:41 2025 -0700
+
+    adding gitlog for partner who made the test cases then fixed errors to do with missing module and class variable acces
+
+commit 8c0900250f37f53ff26a7d01b03d9e6a630a0bbc
+Author: WUBBBZZZ <112722551+WUBBBZZZ@users.noreply.github.com>
+Date:   Fri Feb 28 23:15:07 2025 -0700
+
+    adding gitlog for partner, and fixed errors in code regarding the access to class variables
+
+commit 7c5aa8e0aba19925fe5992ac00d438cc2c3a6301
+Merge: 8c30cb1 7f3aa78
+Author: TristanKarno <tristan_karno@mines.edu>
+Date:   Fri Feb 28 17:13:41 2025 -0700
+
+    Most of the code is done. just need to fix a few more errors.
+
+commit 7f3aa783353fa35989c4fd9c8b3d119d0ca061f7
+Author: WUBBBZZZ <112722551+WUBBBZZZ@users.noreply.github.com>
+Date:   Fri Feb 28 10:48:09 2025 -0700
+
+    updated TestBoard
+    
+    updated test board becuase it was not included in initial push
+
+commit c782d3c35f536d45db37ce2e1d123d20472f94e5
+Author: WUBBBZZZ <112722551+WUBBBZZZ@users.noreply.github.com>
+Date:   Fri Feb 28 10:46:17 2025 -0700
+
+    Update gitlog.txt
+
+commit dc345ee7b6bcaa76644b702fad893ba9dcc19308
+Author: WUBBBZZZ <112722551+WUBBBZZZ@users.noreply.github.com>
+Date:   Fri Feb 28 10:45:58 2025 -0700
+
+    created testboard.java, testBoardCell and BoardTestsEXP
+
+commit 8c30cb13b9350ed7bedadee9e7dc939ed6888c5d
+Author: TristanKarno <tristan_karno@mines.edu>
+Date:   Thu Feb 27 21:31:53 2025 -0700
+
+    Created all tests (subject to change) based off of assignment specifications. Also created basic functionality for the classes from which the tests will be run on. Code is subject to errors, and revision is anticipated.
+
+commit bb49952c55e62d3c4ee1684f1f1c95af9994b7c1
+Author: WUBBBZZZ <112722551+WUBBBZZZ@users.noreply.github.com>
+Date:   Thu Feb 27 13:15:26 2025 -0700
+
+    Create gitlog.txt
+
+commit 6968e46cf06dbb19471b80569798d12f144046ae
+Author: WUBBBZZZ <112722551+WUBBBZZZ@users.noreply.github.com>
+Date:   Thu Feb 27 13:01:47 2025 -0700
+
+    creating gitlog.txt
+
+commit 2cdb430bdb34ead18f8ca6047605255d94ea015e
+Author: WUBBBZZZ <112722551+WUBBBZZZ@users.noreply.github.com>
+Date:   Thu Feb 27 12:55:29 2025 -0700
+
+    gitlog test
+    
+    test to see how to make gitlog
+
+commit a81110f3bf864f82daef3c1a2b82f3259ae350c3
+Author: WUBBBZZZ <112722551+WUBBBZZZ@users.noreply.github.com>
+Date:   Thu Feb 27 12:51:23 2025 -0700
+
+    git test
+
+commit 081fbfadba65e5be1141ce7cfb508b799ff7c047
+Author: WUBBBZZZ <112722551+WUBBBZZZ@users.noreply.github.com>
+Date:   Thu Feb 27 12:49:06 2025 -0700
+
+    help
+
+commit a59baabcd1a04761f750567f096ff3b4e39e234d
+Author: WUBBBZZZ <112722551+WUBBBZZZ@users.noreply.github.com>
+Date:   Thu Feb 27 12:47:03 2025 -0700
+
+    initialize files
+
+commit 56d47e33dbc4aff29655c0688efbaff3d77b7c18
+Author: WUBBBZZZ <112722551+WUBBBZZZ@users.noreply.github.com>
+Date:   Thu Feb 27 12:45:50 2025 -0700
+
+    Initial commit
