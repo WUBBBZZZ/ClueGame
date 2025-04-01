@@ -32,10 +32,12 @@ public class PlayerTests {
 	
 	// Test to see if people are loaded in properly
 	@Test
-	public void testLoadPeople() {
+	public void testLoadPeople() throws BadConfigFormatException {
 		ArrayList<String> testPersons = new ArrayList<String>(List.of("Genji", "Sombra", "Reinhardt", "Doomfist", "Mercy", "Moira"));
+		Player.setConfigFile("ClueSetup.txt");
 		Player.loadPeople();
 		Assert.assertTrue(Player.getPeople().equals(testPersons));
+		Assert.assertTrue(testPersons.size() == 6);
 		
 	}
 

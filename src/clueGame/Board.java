@@ -455,8 +455,7 @@ public class Board {
 		return numColumns;
 	}
 
-	// Combines the methods which translate the csv board file and 
-	// the config .txt file, fully creating our board with full functionality.
+	// Setter method for config file Strings
 	public void setConfigFiles(String layout, String setup) {
 		this.layoutConfigFile = layout;
 		this.setupConfigFile = setup;
