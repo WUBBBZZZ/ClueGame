@@ -45,7 +45,6 @@ public class PlayerTests {
 	//among all player. Players are either initialized as computer or human.
 	
 	// Test to see if people are loaded in properly
-	// REMOVE THIS COMMENT FOR FINAL SUBMISSION: rework the file reading to Board class.
 	@Test
 	public void testLoadPeople() throws BadConfigFormatException {
 		ArrayList<String> testPersons = new ArrayList<String>(List.of("Genji", "Sombra"));
@@ -71,12 +70,11 @@ public class PlayerTests {
 		Assert.assertTrue(board.getCards().size() == 21);
 	}
 	
-	//Test to see if human and computer child objects can be instantiated. Instantiate 5 computer objects and 1 person object
+	//Test proper initialization of 5 computer and 1 human object
 	@Test
 	public void testPlayers() throws BadConfigFormatException {
-		HumanPlayer player = new HumanPlayer();
-		player.loadPeople();
-		Assert.assertTrue(HumanPlayer.getPeople().size() == 6);
+		Assert.assertTrue(ComputerPlayer.getNumPlayers() == 5);
+		Assert.assertTrue(HumanPlayer.getNumPlayers() == 1);
 	}
 	
 	//Test to see if deck of cards instantiated works

@@ -17,6 +17,8 @@ public class Board {
 	private ArrayList<String> rooms;
 	//For Player and Card class
 	private ArrayList<String> people;
+	//colors that associate with respective (index based) person
+	private ArrayList<String> colors;
 	//For Card class
 	private ArrayList<String> weapons;
 	//The deck of cards itself
@@ -45,6 +47,7 @@ public class Board {
 		weapons = new ArrayList<String>();
 		cards = new ArrayList<Card>();
 		rooms = new ArrayList<String>();
+		colors = new ArrayList<String>();
 	}
 
 	// This method returns the only Board
@@ -206,6 +209,14 @@ public class Board {
 		for (String name : people ) {
 			cards.add(new Card(name)) ;
 		}
+		
+		//Player objects are made below
+		HumanPlayer player1 = new HumanPlayer(people.get(0), colors.get(0), 0, 3);
+		ComputerPlayer player2 = new ComputerPlayer(people.get(1), colors.get(1), 6, 0);
+		ComputerPlayer player3 = new ComputerPlayer(people.get(2), colors.get(2), 19, 3);
+		ComputerPlayer player4 = new ComputerPlayer(people.get(3), colors.get(3), 19, 13);
+		ComputerPlayer player5 = new ComputerPlayer(people.get(4), colors.get(4), 16, 20);
+		ComputerPlayer player6 = new ComputerPlayer(people.get(5), colors.get(5), 0, 20);
 	}
 
 	// Translates a given config file for a board to assist with associating symbols to room types.
@@ -257,7 +268,8 @@ public class Board {
 					
 					String playerName = parts[1].trim();
 					people.add(playerName);				
-					//Color functionality to be decided
+					String playerColor = parts[2].trim();
+					colors.add(playerColor);
 				
 					} else if(line.startsWith("Weapon")) {
 						if(parts.length != 2) {
