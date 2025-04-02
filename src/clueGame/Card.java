@@ -7,9 +7,11 @@ import java.util.Scanner;
 
 public class Card {
 	private String cardName;
+	private CardType cardType;
 	
 	public Card(String name) {
 		cardName = name;
+		
 	}
 	
 	public boolean equals(Card target) {
@@ -22,6 +24,14 @@ public class Card {
 	
 	public String getCardName() {
 		return cardName;
+	}
+	
+	public CardType getCardType() {
+		return cardType;
+	}
+	
+	public void setCardType(CardType cardType) {
+		this.cardType = cardType;
 	}
 	
 }

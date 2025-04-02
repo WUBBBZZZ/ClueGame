@@ -1,6 +1,7 @@
 //TODO add class string
 package clueGame;
 import java.util.*;
+import java.util.Random;
 
 import experiment.TestBoardCell;
 
@@ -23,6 +24,8 @@ public class Board {
 	private ArrayList<String> weapons;
 	//The deck of cards itself
 	private ArrayList<Card> cards;
+	//copy of cards
+	private ArrayList<Card> cardsCopy;
 	private static final char WALKWAY_INITIAL = 'W';
 	private static final char SECRET_PASSAGE_IDENTIFIER = 'S';
 	public static final int NO_SECRET_PASSAGE = 0;
@@ -46,6 +49,7 @@ public class Board {
 		people = new ArrayList<String>();
 		weapons = new ArrayList<String>();
 		cards = new ArrayList<Card>();
+		cardsCopy = new ArrayList<Card>();
 		rooms = new ArrayList<String>();
 		colors = new ArrayList<String>();
 	}
@@ -200,14 +204,27 @@ public class Board {
 		this.makeAdjList();
 		
 		//This is where the deck of cards is made:
+		int n = 0;
 		for (String name : rooms ) {
 			cards.add(new Card(name)) ;
-		}
-		for (String name : weapons ) {
-			cards.add(new Card(name)) ;
+			cardsCopy.add(new Card(name)) ;
+			cards.get(n).setCardType(CardType.ROOM);
+			cardsCopy.get(n).setCardType(CardType.ROOM);
+			n++;
 		}
 		for (String name : people ) {
 			cards.add(new Card(name)) ;
+			cardsCopy.add(new Card(name)) ;
+			cards.get(n).setCardType(CardType.SUSPECT);
+			cardsCopy.get(n).setCardType(CardType.SUSPECT);
+			n++;
+		}
+		for (String name : weapons ) {
+			cards.add(new Card(name)) ;
+			cardsCopy.add(new Card(name)) ;
+			cards.get(n).setCardType(CardType.WEAPON);
+			cardsCopy.get(n).setCardType(CardType.WEAPON);
+			n++;
 		}
 		
 		//Player objects are made below
@@ -217,6 +234,48 @@ public class Board {
 		ComputerPlayer player4 = new ComputerPlayer(people.get(3), colors.get(3), 19, 13);
 		ComputerPlayer player5 = new ComputerPlayer(people.get(4), colors.get(4), 16, 20);
 		ComputerPlayer player6 = new ComputerPlayer(people.get(5), colors.get(5), 0, 20);
+		
+		//deals deck to solution
+		Random rand = new Random();
+		
+		//For random room card
+		int randomNumber1 = rand.nextInt(9);
+		//For random player card
+		int randomNumber2 = rand.nextInt(6) + 9;
+		//For random weapon card
+		int randomNumber3 = rand.nextInt(6) + 15;
+		
+		Solution.setRoomSol(cardsCopy.get(randomNumber1));
+		Solution.setPersonSol(cardsCopy.get(randomNumber2));
+		Solution.setWeaponSol(cardsCopy.get(randomNumber3));
+		cardsCopy.remove(randomNumber3);
+		cardsCopy.remove(randomNumber2);
+		cardsCopy.remove(randomNumber1);
+		
+		
+		//deals rest of deck to players
+		for (int j = 0; j < 18; j++) {
+			randomNumber1 = rand.nextInt(18-j);
+			if (j == 0 || j == 1 || j == 2) {
+				player1.updateHand(cardsCopy.get(randomNumber1));
+				cardsCopy.remove(randomNumber1);
+			} else if (j == 3 || j == 4 || j == 5) {
+				player2.updateHand(cardsCopy.get(randomNumber1));
+				cardsCopy.remove(randomNumber1);
+			} else if (j == 6 || j == 7 || j == 8) {
+				player3.updateHand(cardsCopy.get(randomNumber1));
+				cardsCopy.remove(randomNumber1);
+			} else if (j == 9 || j == 10 || j == 11) {
+				player4.updateHand(cardsCopy.get(randomNumber1));
+				cardsCopy.remove(randomNumber1);
+			} else if (j == 12 || j == 13 || j == 14) {
+				player5.updateHand(cardsCopy.get(randomNumber1));
+				cardsCopy.remove(randomNumber1);
+			} else if (j == 15 || j == 16 || j == 17) {
+				player6.updateHand(cardsCopy.get(randomNumber1));
+				cardsCopy.remove(randomNumber1);
+			}
+		}
 	}
 
 	// Translates a given config file for a board to assist with associating symbols to room types.
@@ -533,6 +592,10 @@ public class Board {
 
 	public ArrayList<Card> getCards() {
 		return cards;
+	}
+	
+	public ArrayList<Card> getCardsCopy() {
+		return cardsCopy;
 	}
 
 

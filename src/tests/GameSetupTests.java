@@ -6,7 +6,6 @@ package tests;
  */
 
 import java.io.FileNotFoundException;
-
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.util.ArrayList;
@@ -22,9 +21,10 @@ import clueGame.Player;
 import clueGame.HumanPlayer;
 import clueGame.ComputerPlayer;
 import clueGame.Card;
+import clueGame.CardType;
 import clueGame.Solution;
 
-public class PlayerTests {
+public class GameSetupTests {
 	
 	private static Board board;
 	
@@ -77,16 +77,20 @@ public class PlayerTests {
 		Assert.assertTrue(HumanPlayer.getNumPlayers() == 1);
 	}
 	
-	//Test to see if deck of cards instantiated works
-	//@Test
-	public void testDeck() {
-		return;
+	//Test to see if Solution has 3 cards of types room, person and weapon
+	@Test
+	public void testSolution() throws BadConfigFormatException {
+		Assert.assertTrue(Solution.getRoomSol().getCardType().equals(CardType.ROOM));
+		Assert.assertTrue(Solution.getPersonSol().getCardType().equals(CardType.SUSPECT));
+		Assert.assertTrue(Solution.getWeaponSol().getCardType().equals(CardType.WEAPON));
 	}
 	
-	//Test card dealing functionality. See if players have a roughly equal number of cards, and no cards remain after being dealt. 
-	
-	
-	//Test to see if there any any leftover cards after being dealt. Should be 0.
-	
+	//Test to see if players have a roughly equal number of cards, and no cards remain after being dealt. 
+	@Test
+	public void testCardLeftovers() throws BadConfigFormatException {
+		Assert.assertTrue(board.getCardsCopy().size() == 0);
+		//Tests won't let me test for objects initialized in board.
+		
+	}
 
 }
