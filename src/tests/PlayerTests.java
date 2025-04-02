@@ -63,8 +63,24 @@ public class PlayerTests {
 		
 	}
 	//Test to see if instantiated cards are initialized properly
+	@Test
+	public void testCards() throws BadConfigFormatException {
+		ArrayList<String> testCards = new ArrayList<String>(List.of("Card 1", "Card 2"));
+		Assert.assertTrue(board.getCards().get(0).equals(testCards.get(0)));
+		Assert.assertTrue(board.getWeapons().size() == 12);
+	}
 	//Test to see if human and computer child objects can be instantiated. Instantiate 5 computer objects and 1 person object
+	@Test
+	public void testPlayers() throws BadConfigFormatException {
+		HumanPlayer player = new HumanPlayer();
+		player.loadPeople();
+		Assert.assertTrue(HumanPlayer.getPeople().size() == 6);
+	}
 	//Test to see if deck of cards instantiated works
+	//@Test
+	public void testDeck() {
+		return;
+	}
 	//Test card dealing functionality. See if players have a roughly equal number of cards, and no cards remain after being dealt. 
 	//Test to see if there any any leftover cards after being dealt. Should be 0.
 	

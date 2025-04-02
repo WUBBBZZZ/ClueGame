@@ -497,5 +497,10 @@ public class Board {
 
 	}
 
+	public ArrayList<String> getCards() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 
 }
