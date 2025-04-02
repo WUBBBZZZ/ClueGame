@@ -13,6 +13,10 @@ public class Board {
 	private Map<Character, String> cellMap; 
 	private Set<BoardCell> targets;
 	private Set<BoardCell> visited;
+	//For Player and Card class
+	private ArrayList<String> people;
+	//For Card class
+	private ArrayList<String> weapons;
 	private static final char WALKWAY_INITIAL = 'W';
 	private static final char SECRET_PASSAGE_IDENTIFIER = 'S';
 	public static final int NO_SECRET_PASSAGE = 0;
@@ -33,6 +37,8 @@ public class Board {
 		super() ;
 		roomMap = new HashMap<Character, Room>();
 		cellMap = new HashMap<Character, String>();
+		people = new ArrayList<String>();
+		weapons = new ArrayList<String>();
 	}
 
 	// This method returns the only Board
@@ -225,7 +231,26 @@ public class Board {
 					roomMap.put(spaceSymbol.charAt(0), newRoom);
 					cellMap.put(spaceSymbol.charAt(0), spaceName);
 					
-				} else {
+				} else if(line.startsWith("Person")) {
+					if(parts.length != 3) {
+						String message = "Invalidformat, expecting a name and color for each Person, bad line: \" " + line + "\".";
+						throw new BadConfigFormatException(message);
+					}
+					
+					String playerName = parts[1].trim();
+					people.add(playerName);				
+					//Color functionality to be decided
+				
+					} else if(line.startsWith("Weapon")) {
+						if(parts.length != 2) {
+							String message = "Invalidformat, expecting a name after weapon, bad line: \" " + line + "\".";
+							throw new BadConfigFormatException(message);
+						}
+						
+						String weaponName = parts[1].trim();
+						weapons.add(weaponName);
+						
+						} else {
 					continue;
 				}
 			}
@@ -454,6 +479,16 @@ public class Board {
 	public int getNumColumns() {
 		return numColumns;
 	}
+	
+	// getter for people set
+	public ArrayList<String> getPeople() {
+		return people;
+	}
+	
+	// getter for weapon set
+		public ArrayList<String> getWeapons() {
+			return weapons;
+		}
 
 	// Setter method for config file Strings
 	public void setConfigFiles(String layout, String setup) {

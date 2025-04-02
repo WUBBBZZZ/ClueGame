@@ -28,7 +28,7 @@ public abstract class Player {
 				
 				// Check each line for rooms and spaces
 				if(line.startsWith("Person")) {
-					if(parts.length != 2) {
+					if(parts.length != 3) {
 						String message = "Invalidformat, expecting a name for each player, bad line: \" " + line + "\".";
 						throw new BadConfigFormatException(message);
 					}

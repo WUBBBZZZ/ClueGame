@@ -14,15 +14,15 @@ Space, Walkway, W
 //-----------------------
 //People and weapons: 
 //-----------------------
-Person, Genji
-Person, Sombra
-Person, Reinhardt
-Person, Doomfist
-Person, Mercy
-Person, Moira
+Person, Genji, Green
+Person, Sombra, Purple
+Person, Reinhardt, Silver
+Person, Doomfist, Red
+Person, Mercy, Yellow
+Person, Moira, Black
 Weapon, SawCleaver
-Weapon, RiversOfBlood
+Weapon, NanoBlade
 Weapon, BFG-10000
 Weapon, DaedricMace
-Weapon, NanoBlade
+Weapon, RiversOfBlood
 Weapon, DiamondSword
