@@ -6,20 +6,22 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Card {
-	private ArrayList<Card> cards= new ArrayList<Card>();
-	private static String setupConfigFile;
-	private CardType type;
+	private String cardName;
 	
-	public static void loadCards() throws BadConfigFormatException {
-		return;
+	public Card(String name) {
+		cardName = name;
 	}
 	
-	public ArrayList<Card> getCards() {
-		return cards;
+	public boolean equals(Card target) {
+		if (this.getCardName().equals(target.getCardName())) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 	
-	public static void setConfigFile(String setup) {
-		setupConfigFile = setup;
-
+	public String getCardName() {
+		return cardName;
 	}
+	
 }

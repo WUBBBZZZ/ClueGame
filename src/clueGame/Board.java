@@ -13,10 +13,14 @@ public class Board {
 	private Map<Character, String> cellMap; 
 	private Set<BoardCell> targets;
 	private Set<BoardCell> visited;
+	//List of room names, for cards
+	private ArrayList<String> rooms;
 	//For Player and Card class
 	private ArrayList<String> people;
 	//For Card class
 	private ArrayList<String> weapons;
+	//The deck of cards itself
+	private ArrayList<Card> cards;
 	private static final char WALKWAY_INITIAL = 'W';
 	private static final char SECRET_PASSAGE_IDENTIFIER = 'S';
 	public static final int NO_SECRET_PASSAGE = 0;
@@ -39,6 +43,8 @@ public class Board {
 		cellMap = new HashMap<Character, String>();
 		people = new ArrayList<String>();
 		weapons = new ArrayList<String>();
+		cards = new ArrayList<Card>();
+		rooms = new ArrayList<String>();
 	}
 
 	// This method returns the only Board
@@ -189,6 +195,17 @@ public class Board {
 			e.printStackTrace();
 		}
 		this.makeAdjList();
+		
+		//This is where the deck of cards is made:
+		for (String name : rooms ) {
+			cards.add(new Card(name)) ;
+		}
+		for (String name : weapons ) {
+			cards.add(new Card(name)) ;
+		}
+		for (String name : people ) {
+			cards.add(new Card(name)) ;
+		}
 	}
 
 	// Translates a given config file for a board to assist with associating symbols to room types.
@@ -214,6 +231,7 @@ public class Board {
 					}
 					
 					String roomName = parts[1].trim();
+					rooms.add(roomName);
 					Room newRoom = new Room(roomName);				
 					String symbol = parts[2].trim();
 					roomMap.put(symbol.charAt(0), newRoom);
@@ -489,17 +507,20 @@ public class Board {
 		public ArrayList<String> getWeapons() {
 			return weapons;
 		}
+	
+	//getter for room names set
+		public ArrayList<String> getRoomList() {
+			return rooms;
+		}
 
 	// Setter method for config file Strings
 	public void setConfigFiles(String layout, String setup) {
 		this.layoutConfigFile = layout;
 		this.setupConfigFile = setup;
-
 	}
 
-	public ArrayList<String> getCards() {
-		// TODO Auto-generated method stub
-		return null;
+	public ArrayList<Card> getCards() {
+		return cards;
 	}
 
 
