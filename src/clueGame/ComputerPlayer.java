@@ -24,6 +24,8 @@ public class ComputerPlayer extends Player {
 	public ArrayList<Card> getCompCards() {
 		return compCards;
 	}
-	
+	public BoardCell selectTarget() {
+		
+	}
 	
 }
