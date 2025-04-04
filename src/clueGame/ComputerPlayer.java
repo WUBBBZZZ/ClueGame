@@ -25,7 +25,7 @@ public class ComputerPlayer extends Player {
 		return compCards;
 	}
 	public BoardCell selectTarget() {
-		
+		return null;
 	}
 	
 }

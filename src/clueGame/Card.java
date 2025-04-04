@@ -9,9 +9,9 @@ public class Card {
 	private String cardName;
 	private CardType cardType;
 	
-	public Card(String name) {
+	public Card(String name, CardType cardType) {
 		cardName = name;
-		
+		this.cardType = cardType;
 	}
 	
 	public boolean equals(Card target) {

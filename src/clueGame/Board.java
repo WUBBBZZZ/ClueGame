@@ -206,24 +206,18 @@ public class Board {
 		//This is where the deck of cards is made:
 		int n = 0;
 		for (String name : rooms ) {
-			cards.add(new Card(name)) ;
-			cardsCopy.add(new Card(name)) ;
-			cards.get(n).setCardType(CardType.ROOM);
-			cardsCopy.get(n).setCardType(CardType.ROOM);
+			cards.add(new Card(name, CardType.ROOM)) ;
+			cardsCopy.add(new Card(name, CardType.ROOM)) ;
 			n++;
 		}
 		for (String name : people ) {
-			cards.add(new Card(name)) ;
-			cardsCopy.add(new Card(name)) ;
-			cards.get(n).setCardType(CardType.SUSPECT);
-			cardsCopy.get(n).setCardType(CardType.SUSPECT);
+			cards.add(new Card(name, CardType.SUSPECT)) ;
+			cardsCopy.add(new Card(name, CardType.SUSPECT)) ;
 			n++;
 		}
 		for (String name : weapons ) {
-			cards.add(new Card(name)) ;
-			cardsCopy.add(new Card(name)) ;
-			cards.get(n).setCardType(CardType.WEAPON);
-			cardsCopy.get(n).setCardType(CardType.WEAPON);
+			cards.add(new Card(name, CardType.WEAPON)) ;
+			cardsCopy.add(new Card(name, CardType.WEAPON)) ;
 			n++;
 		}
 		
@@ -245,9 +239,7 @@ public class Board {
 		//For random weapon card
 		int randomNumber3 = rand.nextInt(6) + 15;
 		
-		Solution.setRoomSol(cardsCopy.get(randomNumber1));
-		Solution.setPersonSol(cardsCopy.get(randomNumber2));
-		Solution.setWeaponSol(cardsCopy.get(randomNumber3));
+		Solution theSolution = new Solution(cardsCopy.get(randomNumber1), cardsCopy.get(randomNumber2), cardsCopy.get(randomNumber3));
 		cardsCopy.remove(randomNumber3);
 		cardsCopy.remove(randomNumber2);
 		cardsCopy.remove(randomNumber1);
@@ -596,6 +588,19 @@ public class Board {
 	
 	public ArrayList<Card> getCardsCopy() {
 		return cardsCopy;
+	}
+	
+	public boolean checkAccusation(String string1, String string2, String string3, Solution solution) {
+		if (!string1.equals(solution.getRoomSol().getCardName())) {
+			return false;
+		} else if (!string2.equals(solution.getPersonSol().getCardName())) {
+			return false;
+		} else if (!string3.equals(solution.getWeaponSol().getCardName())) {
+			return false;
+		} else {
+			return true;
+		}
+		
 	}
 
 

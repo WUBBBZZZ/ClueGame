@@ -65,7 +65,7 @@ public class GameSetupTests {
 	//Test to see if instantiated cards are initialized properly
 	@Test
 	public void testCards() throws BadConfigFormatException {
-		Card testCard = new Card("Food Hall");
+		Card testCard = new Card("Food Hall", CardType.ROOM);
 		Assert.assertTrue(board.getCards().get(0).equals(testCard));
 		Assert.assertTrue(board.getCards().size() == 21);
 	}
@@ -80,16 +80,19 @@ public class GameSetupTests {
 	//Test to see if Solution has 3 cards of types room, person and weapon
 	@Test
 	public void testSolution() throws BadConfigFormatException {
-		Assert.assertTrue(Solution.getRoomSol().getCardType().equals(CardType.ROOM));
-		Assert.assertTrue(Solution.getPersonSol().getCardType().equals(CardType.SUSPECT));
-		Assert.assertTrue(Solution.getWeaponSol().getCardType().equals(CardType.WEAPON));
+		Card card1 = new Card("name1", CardType.ROOM);
+		Card card2 = new Card("name2", CardType.SUSPECT);
+		Card card3 = new Card("name3", CardType.WEAPON);
+		Solution testSolution = new Solution(card1, card2, card3);
+		Assert.assertTrue(testSolution.getRoomSol().getCardType().equals(CardType.ROOM));
+		Assert.assertTrue(testSolution.getPersonSol().getCardType().equals(CardType.SUSPECT));
+		Assert.assertTrue(testSolution.getWeaponSol().getCardType().equals(CardType.WEAPON));
 	}
 	
 	//Test to see if players have a roughly equal number of cards, and no cards remain after being dealt. 
 	@Test
 	public void testCardLeftovers() throws BadConfigFormatException {
 		Assert.assertTrue(board.getCardsCopy().size() == 0);
-		//Tests won't let me test for objects initialized in board.
 		
 	}
 

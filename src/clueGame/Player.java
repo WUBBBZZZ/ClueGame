@@ -2,13 +2,15 @@ package clueGame;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Set;
+import java.util.HashSet;
 
 public abstract class Player {
 
 	private String name;
 	private String color;
 	private int row, col;
-	private Set<Card> seenCards = new HashSet<Card>;
+	private Set<Card> seenCards = new HashSet<Card>();
 	
 	public Player(String name, String color, int row, int col) {
 		this.name = name;

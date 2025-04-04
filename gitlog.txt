@@ -1,3 +1,151 @@
+commit 70b8e341a8b249f12903bbd383c51015491e530e
+Author: TristanKarno <tristan_karno@mines.edu>
+Date:   Tue Apr 1 23:56:55 2025 -0600
+
+    Final tests passed
+    
+    Final two tests tested functionality of dealing, relating to how many cards were remaining after dealing and with what the solution set should contain. All tests have thus been created as per the requirements, and all pass, so code is functional.
+
+commit 3eb0d6f28712a188e36ea1d8d6e157c5b437c2cb
+Author: TristanKarno <tristan_karno@mines.edu>
+Date:   Tue Apr 1 22:20:09 2025 -0600
+
+    Test 4 created and passed
+    
+    All 6 players' instantiation is now successful. Player objects exist now.
+
+commit c2008aea9e7c31d53e6cff3c41fc2eda683c2c69
+Author: TristanKarno <tristan_karno@mines.edu>
+Date:   Tue Apr 1 21:50:10 2025 -0600
+
+    Third test created and passed
+    
+    I rewrote the test functionality for checking on card initialization to better fit the flow of the code. cards are an ArrayList in the Board class, may refactor to have separate card lists.
+
+commit 1cd2ae594d05ef6408b850ae0305455c8c80cf88
+Author: WUBBBZZZ <112722551+WUBBBZZZ@users.noreply.github.com>
+Date:   Tue Apr 1 21:21:41 2025 -0600
+
+    added functionality to card class
+    
+    added code to card class and wrote tests to go with teh updated code
+
+commit 7b25ea4db13fd06645a6ef19aca8431dc655867d
+Author: TristanKarno <tristan_karno@mines.edu>
+Date:   Tue Apr 1 20:06:12 2025 -0600
+
+    Second Test tried and passed
+    
+    In addition ot finishing the test on testing weapons being loaded in, I also refactord the code so that this functionality for both weapons and names happens in Board, along with reading in rooms.
+
+commit 00b4b41bcc84f4b9dd6da64d5c26a04c99fe896a
+Author: TristanKarno <tristan_karno@mines.edu>
+Date:   Tue Apr 1 11:40:38 2025 -0600
+
+    Finished first test - success
+    
+    Code funcionality involving the first test is complete, and it passes. Player names can now be read and inserted into an ArrayList.
+
+commit 8e91c0d493aecc15d993ae40ac0ed1be62d3a725
+Author: TristanKarno <tristan_karno@mines.edu>
+Date:   Mon Mar 31 21:48:33 2025 -0600
+
+    Started on Clue Players 1
+    
+    I instantiated all classes, but only added barely any functionality to Player.java. Created the first test, testLoadPeople(), which currently runs but fails (tested functionality isn't finished). This is just a starting point.
+
+commit 3c7974db264ed0049b836b84a25fccc1180bc271
+Merge: 1dc8e8d 7402d50
+Author: TristanKarno <tristan_karno@mines.edu>
+Date:   Fri Mar 28 21:30:54 2025 -0600
+
+    Added extensive commenting throughout Board.java and BoardCell.java
+
+commit 7402d5065df066f108cca42c7a64553f8da0a546
+Author: WUBBBZZZ <112722551+WUBBBZZZ@users.noreply.github.com>
+Date:   Fri Mar 28 20:38:48 2025 -0600
+
+    code snippet
+    
+    added code snippet to readme so we partner can do final submission
+
+commit 2443c70f06dedd495c74a9cd277335ad974810cd
+Author: WUBBBZZZ <112722551+WUBBBZZZ@users.noreply.github.com>
+Date:   Fri Mar 28 20:34:30 2025 -0600
+
+    refactor #7
+    
+    makeadjlist() was also doing too much in one function so we split it into a smaller function with several helper functions taking care of building specific adjacencies
+
+commit fecd607132ce13543bbc1f6a95cce16cafca9c5d
+Author: WUBBBZZZ <112722551+WUBBBZZZ@users.noreply.github.com>
+Date:   Fri Mar 28 20:31:06 2025 -0600
+
+    refactor #5
+    
+    cleaned up some commented code cluttering our calctargets function
+
+commit b2ee67f7015e5e0933fe6ea6d0b2f4e5ea76c6e0
+Author: WUBBBZZZ <112722551+WUBBBZZZ@users.noreply.github.com>
+Date:   Fri Mar 28 20:05:21 2025 -0600
+
+    refactor 4
+    
+    refactored the code logic to create variables at the start of functions so we only called the getters and setters once per function making code easier to read and more efficient
+
+commit a90e67f1d0e337f7a153156a8ea69ff45d0a6df4
+Author: WUBBBZZZ <112722551+WUBBBZZZ@users.noreply.github.com>
+Date:   Fri Mar 28 19:48:41 2025 -0600
+
+    refactor #3
+    
+    loadlayoutconfig() was doing  way too many things in one function so we changed it so it has multiple helper functions each doing a seperate thing
+
+commit a5908394903a298f4829a250550d0acafda56bab
+Author: WUBBBZZZ <112722551+WUBBBZZZ@users.noreply.github.com>
+Date:   Fri Mar 28 19:42:40 2025 -0600
+
+    refactor 2
+    
+    changed all grid access other than creating board to getCell(row, col) function for consistancy
+
+commit 4d68d4ffacf6606451ce6afbef2696c37a7d3263
+Author: WUBBBZZZ <112722551+WUBBBZZZ@users.noreply.github.com>
+Date:   Fri Mar 28 19:32:20 2025 -0600
+
+    Refactor #1
+    
+    changed magic values such as secret_passage = 0 and walkway = 'w' to static final values so the code is easier to read
+
+commit 1dc8e8dad3b8ac2f2496441d390bbf833cdc3ae9
+Merge: 0bca30e d08837a
+Author: TristanKarno <tristan_karno@mines.edu>
+Date:   Fri Mar 28 18:54:33 2025 -0600
+
+    gits being stupid I have to merge for some reason
+
+commit e05bba762e22ec4e9e379e1a524bfe725fe83d2f
+Author: WUBBBZZZ <112722551+WUBBBZZZ@users.noreply.github.com>
+Date:   Fri Mar 28 16:15:06 2025 -0600
+
+    ALL TESTS PASS
+    
+    made all tests pass however it appears that room entry will be added later as a movement option
+
+commit 0bca30e8a642e49e87f5458c9a3dc7e2dc5ea993
+Author: TristanKarno <tristan_karno@mines.edu>
+Date:   Thu Mar 27 15:08:34 2025 -0600
+
+    Made changes to the readme
+
+commit d08837a2fccb89e65300a3990fbc08cb94aa84c3
+Author: WUBBBZZZ <koolerkat02@gmail.com>
+Date:   Thu Mar 27 14:29:13 2025 -0600
+
+    got most tests passing
+    
+    last todo is to get calc targets to work when adding rooms when a door is avialable to land on
+
 commit 1dab5a2c450fa8ff9bca5f86cfe344382ca22bc2
 Author: WUBBBZZZ <112722551+WUBBBZZZ@users.noreply.github.com>
 Date:   Tue Mar 25 22:25:29 2025 -0600
