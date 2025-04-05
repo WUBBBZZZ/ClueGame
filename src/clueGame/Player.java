@@ -20,5 +20,8 @@ public abstract class Player {
 	}
 	
 	public abstract void updateHand(Card card);
-	
+	@Override
+	public String toString() {
+		return name +  ", " + color;
+	}
 }

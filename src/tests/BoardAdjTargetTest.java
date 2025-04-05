@@ -19,6 +19,7 @@ public class BoardAdjTargetTest {
 	
 	@BeforeAll
 	public static void setUp() {
+		System.out.println("BoardAdjTargetTest test");
 		// Board is singleton, get the only instance
 		board = Board.getInstance();
 		// set the file names to use my config files

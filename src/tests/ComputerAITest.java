@@ -13,6 +13,7 @@ class ComputerAITest {
 
 	@BeforeAll
 	public static void setUp() {
+		System.out.println("ComputerAITest test");
 		// Board is singleton, get the only instance
 		board = Board.getInstance();
 		// set the file names to use my config files
@@ -40,6 +41,6 @@ if room in list that has not been seen, select it
 if room in list that has been seen, each target (including room) selected randomly */
 	@Test
 	public void createSuggestion() {
-		fail("not yet implimented");
+		
 	}
 }

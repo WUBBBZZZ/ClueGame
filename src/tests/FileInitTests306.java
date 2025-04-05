@@ -29,6 +29,7 @@ public class FileInitTests306 {
 
 	@BeforeAll
 	public static void setUp() {
+		System.out.println("FileInitTests306 test");
 		// Board is singleton, get the only instance
 		board = Board.getInstance();
 		// set the file names to use my config files

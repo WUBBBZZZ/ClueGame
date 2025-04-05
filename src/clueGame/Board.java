@@ -58,7 +58,11 @@ public class Board {
 	public static Board getInstance() {
 		if(theInstance == null) {
 			theInstance = new Board();
+			//System.out.println("created new");
+		} else {
+			//System.out.println("returned old");
 		}
+		//System.out.println(theInstance.getPeople());
 		return theInstance;
 	}
 	
@@ -318,9 +322,11 @@ public class Board {
 					}
 					
 					String playerName = parts[1].trim();
-					people.add(playerName);				
 					String playerColor = parts[2].trim();
+					people.add(playerName);
 					colors.add(playerColor);
+					
+					
 				
 					} else if(line.startsWith("Weapon")) {
 						if(parts.length != 2) {
@@ -602,6 +608,22 @@ public class Board {
 		}
 		
 	}
-
+	public String disproveSuggestion(String string1, String string2, String string3, Solution solution) {
+		ArrayList<String> disprovable = new ArrayList<String>();
+		if (string1.equals(solution.getRoomSol().getCardName())) {
+			disprovable.add(string1);
+		}
+		if (string2.equals(solution.getPersonSol().getCardName())) {
+			disprovable.add(string2);
+		}
+		if (string3.equals(solution.getWeaponSol().getCardName())) {
+			disprovable.add(string3);
+		}
+		if(disprovable.size() > 0) {
+			return disprovable.get(0);
+		} else {
+			return null;
+		}
+	}
 
 }

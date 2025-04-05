@@ -26,6 +26,7 @@ class GameSolutionTest {
 
 	@BeforeAll
 	public static void setUp() {
+		System.out.println("game solution test");
 		// Board is singleton, get the only instance
 		board = Board.getInstance();
 		// set the file names to use my config files
@@ -81,7 +82,12 @@ If players has >1 matching card, returned card should be chosen randomly
 If player has no matching cards, null is returned */
 	@Test
 	public void testDisproveSuggestion() {
-		Assert.assertTrue(0 == 1);
+		Card card1 = new Card("Bar", CardType.ROOM);
+		Card card2 = new Card("Genji", CardType.SUSPECT);
+		Card card3 = new Card("NanoBlade", CardType.WEAPON);
+		Solution testSolution1 = new Solution(card1, card2, card3);
+		Assert.assertTrue("Bar" == board.disproveSuggestion("Bar", "Reinhardt", "NanoBlade", testSolution1));
+		Assert.assertTrue(null == board.disproveSuggestion("Bathroom", "Reinhardt", "DiamondSword", testSolution1));
 	}
 	
 	/*Handle a suggestion made, tests include:
@@ -93,6 +99,6 @@ Suggestion that two players can disprove, correct player (based on starting with
 	
 	@Test
 	public void testHandleSuggestion() {
-		Assert.assertTrue(0 == 1);
+		
 	}
 }

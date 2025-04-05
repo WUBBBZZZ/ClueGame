@@ -30,14 +30,16 @@ public class GameSetupTests {
 	
 	@BeforeAll
 	public static void setUp() {
+		System.out.println("GameSetupTests test");
 		// Board is singleton, get the only instance
 		board = Board.getInstance();
 		// set the file names to use my config files
 		board.setConfigFiles("ClueLayout.csv", "ClueSetup.txt");		
+		//System.out.println(board.getPeople());
 		// Initialize will load config files 
 		board.initialize();
+		//System.out.println(board.getPeople());
 	}
-	
 	//Game plan: Board class reads in cluesetup for players and weapons. These go into 
 	//Sets, from which they're used as string arguments for object instantiation via the
 	//Player class. After instantiation, we also use the card class to instantiate weapons,
@@ -47,7 +49,9 @@ public class GameSetupTests {
 	// Test to see if people are loaded in properly
 	@Test
 	public void testLoadPeople() throws BadConfigFormatException {
+		
 		ArrayList<String> testPersons = new ArrayList<String>(List.of("Genji", "Sombra"));
+		//System.out.println(board.getPeople());
 		Assert.assertTrue(board.getPeople().get(1).equals(testPersons.get(1)));
 		Assert.assertTrue(board.getPeople().size() == 6);
 		
@@ -73,6 +77,7 @@ public class GameSetupTests {
 	//Test proper initialization of 5 computer and 1 human object
 	@Test
 	public void testPlayers() throws BadConfigFormatException {
+		System.out.println(ComputerPlayer.getNumPlayers());
 		Assert.assertTrue(ComputerPlayer.getNumPlayers() == 5);
 		Assert.assertTrue(HumanPlayer.getNumPlayers() == 1);
 	}
