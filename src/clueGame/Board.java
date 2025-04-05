@@ -239,9 +239,9 @@ public class Board {
 		//For random room card
 		int randomNumber1 = rand.nextInt(9);
 		//For random player card
-		int randomNumber2 = rand.nextInt(6) + 9;
+		int randomNumber2 = rand.nextInt(9, 15);
 		//For random weapon card
-		int randomNumber3 = rand.nextInt(6) + 15;
+		int randomNumber3 = rand.nextInt(15, 21);
 		
 		Solution theSolution = new Solution(cardsCopy.get(randomNumber1), cardsCopy.get(randomNumber2), cardsCopy.get(randomNumber3));
 		cardsCopy.remove(randomNumber3);
