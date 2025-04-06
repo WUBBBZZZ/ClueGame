@@ -24,8 +24,10 @@ public class Board {
 	private ArrayList<String> weapons;
 	//The deck of cards itself
 	private ArrayList<Card> cards;
+	private ArrayList<Player> players;
 	//copy of cards
 	private ArrayList<Card> cardsCopy;
+	private Solution theSolution;
 	private static final char WALKWAY_INITIAL = 'W';
 	private static final char SECRET_PASSAGE_IDENTIFIER = 'S';
 	public static final int NO_SECRET_PASSAGE = 0;
@@ -52,6 +54,7 @@ public class Board {
 		cardsCopy = new ArrayList<Card>();
 		rooms = new ArrayList<String>();
 		colors = new ArrayList<String>();
+		players = new ArrayList<Player>();
 	}
 
 	// This method returns the only Board
@@ -68,7 +71,18 @@ public class Board {
 	
 	//This method is only used for testing purposes, to reset the Board instance per successive test.
 	public static void resetInstance() {
-		
+		theInstance.roomMap.clear();
+		theInstance.cellMap.clear();
+		theInstance.people.clear();
+		theInstance.weapons.clear();
+		theInstance.cards.clear();
+		theInstance.cardsCopy.clear();
+		theInstance.rooms.clear();
+		theInstance.colors.clear();
+		theInstance.players.clear();
+		for (Player player : theInstance.players) {
+			player.reset();
+		}
         theInstance = null;
     }
 	
@@ -209,31 +223,32 @@ public class Board {
 		}
 		this.makeAdjList();
 		
-		//This is where the deck of cards is made:
-		int n = 0;
 		for (String name : rooms ) {
 			cards.add(new Card(name, CardType.ROOM)) ;
 			cardsCopy.add(new Card(name, CardType.ROOM)) ;
-			n++;
 		}
 		for (String name : people ) {
 			cards.add(new Card(name, CardType.SUSPECT)) ;
 			cardsCopy.add(new Card(name, CardType.SUSPECT)) ;
-			n++;
 		}
 		for (String name : weapons ) {
 			cards.add(new Card(name, CardType.WEAPON)) ;
 			cardsCopy.add(new Card(name, CardType.WEAPON)) ;
-			n++;
 		}
 		
 		//Player objects are made below
 		HumanPlayer player1 = new HumanPlayer(people.get(0), colors.get(0), 0, 3);
+		players.add(player1);
 		ComputerPlayer player2 = new ComputerPlayer(people.get(1), colors.get(1), 6, 0);
+		players.add(player2);
 		ComputerPlayer player3 = new ComputerPlayer(people.get(2), colors.get(2), 19, 3);
+		players.add(player3);
 		ComputerPlayer player4 = new ComputerPlayer(people.get(3), colors.get(3), 19, 13);
+		players.add(player4);
 		ComputerPlayer player5 = new ComputerPlayer(people.get(4), colors.get(4), 16, 20);
+		players.add(player5);
 		ComputerPlayer player6 = new ComputerPlayer(people.get(5), colors.get(5), 0, 20);
+		players.add(player6);
 		
 		//deals deck to solution
 		Random rand = new Random();
@@ -245,7 +260,7 @@ public class Board {
 		//For random weapon card
 		int randomNumber3 = rand.nextInt(15, 21);
 		
-		Solution theSolution = new Solution(cardsCopy.get(randomNumber1), cardsCopy.get(randomNumber2), cardsCopy.get(randomNumber3));
+		theSolution = new Solution(cardsCopy.get(randomNumber1), cardsCopy.get(randomNumber2), cardsCopy.get(randomNumber3));
 		cardsCopy.remove(randomNumber3);
 		cardsCopy.remove(randomNumber2);
 		cardsCopy.remove(randomNumber1);
@@ -274,7 +289,42 @@ public class Board {
 				cardsCopy.remove(randomNumber1);
 			}
 		}
-		System.out.println(this.people);
+		
+		for (Card card : cards) {
+			//System.out.println(card);
+			if (card.equals(theSolution.getPersonSol())) {
+				continue;
+			} else if (card.equals(theSolution.getRoomSol())) {
+				continue;
+			} else if (card.equals(theSolution.getWeaponSol())) {
+				continue;
+			}
+			
+			for (Player player : players){
+				//System.out.println(player.getName());
+				if (card.getCardName() == player.getName()) {
+					continue;
+				}
+				boolean inHand = false;
+					for(Card hand : player.getHand()) {
+						if (card.equals(hand)) {
+							inHand = true;
+						}
+					}
+					if (inHand == false) {
+						//System.out.print("added card");
+						//System.out.println(card);
+						player.addUnseen(card);
+					}
+					//System.out.println(player.getUnseen());
+			}
+		}
+		//System.out.println(this.players.get(2).getName());
+		//System.out.println(this.players.get(2).getUnseen());
+		//System.out.println(this.players.get(2).getHand());
+		System.out.println(this.theSolution.getPersonSol());
+		System.out.println(this.theSolution.getRoomSol());
+		System.out.println(this.theSolution.getWeaponSol());
 	}
 
 	// Translates a given config file for a board to assist with associating symbols to room types.
@@ -628,5 +678,16 @@ public class Board {
 			return null;
 		}
 	}
-
+	public Player getTestPlayer() {
+		return players.get(2);
+	}
+	public Card getRoomCard(int r, int c) {
+		String name = this.getRoom(this.getCell(r, c).getInitial()).getName();
+		for (Card card : this.cards) {
+			if (card.getCardName().equals(name)) {
+				return card;
+			}
+		}
+		return null;
+	}
 }

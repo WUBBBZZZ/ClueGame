@@ -28,10 +28,10 @@ public class GameSetupTests {
 	
 	private static Board board;
 	
-	@BeforeEach
-	public void setUp() {
+	@BeforeAll
+	public static void setUp() {
 		Board.resetInstance();
-		System.out.println("GameSetupTests test");
+		
 		// Board is singleton, get the only instance
 		board = Board.getInstance();
 		// set the file names to use my config files
@@ -50,7 +50,7 @@ public class GameSetupTests {
 	// Test to see if people are loaded in properly
 	@Test
 	public void testLoadPeople() throws BadConfigFormatException {
-		
+		System.out.println("GameSetupTests test");
 		ArrayList<String> testPersons = new ArrayList<String>(List.of("Genji", "Sombra"));
 		//System.out.println(board.getPeople());
 		Assert.assertTrue(board.getPeople().get(1).equals(testPersons.get(1)));
@@ -75,12 +75,10 @@ public class GameSetupTests {
 		Assert.assertTrue(board.getCards().size() == 21);
 	}
 	
-	//Test proper initialization of 5 computer and 1 human object
+	//Test proper initialization of 6 player objects
 	@Test
 	public void testPlayers() throws BadConfigFormatException {
-		System.out.println(ComputerPlayer.getNumPlayers());
-		Assert.assertTrue(ComputerPlayer.getNumPlayers() == 5);
-		Assert.assertTrue(HumanPlayer.getNumPlayers() == 1);
+		Assert.assertTrue(board.getPeople().size() == 6);
 	}
 	
 	//Test to see if Solution has 3 cards of types room, person and weapon

@@ -14,12 +14,15 @@ public class HumanPlayer extends Player {
 		humanCardsRand = new ArrayList<Card>();
 		numPlayers++;
 	}
-	
 	@Override
 	public void updateHand(Card card) {
+		this.addSeen(card);
 		humanCards.add(card);
 	}
-	
+	@Override
+	public ArrayList<Card> getHand(){
+		return humanCards;
+	}
 	public static int getNumPlayers() {
 		return numPlayers;
 	}
@@ -53,6 +56,25 @@ public class HumanPlayer extends Player {
 			int randomNumber1 = rand.nextInt(n);
 			return humanCardsRand.get(randomNumber1);
 		}
+	}
+	@Override
+	public Solution createSuggestion(Card room) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	public void reset() {
+		numPlayers = 0;
+	}
+	@Override
+	public ArrayList<Card> getWeap() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	public ArrayList<Card> getPlayers() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 }

@@ -10,30 +10,27 @@ public class ComputerPlayer extends Player {
 	private static int numPlayers;
 	private ArrayList<Card> compCards;
 	private ArrayList<Card> compCardsRand;
-	private ArrayList<Card> seenPlayers;
-	private ArrayList<Card> seenWeap;
-	private ArrayList<Card> seenRooms;
-	private Set<Card>unseenWeap;
-	private Set<Card>unseenRoom;
-	private Set<Card>unseenPlayers;
+	private ArrayList<Card> unseenWeap;
+	private ArrayList<Card> unseenPlayers;
+
 	public ComputerPlayer(String name, String color, int row, int col) {
 		super(name, color, row, col);
 		compCards = new ArrayList<Card>();
 		compCardsRand = new ArrayList<Card>();
-		seenPlayers = new ArrayList<Card>();
-		seenWeap = new ArrayList<Card>();
-		seenRooms = new ArrayList<Card>();
-		unseenWeap = new HashSet<Card>();
-		unseenRoom = new HashSet<Card>();
-		unseenPlayers = new HashSet<Card>();
+		unseenWeap  = new ArrayList<Card>();
+		unseenPlayers  = new ArrayList<Card>();
 		numPlayers++;
 	}
 	
 	@Override
 	public void updateHand(Card card) {
 		compCards.add(card);
+		this.addSeen(card);
 	}
-	
+	@Override
+	public ArrayList<Card> getHand(){
+		return compCards;
+	}
 	public static int getNumPlayers() {
 		return numPlayers;
 	}
@@ -72,65 +69,38 @@ public Card disproveSuggestion(Solution solution) {
 	public ArrayList<Card> getCompCards() {
 		return compCards;
 	}
-	public BoardCell selectTarget() {
-		return null;
-	}
-	public void updateSeen(Card card) {
-		if (card.getCardType() == CardType.ROOM) {
-			seenRooms.add(card);
+	@Override
+	public Solution createSuggestion(Card roomProp) {
+		Random rand = new Random();
+		if (unseenPlayers.size() != 0 || unseenWeap.size() != 0) {
+			unseenPlayers.clear();
+			unseenWeap.clear();
 		}
-		if (card.getCardType() == CardType.WEAPON) {
-			seenWeap.add(card);
+		for (Card card : this.unseenCards) {
+			if (card.getCardType() == CardType.ROOM) {
+				continue;
+			}else if (card.getCardType() == CardType.SUSPECT) {
+				unseenPlayers.add(card);
+			}else if (card.getCardType() == CardType.WEAPON) {
+				unseenWeap.add(card);
+			}
 		}
-		if (card.getCardType() == CardType.SUSPECT) {
-			seenPlayers.add(card);
-		}
+		int x = Math.abs(rand.nextInt() % unseenPlayers.size());
+		int y = Math.abs(rand.nextInt() % unseenWeap.size());
+		return new Solution(roomProp, unseenPlayers.get(x), unseenWeap.get(y));
 	}
 
-	public void setUnseenWeapons(Set<Card> unseenWeapons) {
-		this.unseenWeap = unseenWeapons;
+	@Override
+	public void reset() {
+		numPlayers = 0;
 	}
-
-	public void setUnseenPersons(Set<Card> unseenPersons) {
-		this.unseenPlayers = unseenPersons;
+	@Override
+	public ArrayList<Card> getWeap(){
+		return this.unseenWeap;
 	}
-
-	public Solution createSuggestion() {
-	    // Get current room from player's location
-	    Board board = Board.getInstance();
-	    BoardCell currentCell = board.getCell(this.row, this.col);
-	    String currentRoomName = board.getRoom(currentCell).getName();
-	    Card roomCard = new Card(currentRoomName, CardType.ROOM);
-
-	    // Select a weapon randomly from unseen weapons
-	    List<Card> weaponOptions = new ArrayList<Card>();
-	    for (Card weapon : unseenWeap) {
-	        if (!seenCards.contains(weapon)) {
-	            weaponOptions.add(weapon);
-	        }
-	    }
-	    Card weaponCard = weaponOptions.get(new Random().nextInt(weaponOptions.size()));
-
-	    // Select a person randomly from unseen persons
-	    List<Card> personOptions = new ArrayList<Card>();
-	    for (Card person : unseenPlayers) {
-	        if (!seenCards.contains(person)) {
-	            personOptions.add(person);
-	        }
-	    }
-	    Card personCard = personOptions.get(new Random().nextInt(personOptions.size()));
-
-	    // Create and return the suggestion
-	    return new Solution(personCard, roomCard, weaponCard);
+	@Override
+	public ArrayList<Card> getPlayers(){
+		return this.unseenPlayers;
 	}
-
-	public BoardCell selectTarget(Set<BoardCell> targets) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-
-
-
 
 }

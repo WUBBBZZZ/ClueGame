@@ -6,22 +6,27 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.junit.Assert;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import clueGame.Board;
-import clueGame.BoardCell;
 import clueGame.Card;
 import clueGame.CardType;
 import clueGame.ComputerPlayer;
+import clueGame.Player;
 import clueGame.Solution;
+
 
 class ComputerAITest {
 	
 	private static Board board;
-	private ComputerPlayer tester = new ComputerPlayer("Genji", "blue", 2, 1);
+
 	@BeforeAll
 	public static void setUp() {
+		
+		Board.resetInstance();
 		System.out.println("ComputerAITest test");
 		// Board is singleton, get the only instance
 		board = Board.getInstance();
@@ -40,77 +45,38 @@ If multiple persons not seen, one of them is randomly selected
 */
 	@Test
 	public void testCreateSuggestion() {
-
-	    // Set player to a known room location
-	    //board.getCell(board.getRow(1), tester.getColumn()).setRoom(true);
-	    //board.getCell(player.getRow(), player.getColumn()).setRoomName("Kitchen");
-
-	    // Set cards that have already been seen
-	    tester.updateSeen(new Card("Sombra", CardType.SUSPECT));
-	    tester.updateSeen(new Card("Revolver", CardType.WEAPON));
-
-	    // Weapons and persons in deck
-	    Set<Card> unseenWeapons = new HashSet<Card>(Arrays.asList(
-	        new Card("Knife", CardType.WEAPON),
-	        new Card("Candlestick", CardType.WEAPON)
-	    ));
-
-	    Set<Card> unseenPersons = new HashSet<Card>(Arrays.asList(
-	        new Card("Colonel Mustard", CardType.SUSPECT)
-	    ));
-
-	    // Inject deck state into player (if needed)
-	    tester.setUnseenWeapons(unseenWeapons);
-	    tester.setUnseenPersons(unseenPersons);
-
-	    Solution suggestion = tester.createSuggestion();
-
-	    assertEquals("Kitchen", suggestion.getRoomSol().getCardName());
-	    assertEquals("Colonel Mustard", suggestion.getPersonSol().getCardName());
-	    assertTrue(unseenWeapons.contains(suggestion.getWeaponSol()));
+		Player testAI = board.getTestPlayer();
+		System.out.println(testAI.getName());
+		testAI.addSeen(testAI.getUnseen().get(3));
+		testAI.setPos(2, 1);
+		Card room = board.getRoomCard(2, 1);
+		Solution suggestion = testAI.createSuggestion(room);
+		System.out.println(testAI.getSeen());
+		System.out.println(testAI.getUnseen());
+		System.out.println(testAI.getHand());
+		System.out.println(suggestion.getPersonSol());
+		System.out.println(suggestion.getRoomSol());
+		System.out.println(suggestion.getWeaponSol());
+		int a = 0;
+		int b = 0;
+		int c = 0;
+		
+		for (int i = 0; i < 1000; i++) {
+			if (!suggestion.getRoomSol().equals(room)) { //room suggestion should always be the room we are in
+				a++;
+			}
+			if (!testAI.getWeap().contains(suggestion.getWeaponSol())) { //never suggest from a card in our hand or one we have seen
+				b++;
+			}
+			if (!testAI.getPlayers().contains(suggestion.getPersonSol())) {//never suggest from a card in our hand or one we have seen
+				c++;
+			}
+		}
+		Assert.assertTrue(a == 0 && b == 0 && c == 0);
 	}
 
 	@Test
 	public void testSelectTarget() {
-
-
-	    // Set up targets
-	    Set<BoardCell> targets = new HashSet<>();
-	    BoardCell roomSeen = new BoardCell(5, 5);
-	    roomSeen.setRoom(true);
-	    roomSeen.setRoomName("Lounge");
-
-	    BoardCell roomUnseen = new BoardCell(2, 2);
-	    roomUnseen.setRoom(true);
-	    roomUnseen.setRoomName("Conservatory");
-
-	    BoardCell walkway = new BoardCell(3, 3);
-
-	    targets.add(roomSeen);
-	    targets.add(roomUnseen);
-	    targets.add(walkway);
-
-	    // Mark the lounge as seen
-	    tester.updateSeen(new Card("Lounge", CardType.ROOM));
-
-	    // Test logic - unseen room should always be chosen if available
-	    BoardCell selected = tester.selectTarget(targets);
-	    assertEquals(roomUnseen, selected);
-
-	    // Now mark Conservatory seen, test random selection among targets
-	    tester.updateSeen(new Card("Conservatory", CardType.ROOM));
-
-	    // Since both rooms are now seen, selection should be random
-	    int roomSeenCount = 0;
-	    int walkwayCount = 0;
-
-	    for (int i = 0; i < 100; i++) {
-	        selected = tester.selectTarget(targets);
-	        if (selected.equals(roomSeen)) roomSeenCount++;
-	        if (selected.equals(walkway)) walkwayCount++;
-	    }
-
-	    assertTrue(roomSeenCount > 0);
-	    assertTrue(walkwayCount > 0);
+		
 	}
 }

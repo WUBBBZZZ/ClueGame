@@ -21,7 +21,10 @@ public class Card {
 			return false;
 		}
 	}
-	
+	@Override 
+	public String toString(){
+		return cardName;
+	}
 	public String getCardName() {
 		return cardName;
 	}
