@@ -96,8 +96,7 @@ public class GameSetupTests {
 	//Test to see if players have a roughly equal number of cards, and no cards remain after being dealt. 
 	@Test
 	public void testCardLeftovers() throws BadConfigFormatException {
-		Assert.assertTrue(board.getCardsCopy().size() == 0);
-		
+		Assert.assertTrue(board.getCardsCopy().size() == 0);	
 	}
 
 }

@@ -46,17 +46,10 @@ If multiple persons not seen, one of them is randomly selected
 	@Test
 	public void testCreateSuggestion() {
 		Player testAI = board.getTestPlayer();
-		System.out.println(testAI.getName());
 		testAI.addSeen(testAI.getUnseen().get(3));
 		testAI.setPos(2, 1);
 		Card room = board.getRoomCard(2, 1);
 		Solution suggestion = testAI.createSuggestion(room);
-		System.out.println(testAI.getSeen());
-		System.out.println(testAI.getUnseen());
-		System.out.println(testAI.getHand());
-		System.out.println(suggestion.getPersonSol());
-		System.out.println(suggestion.getRoomSol());
-		System.out.println(suggestion.getWeaponSol());
 		int a = 0;
 		int b = 0;
 		int c = 0;
@@ -73,6 +66,17 @@ If multiple persons not seen, one of them is randomly selected
 			}
 		}
 		Assert.assertTrue(a == 0 && b == 0 && c == 0);
+		
+		for (int i = 0; i < testAI.getWeap().size() - 1; i++) {
+			testAI.addSeen(testAI.getWeap().get(i));
+		}
+		for (int i = 0; i < testAI.getPlayers().size() - 1; i++) {
+			testAI.addSeen(testAI.getPlayers().get(i));
+		}
+		suggestion = testAI.createSuggestion(room);
+		//asserts that when there is 1 weapon and player left the AI chooses that player
+		Assert.assertTrue(testAI.getWeap().get(0).equals(suggestion.getWeaponSol()));
+		Assert.assertTrue(testAI.getPlayers().get(0).equals(suggestion.getPersonSol()));
 	}
 
 	@Test

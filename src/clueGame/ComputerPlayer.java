@@ -40,7 +40,7 @@ public class ComputerPlayer extends Player {
 	
 @Override
 public Card disproveSuggestion(Solution solution) {
-		
+		compCardsRand.clear();
 		Random rand = new Random();
 		
 		int n = 0; 
@@ -102,5 +102,10 @@ public Card disproveSuggestion(Solution solution) {
 	public ArrayList<Card> getPlayers(){
 		return this.unseenPlayers;
 	}
-
+	@Override
+	public void deleteHand() {
+		compCards.clear();
+		compCardsRand.clear();
+	}
+	
 }

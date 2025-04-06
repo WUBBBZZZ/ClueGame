@@ -2,6 +2,8 @@ package tests;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.util.ArrayList;
+
 import org.junit.Assert;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -162,6 +164,16 @@ Suggestion that two players can disprove, correct player (based on starting with
 	
 	@Test
 	public void testHandleSuggestion() {
-		
+		ArrayList<Player> players = board.getPlayers();
+		ArrayList<Player> computers = new ArrayList<Player>();
+		Player me;
+		for (Player player : players) {
+			if (player instanceof HumanPlayer) {
+				me = player;
+				continue;
+			}else if (player instanceof ComputerPlayer) {
+				computers.add(player);
+			}
+		}
 	}
 }

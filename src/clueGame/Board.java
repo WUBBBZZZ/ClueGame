@@ -1,7 +1,6 @@
 //TODO add class string
 package clueGame;
 import java.util.*;
-import java.util.Random;
 
 import experiment.TestBoardCell;
 
@@ -291,7 +290,6 @@ public class Board {
 		}
 		
 		for (Card card : cards) {
-			//System.out.println(card);
 			if (card.equals(theSolution.getPersonSol())) {
 				continue;
 			} else if (card.equals(theSolution.getRoomSol())) {
@@ -301,30 +299,20 @@ public class Board {
 			}
 			
 			for (Player player : players){
-				//System.out.println(player.getName());
 				if (card.getCardName() == player.getName()) {
 					continue;
 				}
 				boolean inHand = false;
-					for(Card hand : player.getHand()) {
-						if (card.equals(hand)) {
-							inHand = true;
-						}
+				for(Card hand : player.getHand()) {
+					if (card.equals(hand)) {
+						inHand = true;
 					}
-					if (inHand == false) {
-						//System.out.print("added card");
-						//System.out.println(card);
-						player.addUnseen(card);
-					}
-					//System.out.println(player.getUnseen());
+				}
+				if (inHand == false) {
+					player.addUnseen(card);
+				}
 			}
 		}
-		//System.out.println(this.players.get(2).getName());
-		//System.out.println(this.players.get(2).getUnseen());
-		//System.out.println(this.players.get(2).getHand());
-		System.out.println(this.theSolution.getPersonSol());
-		System.out.println(this.theSolution.getRoomSol());
-		System.out.println(this.theSolution.getWeaponSol());
 	}
 
 	// Translates a given config file for a board to assist with associating symbols to room types.
@@ -681,11 +669,29 @@ public class Board {
 	public Player getTestPlayer() {
 		return players.get(2);
 	}
+	public ArrayList<Player> getPlayers() {
+		return players;
+	}
 	public Card getRoomCard(int r, int c) {
 		String name = this.getRoom(this.getCell(r, c).getInitial()).getName();
 		for (Card card : this.cards) {
 			if (card.getCardName().equals(name)) {
 				return card;
+			}
+		}
+		return null;
+	}
+	
+	
+	public Card handleSuggestion(Solution suggestion, Player accuser) {
+		for (Player player : players) {
+			if (player == accuser) {
+				continue;
+			}
+			if (player.disproveSuggestion(suggestion) == null) {
+				continue;
+			} else {
+				return player.disproveSuggestion(suggestion);
 			}
 		}
 		return null;

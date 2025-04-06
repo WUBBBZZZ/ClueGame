@@ -60,4 +60,5 @@ public abstract class Player {
 	public abstract ArrayList<Card> getWeap();
 
 	public abstract ArrayList<Card> getPlayers();
+	public abstract void deleteHand();
 }

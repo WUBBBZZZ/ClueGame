@@ -32,7 +32,7 @@ public class HumanPlayer extends Player {
 	
 	@Override
 	public Card disproveSuggestion(Solution solution) {
-		
+		humanCardsRand.clear();
 		Random rand = new Random();
 		
 		int n = 0; 
@@ -75,6 +75,11 @@ public class HumanPlayer extends Player {
 	public ArrayList<Card> getPlayers() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+	@Override
+	public void deleteHand() {
+		humanCards.clear();
+		humanCardsRand.clear();
 	}
 	
 }
