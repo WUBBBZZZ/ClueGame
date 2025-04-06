@@ -28,8 +28,9 @@ public class GameSetupTests {
 	
 	private static Board board;
 	
-	@BeforeAll
-	public static void setUp() {
+	@BeforeEach
+	public void setUp() {
+		Board.resetInstance();
 		System.out.println("GameSetupTests test");
 		// Board is singleton, get the only instance
 		board = Board.getInstance();

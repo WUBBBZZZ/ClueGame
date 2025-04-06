@@ -23,6 +23,9 @@ public class HumanPlayer extends Player {
 	public static int getNumPlayers() {
 		return numPlayers;
 	}
+	public static void setNumPlayers(int x) {
+		numPlayers = x;
+	}
 	
 	@Override
 	public Card disproveSuggestion(Solution solution) {

@@ -12,6 +12,7 @@ public class BoardCell {
 	private Set<BoardCell> adjList;
 	private DoorDirection direction;
 	private char secretPassage;
+	private String name;
 	public static final char NO_SECRET_PASSAGE = 0;
 
 	// Constructor with row and col inputs
@@ -159,5 +160,10 @@ public class BoardCell {
 	@Override
 	public String toString() {
 		return String.format("Cell: %s, %s", row, col);
+	}
+
+	public void setRoomName(String string) {
+		name = string;
+		
 	}
 }

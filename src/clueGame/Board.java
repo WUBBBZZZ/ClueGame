@@ -68,6 +68,7 @@ public class Board {
 	
 	//This method is only used for testing purposes, to reset the Board instance per successive test.
 	public static void resetInstance() {
+		
         theInstance = null;
     }
 	
@@ -193,6 +194,7 @@ public class Board {
 	 */
 	public void initialize(){
 		Board board = Board.getInstance();
+		
 		try {
 			board.loadSetupConfig();
 		} catch (BadConfigFormatException e) {
@@ -272,6 +274,7 @@ public class Board {
 				cardsCopy.remove(randomNumber1);
 			}
 		}
+		System.out.println(this.people);
 	}
 
 	// Translates a given config file for a board to assist with associating symbols to room types.

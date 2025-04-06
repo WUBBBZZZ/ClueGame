@@ -7,10 +7,10 @@ import java.util.HashSet;
 
 public abstract class Player {
 
-	private String name;
-	private String color;
-	private int row, col;
-	private Set<Card> seenCards = new HashSet<Card>();
+	protected String name;
+	protected String color;
+	protected int row, col;
+	protected Set<Card> seenCards = new HashSet<Card>();
 	
 	public Player(String name, String color, int row, int col) {
 		this.name = name;
