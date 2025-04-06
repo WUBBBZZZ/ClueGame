@@ -36,7 +36,6 @@ public class HumanPlayer extends Player {
 		Random rand = new Random();
 		
 		int n = 0; 
-		
 		for (Card c : humanCards) {
 			if (solution.getPersonSol().getCardName().equals(c.getCardName())) {
 				n++;

@@ -44,7 +44,7 @@ public Card disproveSuggestion(Solution solution) {
 		Random rand = new Random();
 		
 		int n = 0; 
-		
+
 		for (Card c : compCards) {
 			if (solution.getPersonSol().getCardName().equals(c.getCardName())) {
 				n++;

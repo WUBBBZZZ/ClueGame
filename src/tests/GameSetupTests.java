@@ -75,10 +75,21 @@ public class GameSetupTests {
 		Assert.assertTrue(board.getCards().size() == 21);
 	}
 	
-	//Test proper initialization of 6 player objects
+	//Test proper initialization of 6 player objects then chacks to see if there are 1 human and 5 computers
 	@Test
 	public void testPlayers() throws BadConfigFormatException {
 		Assert.assertTrue(board.getPeople().size() == 6);
+		int humanCount = 0;
+		int compCount = 0;
+		for (Player player : board.getPlayers()) {
+			if (player instanceof HumanPlayer) {
+				humanCount++;
+			} else if (player instanceof ComputerPlayer) {
+				compCount++;
+			}
+		}
+		Assert.assertTrue(humanCount == 1);
+		Assert.assertTrue(compCount == 5);
 	}
 	
 	//Test to see if Solution has 3 cards of types room, person and weapon

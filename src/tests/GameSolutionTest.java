@@ -28,7 +28,6 @@ class GameSolutionTest {
 
 	@BeforeAll
 	public static void setUp() {
-		System.out.println("game solution test");
 		// Board is singleton, get the only instance
 		board = Board.getInstance();
 		// set the file names to use my config files
@@ -165,15 +164,35 @@ Suggestion that two players can disprove, correct player (based on starting with
 	@Test
 	public void testHandleSuggestion() {
 		ArrayList<Player> players = board.getPlayers();
-		ArrayList<Player> computers = new ArrayList<Player>();
-		Player me;
 		for (Player player : players) {
-			if (player instanceof HumanPlayer) {
-				me = player;
-				continue;
-			}else if (player instanceof ComputerPlayer) {
-				computers.add(player);
-			}
+			player.deleteHand();
 		}
+		Card card1 = new Card("Bar", CardType.ROOM);
+		Card card2 = new Card("Genji", CardType.SUSPECT);
+		Card card3 = new Card("NanoBlade", CardType.WEAPON);
+		Card card4 = new Card("Bathroom", CardType.ROOM);
+		Card card5 = new Card("Sombra", CardType.SUSPECT);
+		Card card6 = new Card("BFG-10000", CardType.WEAPON);
+		Card card7 = new Card("Mancave", CardType.ROOM);
+		Card card8 = new Card("Doomfist", CardType.SUSPECT);
+		Card card9 = new Card("DiamondSword", CardType.WEAPON);
+
+		players.get(0).updateHand(card1);
+		players.get(1).updateHand(card2);
+		players.get(2).updateHand(card3);
+		players.get(3).updateHand(card4);
+		players.get(4).updateHand(card5);
+		players.get(5).updateHand(card6);
+		Solution sol1 = new Solution(card7, card8, card9);
+		Assert.assertTrue(board.handleSuggestion(sol1, players.get(0)) == (null));//test no one can prove
+		sol1 = new Solution(card1, card8, card9);
+		Assert.assertTrue(board.handleSuggestion(sol1, players.get(0)) == (null));//test that only accuser can disprove
+		
+		Assert.assertTrue(board.handleSuggestion(sol1, players.get(1)).equals(card1));//test that human player can disprove
+		sol1 = new Solution(card7, card2, card9);
+		Assert.assertTrue(board.handleSuggestion(sol1, players.get(3)).equals(card2));//test that 1 computer can disprove
+		
+		sol1 = new Solution(card7, card5, card6);
+		Assert.assertTrue(board.handleSuggestion(sol1, players.get(3)).equals(card5));//test that 2 computers can disprove returns first computers card
 	}
 }

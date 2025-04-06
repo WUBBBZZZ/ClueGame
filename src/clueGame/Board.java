@@ -67,7 +67,9 @@ public class Board {
 		//System.out.println(theInstance.getPeople());
 		return theInstance;
 	}
-	
+	public void setSolution(Solution newSol) {
+		theSolution = newSol;
+	}
 	//This method is only used for testing purposes, to reset the Board instance per successive test.
 	public static void resetInstance() {
 		theInstance.roomMap.clear();
@@ -685,7 +687,7 @@ public class Board {
 	
 	public Card handleSuggestion(Solution suggestion, Player accuser) {
 		for (Player player : players) {
-			if (player == accuser) {
+			if (player.equals(accuser)) {
 				continue;
 			}
 			if (player.disproveSuggestion(suggestion) == null) {

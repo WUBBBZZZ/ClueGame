@@ -27,7 +27,6 @@ class ComputerAITest {
 	public static void setUp() {
 		
 		Board.resetInstance();
-		System.out.println("ComputerAITest test");
 		// Board is singleton, get the only instance
 		board = Board.getInstance();
 		// set the file names to use my config files
