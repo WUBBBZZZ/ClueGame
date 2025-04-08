@@ -81,4 +81,8 @@ public class HumanPlayer extends Player {
 		humanCardsRand.clear();
 	}
 	
+	public String getColor() {
+		return color;
+	}
+	
 }

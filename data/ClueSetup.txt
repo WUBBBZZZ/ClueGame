@@ -16,7 +16,7 @@ Space, Walkway, W
 //-----------------------
 Person, Genji, Green
 Person, Sombra, Purple
-Person, Reinhardt, Silver
+Person, Reinhardt, Gray
 Person, Doomfist, Red
 Person, Mercy, Yellow
 Person, Moira, Black

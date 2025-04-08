@@ -38,6 +38,10 @@ public class ComputerPlayer extends Player {
 		numPlayers = x;
 	}
 	
+	public String getColor() {
+		return color;
+	}
+	
 @Override
 public Card disproveSuggestion(Solution solution) {
 		compCardsRand.clear();
