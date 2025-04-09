@@ -103,23 +103,23 @@ public class GameControlPanel extends JPanel {
 		
 		playerColor = player.getColor();
 		roll = n;
-        if (playerColor.equals("green")) {
+        if (playerColor.equals("Green")) {
         	playerNameField.setBackground(Color.GREEN);
         	playerNameField.setOpaque(true);
-        } else if (playerColor.equals("purple")) {
+        } else if (playerColor.equals("Purple")) {
         	playerNameField.setBackground(Color.MAGENTA);
         	playerNameField.setOpaque(true);
-        } else if (playerColor.equals("gray")) {
+        } else if (playerColor.equals("Gray")) {
         	playerNameField.setBackground(Color.GRAY);
         	playerNameField.setOpaque(true);
-        } else if (playerColor.equals("red")) {
+        } else if (playerColor.equals("Red")) {
         	playerNameField.setBackground(Color.RED);
         	playerNameField.setOpaque(true);
-        } else if (playerColor.equals("yellow")) {
+        } else if (playerColor.equals("Yellow")) {
         	playerNameField.setBackground(Color.YELLOW);
         	playerNameField.setOpaque(true);
-        } else if (playerColor.equals("black")) {
-        	playerNameField.setBackground(Color.BLACK);
+        } else if (playerColor.equals("Black")) {
+        	playerNameField.setBackground(Color.DARK_GRAY);
         	playerNameField.setOpaque(true);
         } 
         
@@ -142,7 +142,7 @@ public class GameControlPanel extends JPanel {
 		
 		// test filling in the data
 		
-		panel.setTurn(new ComputerPlayer( "Genji", "green", 0, 0), 5);
+		panel.setTurn(new ComputerPlayer( "Genji", "Green", 0, 0), 5);
 		panel.setGuess( "I have no guess!");
 		panel.setGuessResult( "So you have nothing?");
 		

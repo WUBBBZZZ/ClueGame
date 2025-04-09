@@ -41,6 +41,10 @@ public abstract class Player {
 		return name;
 	}
 	
+	public String getColor() {
+		return color;
+	}
+	
 	public abstract Card disproveSuggestion(Solution solution);
 
 	public ArrayList<Card> getUnseen() {
