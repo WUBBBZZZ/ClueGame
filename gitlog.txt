@@ -1,3 +1,11 @@
+commit e358ef22f9fec84f4f2bf26d9ee03216c4af3c7f
+Author: TristanKarno <tristan_karno@mines.edu>
+Date:   Tue Apr 8 21:34:29 2025 -0600
+
+    Finished C21A-2
+    
+    Code is in the file ClueCardsPanel. Specifications met. The card GUI has all relevant components. Testing was done within the file that a) insantiated a player and shown his cards in the in hand field, and b) seen cards from other players have also been tested and added, with full color coding.
+
 commit 6c575c8b8a1dedcdaecc098916ee2603b1c7ed05
 Author: TristanKarno <tristan_karno@mines.edu>
 Date:   Mon Apr 7 19:29:46 2025 -0600

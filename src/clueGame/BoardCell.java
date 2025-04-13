@@ -3,6 +3,10 @@ package clueGame;
 import java.util.HashSet;
 import java.util.Set;
 
+//For the draw() method
+import java.awt.Color;
+import java.awt.Graphics;
+
 import experiment.TestBoardCell;
 
 public class BoardCell {
@@ -165,5 +169,29 @@ public class BoardCell {
 	public void setRoomName(String string) {
 		name = string;
 		
+	}
+	
+	//Draws BoardCells for the GUI
+	public void draw(Graphics g, int row, int col, int width, int height) {
+		//draw method for each board cell type
+		//IMPORTANT: For some reason, rows and columns are inverted in
+		//the GUI, so they need to be swapped when drawing.
+		row = row * 10;
+		col = col * 10;
+		if (this.getInitial() == 'W') {
+			g.setColor(Color.YELLOW);
+			g.fillRect(col,  row,  width,  height);
+			g.setColor(Color.BLACK);
+			g.drawRect(col, row, width, height);
+		} else if (this.getInitial() == 'X') {
+			g.setColor(Color.BLACK);
+			g.fillRect(col,  row,  width,  height);
+			g.setColor(Color.BLACK);
+			g.drawRect(col, row, width, height);
+		} else {
+			g.setColor(Color.GREEN);
+			g.fillRect(col,  row,  width,  height);
+			g.drawRect(col, row, width, height);
+		}
 	}
 }
