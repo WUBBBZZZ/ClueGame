@@ -39,12 +39,12 @@ public class ClueCardsPanel extends JPanel {
 		setLayout(new BorderLayout());
 		JPanel outerPanel = new JPanel(new GridLayout(3, 1));
 	    outerPanel.setBorder(BorderFactory.createTitledBorder("Known Cards"));
-	    //outerPanel.setSize(300, 800);
+	   // outerPanel.setSize(200, 500);
 		
 			//"People" JPanel. 2 JLabels and 7 possible JTextFields
 		    peoplePanel = new JPanel(new GridLayout(9,1));
 		    peoplePanel.setBorder(BorderFactory.createTitledBorder("People"));
-		    peoplePanel.setSize(200, 200);
+		    //peoplePanel.setSize(200, 200);
 		    
 		    JLabel peopleHand = new JLabel("In Hand:");
 		    peopleInHand = new JTextField("None", 20);
@@ -62,7 +62,7 @@ public class ClueCardsPanel extends JPanel {
 			//"Rooms" JPanel. 2 JLabels and 9 possible JTextFields
 		    roomsPanel = new JPanel(new GridLayout(11,1));
 		    roomsPanel.setBorder(BorderFactory.createTitledBorder("Rooms"));
-		    roomsPanel.setSize(200, 200);
+		   //roomsPanel.setSize(200, 200);
 		    
 		    JLabel roomsHand = new JLabel("In Hand:");
 		    roomsInHand = new JTextField("None", 20);
@@ -80,7 +80,7 @@ public class ClueCardsPanel extends JPanel {
 			//"Weapons" JPanel. 2 JLabels and 7 possible JTextFields
 		    weaponsPanel = new JPanel(new GridLayout(9,1));
 		    weaponsPanel.setBorder(BorderFactory.createTitledBorder("Weapons"));
-		    weaponsPanel.setSize(200, 200);
+		    //weaponsPanel.setSize(200, 200);
 		    
 		    JLabel weaponsHand = new JLabel("In Hand:");
 		    weaponsInHand = new JTextField("None", 20);
@@ -105,7 +105,7 @@ public class ClueCardsPanel extends JPanel {
 		ClueCardsPanel panel = new ClueCardsPanel();  // create the panel
 		JFrame frame = new JFrame();  // create the frame 
 		frame.setContentPane(panel); // put the panel in the frame
-		frame.setSize(350, 650);  // size the frame
+		frame.setSize(300, 600);  // size the frame
 		//frame.pack();
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // allow it to close
 		frame.setVisible(true); // make it visible

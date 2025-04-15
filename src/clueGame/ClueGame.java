@@ -26,7 +26,7 @@ public class ClueGame extends JFrame {
 	public static final int BOX_MARGIN = 30;
 	
 	public ClueGame() {
-		setSize(880, 900);
+		setSize(930, 900);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		drawPanel = new DrawPanel();
 		// paintComponent will automatically be called 1 time
@@ -38,9 +38,11 @@ public class ClueGame extends JFrame {
         // Create and add the ClueCardsPanel to the right.
         ClueCardsPanel cardsPanel = new ClueCardsPanel();
         add(cardsPanel, BorderLayout.EAST);
+        setTitle("ClueGame");
 	}
 	
 	// Do this second
+	//get rid of this
 	public void updateDrawing(int dx, int dy) {
 		this.dx = dx;
 		this.dy = dy;
@@ -57,20 +59,20 @@ public class ClueGame extends JFrame {
 	}
 	
 	public static void main(String[] args) {
-	//The entire board is drawn here. 
-	board = Board.getInstance();
-	// set the file names to use my config files
-	board.setConfigFiles("ClueLayout.csv", "ClueSetup.txt");		
-	// Initialize will load config files 
-	board.initialize();
+		//The entire board is drawn here. 
+		board = Board.getInstance();
+		// set the file names to use my config files
+		board.setConfigFiles("ClueLayout.csv", "ClueSetup.txt");		
+		// Initialize will load config files 
+		board.initialize();
+			
+		ClueGame frame = new ClueGame();
+		frame.setVisible(true);
+		// This will cause rectangle to display in new location
+		//frame.updateDrawing(100, 100);
 		
-	ClueGame frame = new ClueGame();
-	frame.setVisible(true);
-	// This will cause rectangle to display in new location
-	//frame.updateDrawing(100, 100);
-	
-	//Each BoardCell in grid will be iterated, and functions will take its
-	//information and draw a correspNnding graphic.
+		//Each BoardCell in grid will be iterated, and functions will take its
+		//information and draw a correspNnding graphic.
 	
 	}
 	
@@ -105,7 +107,7 @@ public class ClueGame extends JFrame {
 				for (int col = 0; col < board.getNumColumns(); col++) {
 					board.getCell(row, col).draw(g, row, col, BOX_WIDTH, BOX_HEIGHT);
 					if (board.getCell(row, col).getOccupied()) {
-						//System.out.println("this plyer exists");
+						//System.out.println("this player exists");
 						ArrayList<Player> players = board.getPlayers();
 						for (Player player : players) {
 							if (player.getRow() == row && player.getCol() == col) {

@@ -19,9 +19,9 @@ public class GameControlPanel extends JPanel {
 	public GameControlPanel() {
 		
 		//Outer JPanel (2x0) - GameControlPanel
-		setLayout(new GridLayout(2, 1));
-		JPanel outerPanel = new JPanel();
-	    outerPanel.setLayout(new BorderLayout());
+		//setLayout(new GridLayout(2, 1));
+		setLayout(new BorderLayout());
+		JPanel outerPanel = new JPanel(new GridLayout(2, 1));
 	    outerPanel.setBorder(BorderFactory.createTitledBorder("Game Control Panel"));
 			//Upper JPanel (1x4)			
 			JPanel upperLongPanel = new JPanel(new GridLayout(1, 4));
