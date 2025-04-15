@@ -6,6 +6,7 @@ import java.awt.Graphics;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.Scanner;
 import javax.swing.JFrame;
 import javax.swing.Timer;
@@ -20,16 +21,23 @@ public class ClueGame extends JFrame {
 	
 	private DrawPanel drawPanel;
 	private int dx, dy;
-	public static final int BOX_WIDTH = 10;
-	public static final int BOX_HEIGHT = 10;
-	public static final int BOX_MARGIN = 10;
+	public static final int BOX_WIDTH = 30;
+	public static final int BOX_HEIGHT = 30;
+	public static final int BOX_MARGIN = 30;
 	
 	public ClueGame() {
-		setSize(300, 300);
+		setSize(880, 900);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		drawPanel = new DrawPanel();
 		// paintComponent will automatically be called 1 time
 		add(drawPanel, BorderLayout.CENTER);
+		 // Create and add the GameControlPanel to the bottom.
+        GameControlPanel controlPanel = new GameControlPanel();
+        add(controlPanel, BorderLayout.SOUTH);
+        
+        // Create and add the ClueCardsPanel to the right.
+        ClueCardsPanel cardsPanel = new ClueCardsPanel();
+        add(cardsPanel, BorderLayout.EAST);
 	}
 	
 	// Do this second
@@ -96,6 +104,16 @@ public class ClueGame extends JFrame {
 			for (int row = 0; row < board.getNumRows(); row++) {
 				for (int col = 0; col < board.getNumColumns(); col++) {
 					board.getCell(row, col).draw(g, row, col, BOX_WIDTH, BOX_HEIGHT);
+					if (board.getCell(row, col).getOccupied()) {
+						//System.out.println("this plyer exists");
+						ArrayList<Player> players = board.getPlayers();
+						for (Player player : players) {
+							if (player.getRow() == row && player.getCol() == col) {
+								player.draw(g, row, col, BOX_WIDTH, BOX_HEIGHT);
+								//System.out.println("this player exists");
+							}
+						}
+					}
 					repaint();
 				}
 			}

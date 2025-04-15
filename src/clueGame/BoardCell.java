@@ -136,8 +136,9 @@ public class BoardCell {
 	}
 	
 	// setter for a room initial
-	public void setInitial(char character) {
+	public void setInitial(char character, String name) {
 		this.roomInitial = character;
+		this.name = name;
 	}
 	
 	// setter for a secret passage room tile type
@@ -176,8 +177,8 @@ public class BoardCell {
 		//draw method for each board cell type
 		//IMPORTANT: For some reason, rows and columns are inverted in
 		//the GUI, so they need to be swapped when drawing.
-		row = row * 10;
-		col = col * 10;
+		row = row * 30;
+		col = col * 30;
 		if (this.getInitial() == 'W') {
 			g.setColor(Color.YELLOW);
 			g.fillRect(col,  row,  width,  height);
@@ -188,10 +189,41 @@ public class BoardCell {
 			g.fillRect(col,  row,  width,  height);
 			g.setColor(Color.BLACK);
 			g.drawRect(col, row, width, height);
-		} else {
+		} else if (this.isRoomCenter()){
 			g.setColor(Color.GREEN);
 			g.fillRect(col,  row,  width,  height);
 			g.drawRect(col, row, width, height);
+			g.setColor(Color.BLUE);
+			g.drawString(name, col, row);
+		}else {
+			g.setColor(Color.GREEN);
+			g.fillRect(col,  row,  width,  height);
+			g.drawRect(col, row, width, height);
+		}
+		if (this.isDoorway()) {
+	        g.setColor(Color.RED);
+            int doorThickness = 4;  // Adjust the thickness as needed
+            DoorDirection doorDirection = this.getDoorDirection();
+            switch(doorDirection) {
+                case UP:
+                    // Draw a door on the top edge
+                    g.fillRect(col, row, width, doorThickness);
+                    break;
+                case DOWN:
+                    // Draw a door on the bottom edge
+                    g.fillRect(col, row + height - doorThickness, width, doorThickness);
+                    break;
+                case LEFT:
+                    // Draw a door on the left edge
+                    g.fillRect(col, row, doorThickness, height);
+                    break;
+                case RIGHT:
+                    // Draw a door on the right edge
+                    g.fillRect(col + width - doorThickness, row, doorThickness, height);
+                    break;
+                default:
+                    break;
+            }
 		}
 	}
 }

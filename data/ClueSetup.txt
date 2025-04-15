@@ -14,11 +14,11 @@ Space, Walkway, W
 //-----------------------
 //People and weapons: 
 //-----------------------
-Person, Genji, Green
+Person, Genji, Blue
 Person, Sombra, Purple
 Person, Reinhardt, Gray
 Person, Doomfist, Red
-Person, Mercy, Yellow
+Person, Mercy, White
 Person, Moira, Black
 Weapon, SawCleaver
 Weapon, NanoBlade

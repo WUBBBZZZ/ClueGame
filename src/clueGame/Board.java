@@ -239,16 +239,22 @@ public class Board {
 		
 		//Player objects are made below
 		HumanPlayer player1 = new HumanPlayer(people.get(0), colors.get(0), 0, 3);
+		this.getCell(0, 3).setOccupied(true);
 		players.add(player1);
 		ComputerPlayer player2 = new ComputerPlayer(people.get(1), colors.get(1), 6, 0);
+		this.getCell(6, 0).setOccupied(true);
 		players.add(player2);
 		ComputerPlayer player3 = new ComputerPlayer(people.get(2), colors.get(2), 19, 3);
+		this.getCell(19, 3).setOccupied(true);
 		players.add(player3);
 		ComputerPlayer player4 = new ComputerPlayer(people.get(3), colors.get(3), 19, 13);
+		this.getCell(19, 13).setOccupied(true);
 		players.add(player4);
 		ComputerPlayer player5 = new ComputerPlayer(people.get(4), colors.get(4), 16, 20);
+		this.getCell(16, 20).setOccupied(true);
 		players.add(player5);
 		ComputerPlayer player6 = new ComputerPlayer(people.get(5), colors.get(5), 0, 20);
+		this.getCell(0, 20).setOccupied(true);
 		players.add(player6);
 		
 		//deals deck to solution
@@ -507,7 +513,7 @@ public class Board {
 	    }
 
 	    BoardCell cell = getCell(row, col);
-	    cell.setInitial(symbol);
+	    cell.setInitial(symbol, this.getRoom(symbol).getName());
 	    Room room = roomMap.get(symbol);
 
 	    if (!cellMap.containsKey(symbol)) {
