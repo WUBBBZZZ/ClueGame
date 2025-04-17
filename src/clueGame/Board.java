@@ -80,10 +80,11 @@ public class Board {
 		theInstance.cardsCopy.clear();
 		theInstance.rooms.clear();
 		theInstance.colors.clear();
-		theInstance.players.clear();
+		
 		for (Player player : theInstance.players) {
 			player.reset();
 		}
+		theInstance.players.clear();
         theInstance = null;
     }
 	
