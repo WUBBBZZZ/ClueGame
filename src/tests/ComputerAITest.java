@@ -12,10 +12,12 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import clueGame.Board;
+import clueGame.BoardCell;
 import clueGame.Card;
 import clueGame.CardType;
 import clueGame.ComputerPlayer;
 import clueGame.Player;
+import clueGame.Room;
 import clueGame.Solution;
 
 
@@ -80,6 +82,51 @@ If multiple persons not seen, one of them is randomly selected
 
 	@Test
 	public void testSelectTarget() {
+		Player testAI = board.getTestPlayer();
+		testAI.setPos(4, 4);
+		BoardCell testRoom = ((ComputerPlayer) testAI).findTarget(3);
+		Room comp = board.getRoom(testRoom);
+		Room comp1 = board.getRoom('F');
+		Room comp2 = board.getRoom('P');
+		Assert.assertTrue((comp.equals(comp1) || comp.equals(comp2)));
 		
+		//removes all rooms but one to test that AI will pick unseen room when given options between rooms and walkways
+		//when only one room is unseen that it goes to that room
+		((ComputerPlayer) testAI).remRoom();
+		testRoom = ((ComputerPlayer) testAI).findTarget(1);
+		comp = board.getRoom(testRoom);
+		comp1 = board.getRoom('F');
+		Assert.assertTrue(comp.equals(comp1));
+		
+		
+		//removes last room from unseen rooms list
+		//then runs findtarget and confirms that out of 500 at least 100 times a room or walkway is chosen
+		((ComputerPlayer) testAI).remRoomF();
+		int roomcount = 0;
+		int walkwaycount = 0;
+		for (int i = 0; i < 500; i++) {
+			testRoom = ((ComputerPlayer) testAI).findTarget(1);
+			if (testRoom.isRoom()) {
+				roomcount++;
+			} else {
+				walkwaycount++;
+			}
+		}
+		Assert.assertTrue(roomcount > 100);
+		Assert.assertTrue(walkwaycount > 100);
+		
+		//tests that when there are no rooms it randomly picks walkways making sure that it picks different walkways
+		//randomly
+		testAI.setPos(4, 5);
+		BoardCell prevCell = board.getCell(0, 0);
+		int count = 0;
+		for (int i = 0; i < 100; i++) {
+			testRoom = ((ComputerPlayer) testAI).findTarget(1);
+			if (prevCell != testRoom) {
+				count++;
+			}
+			prevCell = testRoom;
+		}
+		Assert.assertTrue(count > 1);
 	}
 }

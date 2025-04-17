@@ -105,12 +105,10 @@ public class ClueGame extends JFrame {
 				for (int col = 0; col < board.getNumColumns(); col++) {
 					board.getCell(row, col).draw(g, row, col, BOX_WIDTH, BOX_HEIGHT);
 					if (board.getCell(row, col).getOccupied()) {
-						//System.out.println("this plyer exists");
 						ArrayList<Player> players = board.getPlayers();
 						for (Player player : players) {
 							if (player.getRow() == row && player.getCol() == col) {
 								player.draw(g, row, col, BOX_WIDTH, BOX_HEIGHT);
-								//System.out.println("this player exists");
 							}
 						}
 					}

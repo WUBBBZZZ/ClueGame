@@ -271,7 +271,17 @@ public class Board {
 		cardsCopy.remove(randomNumber3);
 		cardsCopy.remove(randomNumber2);
 		cardsCopy.remove(randomNumber1);
-		
+		for (Player player : players) {
+			if (player instanceof ComputerPlayer) {
+				for (String room : rooms) {
+					char temp = room.charAt(0);
+					Room tempRoom = this.getRoom(temp);
+					((ComputerPlayer) player).initUnseen(tempRoom);
+				}
+			} else {
+				continue;
+			}
+		}
 		
 		//deals rest of deck to players
 		for (int j = 0; j < 18; j++) {
@@ -702,6 +712,18 @@ public class Board {
 				return player.disproveSuggestion(suggestion);
 			}
 		}
+		return null;
+	}
+	public Room doorToRoom(BoardCell cell) {
+		DoorDirection dir = cell.getDoorDirection();
+		int i = cell.getRow();
+		int j = cell.getCol();
+        switch (dir) {
+            case UP -> {return this.getRoom(getCell(i - 1, j));}
+            case DOWN -> {return this.getRoom(getCell(i + 1, j));}
+            case LEFT -> {return this.getRoom(getCell(i, j - 1));}
+            case RIGHT -> {return this.getRoom(getCell(i, j + 1));}
+        }
 		return null;
 	}
 }

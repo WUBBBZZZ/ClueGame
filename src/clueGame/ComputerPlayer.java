@@ -12,6 +12,7 @@ public class ComputerPlayer extends Player {
 	private ArrayList<Card> compCardsRand;
 	private ArrayList<Card> unseenWeap;
 	private ArrayList<Card> unseenPlayers;
+	private ArrayList<Room> unseenRooms;
 
 	public ComputerPlayer(String name, String color, int row, int col) {
 		super(name, color, row, col);
@@ -19,6 +20,7 @@ public class ComputerPlayer extends Player {
 		compCardsRand = new ArrayList<Card>();
 		unseenWeap  = new ArrayList<Card>();
 		unseenPlayers  = new ArrayList<Card>();
+		unseenRooms = new ArrayList<Room>();
 		numPlayers++;
 	}
 	
@@ -93,6 +95,9 @@ public Card disproveSuggestion(Solution solution) {
 		int y = Math.abs(rand.nextInt() % unseenWeap.size());
 		return new Solution(roomProp, unseenPlayers.get(x), unseenWeap.get(y));
 	}
+	public void initUnseen(Room room) {
+		unseenRooms.add(room);
+	}
 
 	@Override
 	public void reset() {
@@ -111,5 +116,54 @@ public Card disproveSuggestion(Solution solution) {
 		compCards.clear();
 		compCardsRand.clear();
 	}
-	
+	public BoardCell findTarget(int roll) {
+		Random rand = new Random();
+		Board board = Board.getInstance();
+		board.calcTargets(board.getCell(this.row, this.col), roll);
+		Set<BoardCell> targets = board.getTargets();
+		if (unseenRooms.isEmpty()) {
+			BoardCell checker = (BoardCell) targets.toArray()[(Math.abs(rand.nextInt() % (targets.size())))];
+			if (checker.isDoorway()) {
+				Room temp = board.doorToRoom(checker);
+				return temp.getCenterCell();
+			} else {
+				return checker;
+			}
+		}
+		ArrayList<BoardCell> unseen = new ArrayList<BoardCell>();
+		ArrayList<BoardCell> seen = new ArrayList<BoardCell>();
+		int roomCount = 0;
+		for (BoardCell target : targets) {
+			if (target.isDoorway()) {
+				Room temp = board.doorToRoom(target);
+				roomCount++;
+				if(unseenRooms.contains(temp)) {
+					unseen.add(temp.getCenterCell());
+				} else {
+					seen.add(temp.getCenterCell());
+				}
+			}
+		}
+		
+		if (unseen.size() > 0) {
+			return unseen.get(Math.abs(rand.nextInt() % (unseen.size())));
+		} else  if (roomCount > 0){
+			return seen.get(Math.abs(rand.nextInt() % (seen.size())));
+		} else {
+			ArrayList<BoardCell> tempCont = new ArrayList<>(targets);
+			return tempCont.get(Math.abs(rand.nextInt() % (tempCont.size())));
+		}
+	}
+	public ArrayList<Room> getRooms(){
+		return unseenRooms;
+	}
+	public void remRoom() {
+		for (int i = 8; i > 0; i--) {
+			unseenRooms.remove(i);
+		}
+		//System.out.println(unseenRooms);
+	} 
+	public void remRoomF() {
+		unseenRooms.clear();
+	}
 }

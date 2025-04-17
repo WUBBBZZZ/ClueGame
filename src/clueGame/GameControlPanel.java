@@ -23,6 +23,7 @@ public class GameControlPanel extends JPanel {
 		JPanel outerPanel = new JPanel();
 	    outerPanel.setLayout(new BorderLayout());
 	    outerPanel.setBorder(BorderFactory.createTitledBorder("Game Control Panel"));
+	   
 			//Upper JPanel (1x4)			
 			JPanel upperLongPanel = new JPanel(new GridLayout(1, 4));
 			
@@ -93,7 +94,6 @@ public class GameControlPanel extends JPanel {
 		outerPanel.add(lowerLongPanel, BorderLayout.SOUTH);
 		
 		this.add(outerPanel, BorderLayout.CENTER);
-				
 	}
 	
 	public void setTurn(ComputerPlayer player, int n) {

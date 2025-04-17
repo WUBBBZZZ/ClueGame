@@ -60,5 +60,9 @@ public class Room {
 	public ArrayList<BoardCell> getDoorCell(){
 		return this.doors;
 	}
+	@Override
+	public String toString() {
+		return this.name;
+	}
 }
 
