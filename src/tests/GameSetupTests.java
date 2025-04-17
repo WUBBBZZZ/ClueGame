@@ -50,7 +50,6 @@ public class GameSetupTests {
 	// Test to see if people are loaded in properly
 	@Test
 	public void testLoadPeople() throws BadConfigFormatException {
-		System.out.println("GameSetupTests test");
 		ArrayList<String> testPersons = new ArrayList<String>(List.of("Genji", "Sombra"));
 		//System.out.println(board.getPeople());
 		Assert.assertTrue(board.getPeople().get(1).equals(testPersons.get(1)));
