@@ -26,7 +26,10 @@ public class ClueGame extends JFrame {
 	public static final int BOX_MARGIN = 30;
 	
 	public ClueGame() {
-		setSize(880, 900);
+		board = Board.getInstance();
+		board.initialize();
+		
+		setSize(920, 900);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		drawPanel = new DrawPanel();
 		// paintComponent will automatically be called 1 time
@@ -38,6 +41,29 @@ public class ClueGame extends JFrame {
         // Create and add the ClueCardsPanel to the right.
         ClueCardsPanel cardsPanel = new ClueCardsPanel();
         add(cardsPanel, BorderLayout.EAST);
+	}
+	
+	//Clicking on game board
+	//Also ensure the edge case of no possible moves is handled gracefully
+	public void ClickerHelper() {
+		
+		//board clicked on. Ensure that all possible locations are highlighted on the board
+		
+		//if it is human player turn:
+			//if clicked on target:
+				//move player
+			//else:
+				//error message, end
+		//else:
+			//end
+		
+		//if in room:
+			//handle suggestion
+		//else:
+			//end
+		
+		//update result, end
+		
 	}
 	
 	// Do this second

@@ -2,6 +2,27 @@
 package clueGame;
 import java.util.*;
 
+import java.awt.Color;
+import java.awt.Graphics;
+
+import java.awt.BorderLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.Scanner;
+
+import javax.swing.ImageIcon;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.Timer;
+
+import org.junit.jupiter.api.BeforeAll;
+
+import javax.swing.JPanel;
+import javax.swing.JWindow;
+import javax.swing.SwingUtilities;
+
 import experiment.TestBoardCell;
 
 import java.io.*;	
@@ -41,6 +62,46 @@ public class Board {
 	 * variable and methods used for singleton pattern
 	 */
 	private static Board theInstance = new Board();
+	private static Board board;
+	
+	//Main method. Will be where the game is actually run.
+	public static void main(String[] args) {
+		
+		SwingUtilities.invokeLater(() -> {
+			
+			JOptionPane.showMessageDialog(
+					null,
+					"You are Genji.\nCan you find the solution\nbefore the Computer players?",
+					"Welcome to Clue",
+					JOptionPane.INFORMATION_MESSAGE
+					);
+			
+			board = Board.getInstance();
+			board.setConfigFiles("ClueLayout.csv", "ClueSetup.txt");
+			board.initialize();
+			
+			ClueGame frame = new ClueGame();
+			frame.setVisible(true);
+		});
+		
+		
+		//1: Display a splash screen. Specific information is covered in canvas.
+		//After it is closed, it is the first player's turn.
+		
+		//Loop through all players' turns
+		
+		
+		
+		
+		
+		//2: Implement functionality for the "next" button.
+		//This will involve setting up a ButtonListener in GameControlPanel.
+		//Specific functionality will be discussed in GameControlPanel
+		
+		//3: Clicking on the game board
+		//Extended functionality is described in the ClueGame class
+		
+	}
 
 	// Constructor is private to ensure only one can be created
 	private Board() {

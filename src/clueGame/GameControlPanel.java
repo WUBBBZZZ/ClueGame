@@ -96,6 +96,35 @@ public class GameControlPanel extends JPanel {
 		this.add(outerPanel, BorderLayout.CENTER);
 	}
 	
+	public void ButtonListenerHelper() {
+		
+		//Next Player Pressed
+		
+		//If Current human player finished: 
+			//update current player
+		//Else:
+			//error message, end.
+		
+		//Roll dice
+		
+		//Calc Targets
+		
+		//Update Game Control Panel
+		
+		//If new player human:
+			//display targets
+		//Else:
+			//Do accusation? (dummy this out)
+			//Do move
+			//Make suggestion? (dummy this out)
+			//end
+		
+		//Flag unfinished
+		
+		//End
+		
+	}
+	
 	public void setTurn(ComputerPlayer player, int n) {
 		playerName = player.getName();
 		playerNameField.setText(playerName);
