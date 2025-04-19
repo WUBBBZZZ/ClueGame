@@ -155,6 +155,11 @@ public class ClueCardsPanel extends JPanel {
 		
 	}
 	
+	//getter for checkSeen arraylist
+	public static ArrayList<Card> getCheckSeen() {
+		return checkSeen;
+	}
+	
 	public void setUp(Player player) {
 		//sets up player's cards
 		for (Card c : player.getHand()) {

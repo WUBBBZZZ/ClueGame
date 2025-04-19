@@ -190,13 +190,13 @@ public class BoardCell {
 			g.setColor(Color.BLACK);
 			g.drawRect(col, row, width, height);
 		} else if (this.isRoomCenter()){
-			g.setColor(Color.GREEN);
+			g.setColor(Color.ORANGE);
 			g.fillRect(col,  row,  width,  height);
 			g.drawRect(col, row, width, height);
 			g.setColor(Color.BLUE);
 			g.drawString(name, col, row);
 		}else {
-			g.setColor(Color.GREEN);
+			g.setColor(Color.ORANGE);
 			g.fillRect(col,  row,  width,  height);
 			g.drawRect(col, row, width, height);
 		}

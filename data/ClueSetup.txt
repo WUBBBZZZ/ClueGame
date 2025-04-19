@@ -14,7 +14,7 @@ Space, Walkway, W
 //-----------------------
 //People and weapons: 
 //-----------------------
-Person, Genji, Blue
+Person, Genji, Green
 Person, Sombra, Purple
 Person, Reinhardt, Gray
 Person, Doomfist, Red

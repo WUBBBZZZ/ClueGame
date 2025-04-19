@@ -20,6 +20,8 @@ public class ClueGame extends JFrame {
 	private static Board board;
 	
 	private DrawPanel drawPanel;
+	private GameControlPanel controlPanel;
+	private ClueCardsPanel cardsPanel;
 	private int dx, dy;
 	public static final int BOX_WIDTH = 30;
 	public static final int BOX_HEIGHT = 30;
@@ -35,12 +37,21 @@ public class ClueGame extends JFrame {
 		// paintComponent will automatically be called 1 time
 		add(drawPanel, BorderLayout.CENTER);
 		 // Create and add the GameControlPanel to the bottom.
-        GameControlPanel controlPanel = new GameControlPanel();
+        controlPanel = new GameControlPanel();
         add(controlPanel, BorderLayout.SOUTH);
         
         // Create and add the ClueCardsPanel to the right.
-        ClueCardsPanel cardsPanel = new ClueCardsPanel();
+        cardsPanel = new ClueCardsPanel();
         add(cardsPanel, BorderLayout.EAST);
+	}
+	
+	//getters for frame components
+	public GameControlPanel getControlPanel() {
+		return controlPanel;
+	}
+	
+	public ClueCardsPanel getCardsPanel() {
+		return cardsPanel;
 	}
 	
 	//Clicking on game board

@@ -96,6 +96,7 @@ public abstract class Player {
 	            case "red":    return Color.RED;
 	            case "white": return Color.WHITE;
 	            case "black":  return Color.DARK_GRAY;
+	            case "green":  return Color.GREEN;
 	            default:       return Color.BLACK; // fallback
 	        }
 	    }

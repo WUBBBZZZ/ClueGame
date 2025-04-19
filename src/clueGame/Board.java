@@ -63,6 +63,7 @@ public class Board {
 	 */
 	private static Board theInstance = new Board();
 	private static Board board;
+	private static ClueGame frame;
 	
 	//Main method. Will be where the game is actually run.
 	public static void main(String[] args) {
@@ -80,19 +81,34 @@ public class Board {
 			board.setConfigFiles("ClueLayout.csv", "ClueSetup.txt");
 			board.initialize();
 			
-			ClueGame frame = new ClueGame();
+			frame = new ClueGame();
 			frame.setVisible(true);
+			
+			//get players
+			HumanPlayer player1 = (HumanPlayer) board.players.get(0);
+			ComputerPlayer player2 = (ComputerPlayer) board.players.get(1);
+			ComputerPlayer player3 = (ComputerPlayer) board.players.get(2);
+			ComputerPlayer player4 = (ComputerPlayer) board.players.get(3);
+			ComputerPlayer player5 = (ComputerPlayer) board.players.get(4);
+			ComputerPlayer player6 = (ComputerPlayer) board.players.get(5);
+			
+			//humanPlayer turn
+			//updates player information
+			frame.getControlPanel().setTurn(player1, board.diceRoll());
+			//updates cards
+			ClueCardsPanel.getCheckSeen().add(player1.getSeen().get(0));
+			ClueCardsPanel.getCheckSeen().add(player1.getSeen().get(1));
+			ClueCardsPanel.getCheckSeen().add(player1.getSeen().get(2));
+			frame.getCardsPanel().setUp(player1);
+			
+			//now for the Next button
+			
+			
+			//all computerPlayer turns
+			
+			
+			
 		});
-		
-		
-		//1: Display a splash screen. Specific information is covered in canvas.
-		//After it is closed, it is the first player's turn.
-		
-		//Loop through all players' turns
-		
-		
-		
-		
 		
 		//2: Implement functionality for the "next" button.
 		//This will involve setting up a ButtonListener in GameControlPanel.
@@ -101,6 +117,13 @@ public class Board {
 		//3: Clicking on the game board
 		//Extended functionality is described in the ClueGame class
 		
+	}
+	
+	//helper for dice
+	public int diceRoll() {
+		Random rand = new Random();
+		int n = rand.nextInt(1,7);
+		return n;
 	}
 
 	// Constructor is private to ensure only one can be created

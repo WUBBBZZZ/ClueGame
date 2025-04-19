@@ -2,6 +2,8 @@ package clueGame;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class GameControlPanel extends JPanel {
 
@@ -15,6 +17,9 @@ public class GameControlPanel extends JPanel {
 	private JTextField rollField;
 	private JTextField guessField;
 	private JTextField guessResultField;
+	
+	private JButton button1;
+	private JButton button2;
 	
 	public GameControlPanel() {
 		
@@ -47,16 +52,29 @@ public class GameControlPanel extends JPanel {
 					rollField = new JTextField("0 ", 5);
 		
 				//JButton, "Make Accusation"
-				JButton button1 = new JButton("Make Accusation");
+				button1 = new JButton("Make Accusation");
 				button1.setBackground(Color.CYAN);
 				button1.setOpaque(true);
 				button1.setBorderPainted(true);
 		
 				//JButton, "NEXT"
-				JButton button2 = new JButton("NEXT");
+				button2 = new JButton("NEXT");
 				button2.setBackground(Color.GRAY);
 				button2.setOpaque(true);
 				button2.setBorderPainted(true);
+				button2.addActionListener(new ActionListener() {
+			        @Override
+			        public void actionPerformed(ActionEvent e) {
+			            // parent → the window that contains this panel:
+			            Window parent = SwingUtilities.getWindowAncestor(GameControlPanel.this);
+			            JOptionPane.showMessageDialog(
+			                parent,
+			                "You clicked NEXT!",
+			                "Next Turn",
+			                JOptionPane.INFORMATION_MESSAGE
+			            );
+			        }
+			    });
 		
 			//Lower JPanel (0x2)
 			JPanel lowerLongPanel = new JPanel(new GridLayout(1, 2));
@@ -125,7 +143,7 @@ public class GameControlPanel extends JPanel {
 		
 	}
 	
-	public void setTurn(ComputerPlayer player, int n) {
+	public void setTurn(Player player, int n) {
 		playerName = player.getName();
 		playerNameField.setText(playerName);
 		
@@ -184,3 +202,4 @@ public class GameControlPanel extends JPanel {
 	}
 	
 }
+
