@@ -1,21 +1,27 @@
 package clueGame;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Graphics;
 
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.Set;
 
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.Timer;
 
 import org.junit.jupiter.api.BeforeAll;
 
 import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
 
 public class ClueGame extends JFrame {
 
@@ -122,9 +128,57 @@ public class ClueGame extends JFrame {
 		private static DrawPanel panel;
 		
 		public DrawPanel() {
-			x = 10;
-			y = 15;
+			addMouseListener(new MouseAdapter() {
+	            @Override public void mouseReleased(MouseEvent e) {
+	                handleClick(e);
+	            }
+	        });
 		}
+		
+		private void handleClick(MouseEvent e) {
+		    int col = e.getX() / BOX_WIDTH;
+		    int row = e.getY() / BOX_HEIGHT;
+
+		    // guard against clicks outside the grid
+		    if (row < 0 || row >= board.getNumRows()) return;
+		    if (col < 0 || col >= board.getNumColumns()) return;
+
+		    BoardCell clicked = board.getCell(row, col);
+		    processClick(clicked);
+		}
+		
+		private void processClick(BoardCell cell) {
+		    //Player current = board.getPlayers().get(board.getCurrentPlayer());
+
+		    Player current = GameControlPanel.nextPlayer;
+		    
+
+		    // 2. allowed moves are the cyan targets you flagged earlier
+		    if (!cell.getHighlighted()) {
+		        JOptionPane.showMessageDialog(this,
+		                "You must click one of the highlighted squares.",
+		                "Illegal Move", JOptionPane.WARNING_MESSAGE);
+		        return;
+		    }
+
+		    // 3. perform the move
+		    BoardCell old = board.getCell(current.getRow(), current.getCol());
+		    old.setOccupied(false);
+
+		    current.setPos(cell.getRow(), cell.getCol());
+		    cell.setOccupied(true);
+
+		    board.clearHighlights();          // turn off cyan
+		    board.setIsFinished(true);        // mark turn done
+		    repaint();                        // one repaint after state changes
+		    
+		    GameControlPanel control = Board.getFrame().getControlPanel();
+		    SwingUtilities.invokeLater(() -> control.button2.setEnabled(true));
+		    
+		    //handle suggestion if in room
+		    
+		}
+
 		
 		// Do this second
 		public void translate(int dx, int dy) {

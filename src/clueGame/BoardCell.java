@@ -178,6 +178,10 @@ public class BoardCell {
 		highlighted = flag;
 	}
 	
+	public boolean getHighlighted() {
+		return highlighted;
+	}
+	
 	public void setBaseColor() {
 		if (this.getInitial() == 'W') {
 			baseColor = Color.YELLOW;

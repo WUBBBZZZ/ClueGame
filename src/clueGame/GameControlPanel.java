@@ -21,10 +21,11 @@ public class GameControlPanel extends JPanel {
 	private JTextField guessResultField;
 	
 	private JButton button1;
-	private JButton button2;
+	public JButton button2;
 	
 	private boolean next;
 	private Board board;
+	public static Player nextPlayer;
 	
 	public GameControlPanel() {
 		
@@ -138,7 +139,7 @@ public class GameControlPanel extends JPanel {
 				//error message, end.
 			if (Board.getIsFinished()) {	
 				
-				Player nextPlayer = board.getPlayers().get(board.getCurrentPlayer());
+				nextPlayer = board.getPlayers().get(board.getCurrentPlayer());
 				int number = this.diceRoll();
 				
 				//updates player, rolls dice
@@ -153,12 +154,15 @@ public class GameControlPanel extends JPanel {
 				
 				if (nextPlayer.getName().equals("Genji")) {
 					//highlighted squares are only visible to human player
+					board.setIsFinished(false);   
 					board.clearHighlights();
 					for (BoardCell cell : board.getTargets()) {
 						cell.setHighlighted(true);
 					}
+					button2.setEnabled(false); 
 					Board.getFrame().repaint();
-					//board.setIsFinished(false);
+
+					
 				} else {
 					board.clearHighlights();
 					
@@ -217,6 +221,11 @@ public class GameControlPanel extends JPanel {
 		//End
 		
 	}
+	
+	public void enableNext(boolean ok) {
+	    button2.setEnabled(ok);
+	}
+
 	
 	public void setTurn(Player player, int n) {
 		playerName = player.getName();
