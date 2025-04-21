@@ -18,6 +18,8 @@ public class BoardCell {
 	private char secretPassage;
 	private String name;
 	public static final char NO_SECRET_PASSAGE = 0;
+	private boolean highlighted = false;
+	private Color baseColor;
 
 	// Constructor with row and col inputs
 	public BoardCell(int r, int c) {
@@ -172,6 +174,30 @@ public class BoardCell {
 		
 	}
 	
+	public void setHighlighted(boolean flag) {
+		highlighted = flag;
+	}
+	
+	public void setBaseColor() {
+		if (this.getInitial() == 'W') {
+			baseColor = Color.YELLOW;
+		} else if (this.getInitial() == 'X') {
+			baseColor = Color.BLACK;
+		} else if (this.isRoomCenter()) {
+			baseColor = Color.ORANGE;
+		} else {
+			baseColor = Color.orange;
+		}
+	}
+	
+	public void drawTarget(Graphics g, int row, int col, int width, int height) {
+		row = row * 30;
+		col = col * 30;
+		g.setColor(Color.LIGHT_GRAY);
+		g.fillRect(col,  row,  width,  height);
+	}
+	
+	
 	//Draws BoardCells for the GUI
 	public void draw(Graphics g, int row, int col, int width, int height) {
 		//draw method for each board cell type
@@ -182,22 +208,38 @@ public class BoardCell {
 		if (this.getInitial() == 'W') {
 			g.setColor(Color.YELLOW);
 			g.fillRect(col,  row,  width,  height);
+			if (highlighted) {           
+	            g.setColor(Color.CYAN);
+	            g.fillRect(col, row, width, height);
+	        }
 			g.setColor(Color.BLACK);
 			g.drawRect(col, row, width, height);
 		} else if (this.getInitial() == 'X') {
 			g.setColor(Color.BLACK);
 			g.fillRect(col,  row,  width,  height);
+			if (highlighted) {           
+				g.setColor(Color.CYAN);
+	            g.fillRect(col, row, width, height);
+	        }
 			g.setColor(Color.BLACK);
 			g.drawRect(col, row, width, height);
 		} else if (this.isRoomCenter()){
 			g.setColor(Color.ORANGE);
 			g.fillRect(col,  row,  width,  height);
+			if (highlighted) {           
+				g.setColor(Color.CYAN);
+	            g.fillRect(col, row, width, height);
+	        }
 			g.drawRect(col, row, width, height);
 			g.setColor(Color.BLUE);
 			g.drawString(name, col, row);
 		}else {
 			g.setColor(Color.ORANGE);
 			g.fillRect(col,  row,  width,  height);
+			if (highlighted) {           
+				g.setColor(Color.CYAN);
+	            g.fillRect(col, row, width, height);
+	        }
 			g.drawRect(col, row, width, height);
 		}
 		if (this.isDoorway()) {

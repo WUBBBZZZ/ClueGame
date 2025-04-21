@@ -4,6 +4,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.Random;
 
 public class GameControlPanel extends JPanel {
 
@@ -21,10 +23,16 @@ public class GameControlPanel extends JPanel {
 	private JButton button1;
 	private JButton button2;
 	
+	private boolean next;
+	private Board board;
+	
 	public GameControlPanel() {
 		
 		//Outer JPanel (2x0) - GameControlPanel
 		//setLayout(new GridLayout(2, 1));
+		
+		next = false;
+		
 		setLayout(new BorderLayout());
 		JPanel outerPanel = new JPanel(new GridLayout(2, 1));
 	    outerPanel.setBorder(BorderFactory.createTitledBorder("Game Control Panel"));
@@ -62,18 +70,9 @@ public class GameControlPanel extends JPanel {
 				button2.setBackground(Color.GRAY);
 				button2.setOpaque(true);
 				button2.setBorderPainted(true);
-				button2.addActionListener(new ActionListener() {
-			        @Override
-			        public void actionPerformed(ActionEvent e) {
-			            // parent → the window that contains this panel:
-			            Window parent = SwingUtilities.getWindowAncestor(GameControlPanel.this);
-			            JOptionPane.showMessageDialog(
-			                parent,
-			                "You clicked NEXT!",
-			                "Next Turn",
-			                JOptionPane.INFORMATION_MESSAGE
-			            );
-			        }
+				button2.addActionListener(e -> {
+					ButtonListenerHelper();
+					
 			    });
 		
 			//Lower JPanel (0x2)
@@ -114,16 +113,92 @@ public class GameControlPanel extends JPanel {
 		this.add(outerPanel, BorderLayout.CENTER);
 	}
 	
+	public boolean buttonContinue() {
+		return next;
+	}
+	
+	//helper for dice
+		public int diceRoll() {
+			Random rand = new Random();
+			int n = rand.nextInt(1,7);
+			return n;
+		}
+	
 	public void ButtonListenerHelper() {
 		
-		//Next Player Pressed
+		SwingUtilities.invokeLater(() -> {
+			
+			board = Board.getInstance();
+			
+
+			//If Current human player finished: 
+				//update current player
+				
+			//Else:
+				//error message, end.
+			if (Board.getIsFinished()) {	
+				
+				Player nextPlayer = board.getPlayers().get(board.getCurrentPlayer());
+				int number = this.diceRoll();
+				
+				//updates player, rolls dice
+				int nextIndex = (board.getCurrentPlayer() + 1) % board.getPlayers().size();
+					
+				board.setCurrentPlayer(nextIndex);
+				this.setTurn(nextPlayer, number);
+				
+				//Calc targets and show possibilities
+				BoardCell playerLocation = board.getCell(nextPlayer.getRow(), nextPlayer.getCol());
+				board.calcTargets(playerLocation, number);
+				
+				if (nextPlayer.getName().equals("Genji")) {
+					//highlighted squares are only visible to human player
+					board.clearHighlights();
+					for (BoardCell cell : board.getTargets()) {
+						cell.setHighlighted(true);
+					}
+					Board.getFrame().repaint();
+					//board.setIsFinished(false);
+				} else {
+					board.clearHighlights();
+					
+					//do accusation?
+					
+					//move
+					
+					
+					BoardCell oldCell = board.getCell(nextPlayer.getRow(), nextPlayer.getCol());
+					oldCell.setOccupied(false);
+					int size = board.getTargets().size();
+					Random rand = new Random();
+					int n = rand.nextInt(size);
+					
+					int count = 0;
+					for (BoardCell cell : board.getTargets()) {
+						if (count == n) {
+							cell.setOccupied(true);
+							nextPlayer.setPos(cell.getRow(), cell.getCol());
+							
+						} 
+						
+						count++;
+					}
+					
+					Board.getFrame().repaint();
+					
+					//make suggestion?
+				}
+				
+			} else {
+				JOptionPane.showMessageDialog(
+				null,
+				"Finish your turn!",
+				"Turn not complete",
+				JOptionPane.INFORMATION_MESSAGE
+				);
+			}
 		
-		//If Current human player finished: 
-			//update current player
-		//Else:
-			//error message, end.
-		
-		//Roll dice
+		});
 		
 		//Calc Targets
 		
@@ -161,7 +236,7 @@ public class GameControlPanel extends JPanel {
         } else if (playerColor.equals("Red")) {
         	playerNameField.setBackground(Color.RED);
         	playerNameField.setOpaque(true);
-        } else if (playerColor.equals("Yellow")) {
+        } else if (playerColor.equals("White")) {
         	playerNameField.setBackground(Color.YELLOW);
         	playerNameField.setOpaque(true);
         } else if (playerColor.equals("Black")) {

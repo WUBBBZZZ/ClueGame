@@ -64,6 +64,8 @@ public class Board {
 	private static Board theInstance = new Board();
 	private static Board board;
 	private static ClueGame frame;
+	private static int currentPlayer;
+	private static boolean isFinished;
 	
 	//Main method. Will be where the game is actually run.
 	public static void main(String[] args) {
@@ -77,24 +79,25 @@ public class Board {
 					JOptionPane.INFORMATION_MESSAGE
 					);
 			
-			board = Board.getInstance();
-			board.setConfigFiles("ClueLayout.csv", "ClueSetup.txt");
-			board.initialize();
+			theInstance = Board.getInstance();
+			theInstance.setConfigFiles("ClueLayout.csv", "ClueSetup.txt");
+			theInstance.initialize();
 			
 			frame = new ClueGame();
 			frame.setVisible(true);
+			isFinished = true;
 			
 			//get players
-			HumanPlayer player1 = (HumanPlayer) board.players.get(0);
-			ComputerPlayer player2 = (ComputerPlayer) board.players.get(1);
-			ComputerPlayer player3 = (ComputerPlayer) board.players.get(2);
-			ComputerPlayer player4 = (ComputerPlayer) board.players.get(3);
-			ComputerPlayer player5 = (ComputerPlayer) board.players.get(4);
-			ComputerPlayer player6 = (ComputerPlayer) board.players.get(5);
+			HumanPlayer player1 = (HumanPlayer) theInstance.players.get(0);
+			ComputerPlayer player2 = (ComputerPlayer) theInstance.players.get(1);
+			ComputerPlayer player3 = (ComputerPlayer) theInstance.players.get(2);
+			ComputerPlayer player4 = (ComputerPlayer) theInstance.players.get(3);
+			ComputerPlayer player5 = (ComputerPlayer) theInstance.players.get(4);
+			ComputerPlayer player6 = (ComputerPlayer) theInstance.players.get(5);
 			
 			//humanPlayer turn
 			//updates player information
-			frame.getControlPanel().setTurn(player1, board.diceRoll());
+			frame.getControlPanel().setTurn(player1, theInstance.diceRoll());
 			//updates cards
 			ClueCardsPanel.getCheckSeen().add(player1.getSeen().get(0));
 			ClueCardsPanel.getCheckSeen().add(player1.getSeen().get(1));
@@ -102,10 +105,15 @@ public class Board {
 			frame.getCardsPanel().setUp(player1);
 			
 			//now for the Next button
+			//Set current player
+			currentPlayer = 0;
 			
 			
 			//all computerPlayer turns
-			
+			//frame.getControlPanel().setTurn(player3, board.diceRoll());
+			//frame.getControlPanel().setTurn(player4, board.diceRoll());
+			//frame.getControlPanel().setTurn(player5, board.diceRoll());
+			//frame.getControlPanel().setTurn(player6, board.diceRoll());
 			
 			
 		});
@@ -117,6 +125,31 @@ public class Board {
 		//3: Clicking on the game board
 		//Extended functionality is described in the ClueGame class
 		
+	}
+	
+	//getter for the frame
+	public static ClueGame getFrame() {
+		return frame;
+	}
+	
+	//getter for current player
+	public static int getCurrentPlayer() {
+		return currentPlayer;
+	}
+	
+	//setter for current player
+	public static void setCurrentPlayer(int n) {
+		currentPlayer = n;
+	}
+	
+	//getter for isFinished flag
+	public static boolean getIsFinished() {
+		return isFinished;
+	}
+		
+	//setter for isFinished flag
+	public static void setIsFinished(boolean n) {
+		isFinished = n;
 	}
 	
 	//helper for dice
@@ -811,4 +844,14 @@ public class Board {
         }
 		return null;
 	}
+	
+	public void clearHighlights() {
+        for (BoardCell[] row : grid) {
+            for (BoardCell cell : row) {
+                cell.setHighlighted(false);
+            }
+        }
+    }
+	
+	
 }

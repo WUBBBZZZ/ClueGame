@@ -8,6 +8,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.Set;
+
 import javax.swing.JFrame;
 import javax.swing.Timer;
 
@@ -29,7 +31,7 @@ public class ClueGame extends JFrame {
 	
 	public ClueGame() {
 		board = Board.getInstance();
-		board.initialize();
+		//board.initialize();
 		
 		setSize(920, 900);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -52,6 +54,10 @@ public class ClueGame extends JFrame {
 	
 	public ClueCardsPanel getCardsPanel() {
 		return cardsPanel;
+	}
+	
+	public DrawPanel getPanel() {
+		return drawPanel;
 	}
 	
 	//Clicking on game board
@@ -111,9 +117,9 @@ public class ClueGame extends JFrame {
 	
 	}
 	
-	private class DrawPanel extends JPanel {
+	public class DrawPanel extends JPanel {
 		private int x, y;
-		private DrawPanel panel;
+		private static DrawPanel panel;
 		
 		public DrawPanel() {
 			x = 10;
@@ -126,6 +132,24 @@ public class ClueGame extends JFrame {
 			y += dy;
 			
 			// Must include this to see changes
+			repaint();
+		}
+		
+		public void highlightTargets(Set<BoardCell> targets) {
+	        board = Board.getInstance();
+			board.clearHighlights();             // reset every cell’s flag
+			repaint();
+	        for (BoardCell c : targets) c.setHighlighted(true);
+	        repaint();                           // ask Swing to redraw the panel
+	    }
+		
+		public void paintTargets(Graphics g) {
+			super.paintComponent(g);
+			Board board = Board.getInstance();
+			
+			for (BoardCell cell : board.getTargets()) {
+				cell.drawTarget(g, cell.getRow(), cell.getCol(), BOX_WIDTH, BOX_HEIGHT);
+			}
 			repaint();
 		}
 		
