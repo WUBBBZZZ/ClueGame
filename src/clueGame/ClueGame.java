@@ -230,21 +230,6 @@ public class ClueGame extends JFrame {
 					repaint();
 				}
 			}
-			
-			//example
-			//g.setColor(Color.BLUE);
-			//g.fillRect(x,  y,  BOX_WIDTH,  BOX_HEIGHT);
-			//g.setColor(Color.RED);
-			//g.drawRect(x, y, BOX_WIDTH, BOX_HEIGHT);
-			
-			//Need to use the BoardCell class for this
-			//Drawing the walkways and doors:
-			
-			//Drawing the Rooms and secret passages, and using door information:
-			
-			//Drawing the empty spaces:
-			
-			//Drawing the players
 		}
 	}
 	
