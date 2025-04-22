@@ -189,48 +189,38 @@ public class ClueGame extends JFrame {
 			repaint();
 		}
 		
-		public void highlightTargets(Set<BoardCell> targets) {
-	        board = Board.getInstance();
-			board.clearHighlights();             // reset every cell’s flag
-			repaint();
-	        for (BoardCell c : targets) c.setHighlighted(true);
-	        repaint();                           // ask Swing to redraw the panel
+	    @Override
+	    public void paintComponent(Graphics g) {
+	        super.paintComponent(g);
+	        // Draw all cells and occupied tokens exactly once
+	        for (int row = 0; row < board.getNumRows(); row++) {
+	            for (int col = 0; col < board.getNumColumns(); col++) {
+	                board.getCell(row, col).draw(g, row, col, BOX_WIDTH, BOX_HEIGHT);
+	                if (board.getCell(row, col).getOccupied()) {
+	                    for (Player player : board.getPlayers()) {
+	                        if (player.getRow() == row && player.getCol() == col) {
+	                            player.draw(g, row, col, BOX_WIDTH, BOX_HEIGHT);
+	                        }
+	                    }
+	                }
+	            }
+	        }
 	    }
-		
-		public void paintTargets(Graphics g) {
-			super.paintComponent(g);
-			Board board = Board.getInstance();
-			
-			for (BoardCell cell : board.getTargets()) {
-				cell.drawTarget(g, cell.getRow(), cell.getCol(), BOX_WIDTH, BOX_HEIGHT);
-			}
-			repaint();
-		}
-		
-		// Do this first
-		@Override
-		public void paintComponent(Graphics g) {
-			super.paintComponent(g);
-			//Need to calculate cell size
-			//panel.getWidth();
-			//panel.getHeight();
-			
-			//Loops through all board cells, drawing each
-			for (int row = 0; row < board.getNumRows(); row++) {
-				for (int col = 0; col < board.getNumColumns(); col++) {
-					board.getCell(row, col).draw(g, row, col, BOX_WIDTH, BOX_HEIGHT);
-					if (board.getCell(row, col).getOccupied()) {
-						ArrayList<Player> players = board.getPlayers();
-						for (Player player : players) {
-							if (player.getRow() == row && player.getCol() == col) {
-								player.draw(g, row, col, BOX_WIDTH, BOX_HEIGHT);
-							}
-						}
-					}
-					repaint();
-				}
-			}
-		}
+
+	    public void paintTargets(Graphics g) {
+	        super.paintComponent(g);
+	        for (BoardCell cell : board.getTargets()) {
+	            cell.drawTarget(g, cell.getRow(), cell.getCol(), BOX_WIDTH, BOX_HEIGHT);
+	        }
+	    }
+
+	    public void highlightTargets(Set<BoardCell> targets) {
+	        board.clearHighlights();    
+	        for (BoardCell c : targets) {
+	            c.setHighlighted(true);
+	        }
+	        // Only one repaint() to update the display
+	        repaint();
+	    }
 	}
-	
 }
