@@ -23,11 +23,14 @@ public abstract class Player {
 		seenCards = new ArrayList<Card>();
 		unseenCards = new ArrayList<Card>();
 	}
-	
 	public abstract void updateHand(Card card);
 	public abstract ArrayList<Card> getHand();
 	
-	public abstract void reset();
+	public void reset() {
+	    // clear card tracking
+	    seenCards.clear();
+	    unseenCards.clear();
+	}
 	public void addUnseen(Card card) {
 		unseenCards.add(card);
 	}

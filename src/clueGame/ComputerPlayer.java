@@ -73,23 +73,11 @@ public Card disproveSuggestion(Solution solution) {
 	}
 	@Override
 	public Solution createSuggestion(Card roomProp) {
-		Random rand = new Random();
-		if (unseenPlayers.size() != 0 || unseenWeap.size() != 0) {
-			unseenPlayers.clear();
-			unseenWeap.clear();
-		}
-		for (Card card : this.unseenCards) {
-			if (card.getCardType() == CardType.ROOM) {
-				continue;
-			}else if (card.getCardType() == CardType.SUSPECT) {
-				unseenPlayers.add(card);
-			}else if (card.getCardType() == CardType.WEAPON) {
-				unseenWeap.add(card);
-			}
-		}
-		int x = Math.abs(rand.nextInt() % unseenPlayers.size());
-		int y = Math.abs(rand.nextInt() % unseenWeap.size());
-		return new Solution(roomProp, unseenPlayers.get(x), unseenWeap.get(y));
+	    Random rand = new Random();
+	    // unseenPlayers and unseenWeap are already up-to-date
+	    int x = rand.nextInt(unseenPlayers.size());
+	    int y = rand.nextInt(unseenWeap.size());
+	    return new Solution(roomProp, unseenPlayers.get(x), unseenWeap.get(y));
 	}
 	public void initUnseen(Room room) {
 		unseenRooms.add(room);
@@ -97,7 +85,14 @@ public Card disproveSuggestion(Solution solution) {
 
 	@Override
 	public void reset() {
-		numPlayers = 0;
+	    super.reset(); // clears seen/unseen lists
+	    // clear computer-specific card lists
+	    compCards.clear();
+	    compCardsRand.clear();
+	    unseenPlayers.clear();
+	    unseenWeap.clear();
+	    unseenRooms.clear();
+	    numPlayers = 0; // reset global count if desired
 	}
 	@Override
 	public ArrayList<Card> getWeap(){
