@@ -14,7 +14,7 @@ public abstract class Player {
 	protected int row, col;
 	protected ArrayList<Card> seenCards;
 	protected ArrayList<Card> unseenCards;
-	
+	public static final int CELL_SIZE = 30;
 	public Player(String name, String color, int row, int col) {
 		this.name = name;
 		this.color = color;
@@ -78,16 +78,13 @@ public abstract class Player {
 
 	    
 	public void draw(Graphics g, int row, int col, int width, int height) {
-		// Convert board coordinates to pixels:
-		row = row * 30;
-		col = col * 30;
+		int x = col * CELL_SIZE;
+	    int y = row * CELL_SIZE;
 	        
-	        g.setColor(convertToColor());
-	        // Draw a filled oval to represent the player's token
-	        g.fillOval(col, row, width, height);
-	        // Optionally, draw an outline
-	        g.setColor(Color.BLACK);
-	        g.drawOval(col, row, width, height);
+	    g.setColor(convertToColor());
+	    g.fillOval(x, y, width, height);
+	    g.setColor(Color.BLACK);
+	    g.drawOval(x, y, width, height);
 	    }
 	    
 	    // Helper method to convert string color to a Color object.
