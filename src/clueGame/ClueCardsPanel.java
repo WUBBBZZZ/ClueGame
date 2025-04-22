@@ -206,34 +206,53 @@ public class ClueCardsPanel extends JPanel {
 				}
 			}
 			
-				if (!n && c.getCardType().equals(CardType.ROOM)) {
-					JTextField newField = new JTextField(c.getCardName(), 20);
-			        roomsPanel.add(newField);
-			        roomsPanel.remove(roomsInSeen);
-			        JTextFieldHelper.recolor(player2, newField);
-			        // Update the layout:
-			        roomsPanel.revalidate();
-			        roomsPanel.repaint();
-				} else if (!n && c.getCardType().equals(CardType.SUSPECT)) {
-					JTextField newField = new JTextField(c.getCardName(), 20);
-					peoplePanel.add(newField);
-					peoplePanel.remove(peopleInSeen);
-					JTextFieldHelper.recolor(player2, newField);
-					peoplePanel.revalidate();
-					peoplePanel.repaint();
-				} else if (!n && c.getCardType().equals(CardType.WEAPON)) {
-					JTextField newField = new JTextField(c.getCardName(), 20);
-					weaponsPanel.add(newField);
-					weaponsPanel.remove(weaponsInSeen);
-					JTextFieldHelper.recolor(player2, newField);
-					weaponsPanel.revalidate();
-					weaponsPanel.repaint();
-				}
+			if (!n) {
+			    JTextField newField = createColoredField(c, player2);
+			    switch (c.getCardType()) {
+			        case ROOM -> {
+			            roomsPanel.add(newField);
+			            roomsPanel.remove(roomsInSeen);
+			            roomsPanel.revalidate();
+			            roomsPanel.repaint();
+			        }
+			        case SUSPECT -> {
+			            peoplePanel.add(newField);
+			            peoplePanel.remove(peopleInSeen);
+			            peoplePanel.revalidate();
+			            peoplePanel.repaint();
+			        }
+			        case WEAPON -> {
+			            weaponsPanel.add(newField);
+			            weaponsPanel.remove(weaponsInSeen);
+			            weaponsPanel.revalidate();
+			            weaponsPanel.repaint();
+			        }
+			    }
+			}
+
 				ClueCardsPanel.checkSeen.add(c);
 			
 		}
     }
 	
+	private JTextField createColoredField(Card card, Player player) {
+	    JTextField field = new JTextField(card.getCardName(), 20);
+
+	    // pick a background color based on the player’s color string
+	    switch (player.getColor().toLowerCase()) {
+	        case "green"  -> field.setBackground(Color.GREEN);
+	        case "purple" -> field.setBackground(Color.MAGENTA);
+	        case "gray"   -> field.setBackground(Color.GRAY);
+	        case "red"    -> field.setBackground(Color.RED);
+	        case "yellow" -> field.setBackground(Color.YELLOW);
+	        case "black"  -> field.setBackground(Color.DARK_GRAY);
+	        default       -> field.setBackground(Color.WHITE);
+	    }
+
+	    field.setOpaque(true);
+	    return field;
+	}
+
 	public class JTextFieldHelper {
 		
 		private static void recolor(Player player, JTextField field) {
