@@ -233,25 +233,8 @@ public class GameControlPanel extends JPanel {
 		
 		playerColor = player.getColor();
 		roll = n;
-        if (playerColor.equals("Green")) {
-        	playerNameField.setBackground(Color.GREEN);
-        	playerNameField.setOpaque(true);
-        } else if (playerColor.equals("Purple")) {
-        	playerNameField.setBackground(Color.MAGENTA);
-        	playerNameField.setOpaque(true);
-        } else if (playerColor.equals("Gray")) {
-        	playerNameField.setBackground(Color.GRAY);
-        	playerNameField.setOpaque(true);
-        } else if (playerColor.equals("Red")) {
-        	playerNameField.setBackground(Color.RED);
-        	playerNameField.setOpaque(true);
-        } else if (playerColor.equals("White")) {
-        	playerNameField.setBackground(Color.YELLOW);
-        	playerNameField.setOpaque(true);
-        } else if (playerColor.equals("Black")) {
-        	playerNameField.setBackground(Color.DARK_GRAY);
-        	playerNameField.setOpaque(true);
-        } 
+		playerNameField.setBackground(parseColor(playerColor));
+		playerNameField.setOpaque(true);
         
         rollField.setText(String.valueOf(roll));
 	}
@@ -284,6 +267,16 @@ public class GameControlPanel extends JPanel {
 		frame.setVisible(true); // make it visible
 		
 	}
-	
+	private Color parseColor(String color) {
+	    return switch(color.toLowerCase()) {
+	        case "green"  -> Color.GREEN;
+	        case "purple" -> Color.MAGENTA;
+	        case "gray"   -> Color.GRAY;
+	        case "red"    -> Color.RED;
+	        case "white"  -> Color.YELLOW;
+	        case "black"  -> Color.DARK_GRAY;
+	        default        -> Color.WHITE;
+	    };
+	}
 }
 
