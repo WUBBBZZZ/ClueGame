@@ -161,36 +161,27 @@ public class ClueCardsPanel extends JPanel {
 	}
 	
 	public void setUp(Player player) {
-		//sets up player's cards
-		for (Card c : player.getHand()) {
-		
-			if (c.getCardType().equals(CardType.ROOM)) {
-					JTextField newField = new JTextField(c.getCardName(), 20);
-			        roomsPanel.add(newField, 1);
-			        roomsPanel.remove(roomsInHand);
-			        JTextFieldHelper.recolor(player, newField);
-			        // Update the layout:
-			        roomsPanel.revalidate();
-			        roomsPanel.repaint();
-				} else if (c.getCardType().equals(CardType.SUSPECT)) {
-					JTextField newField = new JTextField(c.getCardName(), 20);
-					peoplePanel.add(newField, 1);
-					peoplePanel.remove(peopleInHand);
-					JTextFieldHelper.recolor(player, newField);
-					peoplePanel.revalidate();
-					peoplePanel.repaint();
-				} else if (c.getCardType().equals(CardType.WEAPON)) {
-					JTextField newField = new JTextField(c.getCardName(), 20);
-					weaponsPanel.add(newField, 1);
-					weaponsPanel.remove(weaponsInHand);
-					JTextFieldHelper.recolor(player, newField);
-					weaponsPanel.revalidate();
-					weaponsPanel.repaint();
-				}
-			ClueCardsPanel.checkSeen.add(c);
-			
-		}
-		
+	    for (Card c : player.getHand()) {
+	        JTextField newField = createColoredField(c, player);
+	        switch (c.getCardType()) {
+	            case ROOM -> {
+	                roomsPanel.add(newField, 1);
+	                roomsPanel.remove(roomsInHand);
+	            }
+	            case SUSPECT -> {
+	                peoplePanel.add(newField, 1);
+	                peoplePanel.remove(peopleInHand);
+	            }
+	            case WEAPON -> {
+	                weaponsPanel.add(newField, 1);
+	                weaponsPanel.remove(weaponsInHand);
+	            }
+	        }
+	        // only need one repaint/revalidate after the switch:
+	        roomsPanel.revalidate();
+	        roomsPanel.repaint();
+	        checkSeen.add(c);
+	    }
 	}
 	/*
 	 * player 1 is human player
@@ -253,7 +244,7 @@ public class ClueCardsPanel extends JPanel {
 	    return field;
 	}
 
-	public class JTextFieldHelper {
+	/*public class JTextFieldHelper {
 		
 		private static void recolor(Player player, JTextField field) {
 			
@@ -280,5 +271,5 @@ public class ClueCardsPanel extends JPanel {
 	        }
 		}
 		
-	}
+	}*/
 }
