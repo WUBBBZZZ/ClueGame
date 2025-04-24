@@ -164,8 +164,52 @@ public class ClueGame extends JFrame {
 		    // 3. perform the move
 		    BoardCell old = board.getCell(current.getRow(), current.getCol());
 		    old.setOccupied(false);
-
-		    current.setPos(cell.getRow(), cell.getCol());
+		    
+		    //Handle room center overlapping problem:
+		    if (cell.isRoomCenter() && cell.getOccupied() ) {
+		    	if (cell.getInitial() == 'P') {
+		    		
+		    		current.setPos(1, 0);
+		    		
+		    	} else if (cell.getInitial() == 'F') {
+		    		
+		    		current.setPos(1, 8);
+		    		
+		    	} else if (cell.getInitial() == 'T') {
+		    		
+		    		current.setPos(1, 14);
+		    		
+		    	} else if (cell.getInitial() == 'C') {
+		    		
+		    		current.setPos(4, 20);
+		    		
+		    	} else if (cell.getInitial() == 'O') {
+		    		
+		    		current.setPos(11, 18);
+		    		
+		    	} else if (cell.getInitial() == 'M') {
+		    		
+		    		current.setPos(18, 18);
+		    		
+		    	} else if (cell.getInitial() == 'G') {
+		    		
+		    		current.setPos(18, 8);
+		    		
+		    	} else if (cell.getInitial() == 'B') {
+		    		
+		    		current.setPos(17, 2);
+		    		
+		    	} else if (cell.getInitial() == 'A') {
+		    		
+		    		current.setPos(9, 2);
+		    	}
+		    		 
+		    } else {
+		    	current.setPos(cell.getRow(), cell.getCol());
+		    }
+		    System.out.println(current.getRow() + " " + current.getCol());
+			
+		    
 		    cell.setOccupied(true);
 
 		    board.clearHighlights();          // turn off cyan
@@ -198,9 +242,15 @@ public class ClueGame extends JFrame {
 	                board.getCell(row, col).draw(g, row, col, BOX_WIDTH, BOX_HEIGHT);
 	                if (board.getCell(row, col).getOccupied()) {
 	                    for (Player player : board.getPlayers()) {
-	                        if (player.getRow() == row && player.getCol() == col) {
-	                            player.draw(g, row, col, BOX_WIDTH, BOX_HEIGHT);
+	                    	player.draw(g, player.getRow(), player.getCol(), BOX_WIDTH, BOX_HEIGHT);
+	                    	/*
+	                    	if (player.getRow() == row && player.getCol() == col) {
+	                    		
+	                    		  //Handle room center overlapping problem:
+	                    		
+	                    		player.draw(g, row, col, BOX_WIDTH, BOX_HEIGHT);
 	                        }
+	                    */
 	                    }
 	                }
 	            }

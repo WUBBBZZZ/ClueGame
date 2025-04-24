@@ -1,3 +1,86 @@
+commit 02b0cc28974c3fe42025289aa0b644a6b441fe7e
+Author: TristanKarno <tristan_karno@mines.edu>
+Date:   Mon Apr 21 12:33:44 2025 -0600
+
+    Finished player movement. assignment finished.
+    
+    All required functionality for 2: clickign on game board is finished.
+
+commit 3a653b784667848ae6bf328b8ca5eace1f267a9b
+Author: TristanKarno <tristan_karno@mines.edu>
+Date:   Sun Apr 20 22:26:39 2025 -0600
+
+    Finished Next button
+    
+    Next button iterates to the next player. Human player's options are highlighted on board. Computer players make their own moves, and this shows on the board. Extended fucntionality for when human player hasn't acted, they cannot press next unless a window pops up preventing further action.
+
+commit 912d129edb92e1b7394413073102690c1ee45652
+Author: TristanKarno <tristan_karno@mines.edu>
+Date:   Fri Apr 18 18:50:25 2025 -0600
+
+    Started on the game logic. Still need to finish next button, and clicking on board panels
+
+commit 2bd537af236f419bcb89e2e471768d2b3ced009f
+Author: TristanKarno <tristan_karno@mines.edu>
+Date:   Fri Apr 18 17:31:53 2025 -0600
+
+    Splash Screen finished. The game is running in the Board class.
+
+commit 6ccf1ade7cc1b5114382a323683fba18c973bb49
+Author: WUBBBZZZ <112722551+WUBBBZZZ@users.noreply.github.com>
+Date:   Thu Apr 17 12:55:36 2025 -0600
+
+    changed on thing in reset function
+
+commit 6565b0b4ce37e6fac60ae700295a65ced88b1d33
+Author: WUBBBZZZ <112722551+WUBBBZZZ@users.noreply.github.com>
+Date:   Thu Apr 17 12:50:14 2025 -0600
+
+    removed print from test cases
+
+commit e8ffbc246cc0ab10e00d3a5f8a3b2fc2f8455cef
+Merge: 53d656f db29043
+Author: WUBBBZZZ <112722551+WUBBBZZZ@users.noreply.github.com>
+Date:   Thu Apr 17 12:20:27 2025 -0600
+
+    Merge branch 'main' of https://github.com/WUBBBZZZ/ClueGame
+
+commit 53d656f4c0444af718d2f48a153d55d8c3a235ba
+Author: WUBBBZZZ <112722551+WUBBBZZZ@users.noreply.github.com>
+Date:   Thu Apr 17 12:19:21 2025 -0600
+
+    finished test
+    
+    finished AI target tests meeting requirements
+
+commit db2904301bf7652ff39d109488807c05dc322d74
+Author: TristanKarno <tristan_karno@mines.edu>
+Date:   Tue Apr 15 13:21:47 2025 -0600
+
+    Polished and finished C22A. Board now displays correctly.
+
+commit 59392fc9972aae786783081887cad7da621180f8
+Author: WUBBBZZZ <112722551+WUBBBZZZ@users.noreply.github.com>
+Date:   Tue Apr 15 11:58:34 2025 -0600
+
+    updated gui
+    
+    added together gui components so cards, board, and game controls all appear in the same gui and drew players and doorways
+
+commit 26aba5ef20579e84a7a9c8abdc86df7f913d04bd
+Author: WUBBBZZZ <112722551+WUBBBZZZ@users.noreply.github.com>
+Date:   Sun Apr 13 16:52:49 2025 -0600
+
+    Update .classpath
+
+commit 1a2dffc599f662d4a6277f3681edd83f04e5bb56
+Author: TristanKarno <tristan_karno@mines.edu>
+Date:   Sat Apr 12 20:01:22 2025 -0600
+
+    Started C22A
+    
+    Implemented basic functionality. PaintComponent() works with draw() to create a graphic of the board. Only walkways, empty space and rooms are completed. Rooms are only generic so far; need to be further developed. Size of the board also needs to be instantiated. Rooms need to be further modified so as to show door direction. Need to add a title. Need to add players. Finally, will need to be able to be displayed along with two other panels made in previous assignments.
+
 commit e358ef22f9fec84f4f2bf26d9ee03216c4af3c7f
 Author: TristanKarno <tristan_karno@mines.edu>
 Date:   Tue Apr 8 21:34:29 2025 -0600
