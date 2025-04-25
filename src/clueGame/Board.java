@@ -852,6 +852,23 @@ public class Board {
             }
         }
     }
-	
-	
+	public Solution getSolution() {
+		return this.theSolution;
+	}
+	public void move(int row, int col, BoardCell target) {
+		BoardCell beg = this.getCell(row, col);
+		BoardCell end = this.getCell(target.getRow(), target.getCol());
+		beg.setOccupied(false);
+		end.setOccupied(true);
+	}
+	public Card getCard(String name) {
+		for (Card card : cards) {
+			if (card.getCardName().equals(name)) {
+				return card;
+			}
+		}
+		System.out.println("Card doesnt exist:");
+		System.out.println(name);
+		return null;
+	}
 }

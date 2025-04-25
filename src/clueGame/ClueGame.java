@@ -11,6 +11,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
+import java.util.Random;
 import java.util.Scanner;
 import java.util.Set;
 
@@ -120,8 +121,33 @@ public class ClueGame extends JFrame {
 	
 	//Each BoardCell in grid will be iterated, and functions will take its
 	//information and draw a correspNnding graphic.
-	
+	Solution solution = new Solution(null, null, null);
+	while (solution != board.getSolution()) {
+		int roll = board.diceRoll();
+		for(Player player : board.getPlayers()) {
+			if (player instanceof HumanPlayer) {//player turn
+				int row = player.getRow();
+				int col = player.getCol();
+				BoardCell start = board.getCell(row, col);
+				board.calcTargets(start, roll);
+				Set<BoardCell> targets = board.getTargets();
+				//update board to highlight target locations 
+				//accept player input to move 
+				//change player location
+			} else { //computer turn
+				BoardCell target = ((ComputerPlayer) player).findTarget(roll);
+				player.move(target);
+				board.move(player.getRow(), player.getCol(), target);
+				BoardCell curr = board.getCell(target.getRow(), target.getCol());
+				if (curr.isRoom()){
+					String name = board.getRoom(target).getName();
+					Card currRoom = board.getCard(name);
+					Solution tempSol = player.createSuggestion(currRoom); //solution to check and disprove
+				}
+			}
+		}
 	}
+}
 	
 	public class DrawPanel extends JPanel {
 		private int x, y;

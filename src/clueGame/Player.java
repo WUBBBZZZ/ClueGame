@@ -75,7 +75,11 @@ public abstract class Player {
 
 	public abstract ArrayList<Card> getPlayers();
 	public abstract void deleteHand();
-
+	
+	public void move(BoardCell target) {
+		this.row = target.getRow();
+		this.col = target.getCol();
+	}
 	    
 	public void draw(Graphics g, int row, int col, int width, int height) {
 		int x = col * CELL_SIZE;
