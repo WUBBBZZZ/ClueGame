@@ -1,6 +1,7 @@
 package clueGame;
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -10,6 +11,7 @@ import java.util.HashSet;
 public abstract class Player {
 
 	protected String name;
+	private BufferedImage sprite;
 	protected String color;
 	protected int row, col;
 	protected ArrayList<Card> seenCards;
@@ -25,6 +27,10 @@ public abstract class Player {
 	}
 	public abstract void updateHand(Card card);
 	public abstract ArrayList<Card> getHand();
+	
+	public void setSprite(String artFile) {
+		sprite = Art.load(artFile);
+	}
 	
 	public void reset() {
 	    // clear card tracking
@@ -85,11 +91,23 @@ public abstract class Player {
 		int x = col * CELL_SIZE;
 	    int y = row * CELL_SIZE;
 	        
+	    // scale sprite to cell, keep aspect ratio
+	    double scale = Math.min((double) CELL_SIZE / sprite.getWidth(),
+	                            (double) CELL_SIZE / sprite.getHeight());
+	    int sw = (int) (sprite.getWidth()  * scale);
+	    int sh = (int) (sprite.getHeight() * scale);
+	    int sx = x + (CELL_SIZE - sw) / 2;
+	    int sy = y + (CELL_SIZE - sh) / 2;
+
+	    g.drawImage(sprite, sx, sy, sw, sh, null);
+	    /*
 	    g.setColor(convertToColor());
 	    g.fillOval(x, y, width, height);
 	    g.setColor(Color.BLACK);
 	    g.drawOval(x, y, width, height);
+	    */
 	    }
+	
 	    
 	    // Helper method to convert string color to a Color object.
 	    private Color convertToColor() {

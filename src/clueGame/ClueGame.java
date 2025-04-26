@@ -10,6 +10,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
@@ -152,6 +153,8 @@ public class ClueGame extends JFrame {
 	public class DrawPanel extends JPanel {
 		private int x, y;
 		private static DrawPanel panel;
+		private final BufferedImage bg = Art.load("eldensrings.png");
+
 		
 		public DrawPanel() {
 			addMouseListener(new MouseAdapter() {
@@ -262,6 +265,10 @@ public class ClueGame extends JFrame {
 	    @Override
 	    public void paintComponent(Graphics g) {
 	        super.paintComponent(g);
+	        
+	        //draw background
+	        g.drawImage(bg, 0, 0, getWidth(), getHeight(), this);
+	        
 	        // Draw all cells and occupied tokens exactly once
 	        for (int row = 0; row < board.getNumRows(); row++) {
 	            for (int col = 0; col < board.getNumColumns(); col++) {

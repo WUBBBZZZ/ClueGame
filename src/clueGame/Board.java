@@ -69,7 +69,8 @@ public class Board {
 	
 	//Main method. Will be where the game is actually run.
 	public static void main(String[] args) {
-		
+		//System.out.println(Art.class.getResource("/art/eldensrings.png"));
+
 		SwingUtilities.invokeLater(() -> {
 			
 			JOptionPane.showMessageDialog(
@@ -94,6 +95,14 @@ public class Board {
 			ComputerPlayer player4 = (ComputerPlayer) theInstance.players.get(3);
 			ComputerPlayer player5 = (ComputerPlayer) theInstance.players.get(4);
 			ComputerPlayer player6 = (ComputerPlayer) theInstance.players.get(5);
+			
+			//set sprites
+			player1.setSprite("scout.png");
+			player2.setSprite("spy.png");
+			player3.setSprite("heavy.png");
+			player4.setSprite("demoman.png");
+			player5.setSprite("medic.png");
+			player6.setSprite("pyro.png");
 			
 			//humanPlayer turn
 			//updates player information
