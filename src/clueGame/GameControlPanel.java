@@ -14,7 +14,7 @@ public class GameControlPanel extends JPanel {
 	private int roll;
 	private String guess = "";
 	private String guessResult = "";
-	
+	private boolean suggestionMade = false;
 	private JTextField playerNameField;
 	private JTextField rollField;
 	private JTextField guessField;
@@ -66,11 +66,25 @@ public class GameControlPanel extends JPanel {
 				button1.setOpaque(true);
 				button1.setBorderPainted(true);
 				button1.addActionListener(e -> {
+					Player current = Board.getInstance().getPlayers().get(
+						    Board.getInstance().getCurrentPlayer()
+						);
+						//if (!(current instanceof HumanPlayer)) {
+						    // should never happen if setTurn is correct, but just in case:
+						    //return;
+						//}
 				    //grab the board & the human
 				    Board board = Board.getInstance();
 				    Player human = board.getPlayers().get(board.getCurrentPlayer());
-
-				    //make sure they’re in a room
+				    if (suggestionMade) {
+				        JOptionPane.showMessageDialog(
+				            this,
+				            "You’ve already made a suggestion this turn!",
+				            "Suggestion used",
+				            JOptionPane.INFORMATION_MESSAGE
+				        );
+				        return;
+				    }
 				    BoardCell loc = board.getCell(human.getRow(), human.getCol());
 				    if (!loc.isRoom()) {
 				        JOptionPane.showMessageDialog(
@@ -98,9 +112,19 @@ public class GameControlPanel extends JPanel {
 				    // (e) pull back what they chose
 				    Solution s = dlg.getSuggestion();
 				    if (s != null) {
-				        // update ControlPanel display
 				        setGuess(s.toString());
-				        //board.handleSuggestion(s);
+
+				        // 1) grab your Board singleton
+				        board = Board.getInstance();
+
+				        // 2) look up each Card by name
+				        Card personCard = board.getCard(s.getPerson());
+				        Card weaponCard = board.getCard(s.getWeapon());
+				        Card roomCard   = board.getCard( s.getRoom());
+				        clueGame.Solution sol = new clueGame.Solution(personCard, weaponCard, roomCard);
+				        board.handleSuggestion(sol);
+				        suggestionMade = true;
+				        button1.setEnabled(false);
 				    }
 
 				    // (f) re-enable NEXT
@@ -397,6 +421,13 @@ public class GameControlPanel extends JPanel {
 
 	
 	public void setTurn(Player player, int n) {
+		if (player instanceof HumanPlayer) {
+			suggestionMade = false;
+		    button1.setEnabled(true);
+		} else {
+	        //suggestionMade = true;
+	        //button1.setEnabled(false);
+		}
 		playerName = player.getName();
 		playerNameField.setText(playerName);
 		
