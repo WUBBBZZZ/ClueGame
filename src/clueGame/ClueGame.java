@@ -72,7 +72,7 @@ public class ClueGame extends JFrame {
 	public void ClickerHelper() {
 		
 		//board clicked on. Ensure that all possible locations are highlighted on the board
-		
+		//if (controlPanel.get)
 		//if it is human player turn:
 			//if clicked on target:
 				//move player

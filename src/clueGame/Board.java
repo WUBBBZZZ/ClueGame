@@ -103,17 +103,18 @@ public class Board {
 			ClueCardsPanel.getCheckSeen().add(player1.getSeen().get(1));
 			ClueCardsPanel.getCheckSeen().add(player1.getSeen().get(2));
 			frame.getCardsPanel().setUp(player1);
-			
+				
 			//now for the Next button
 			//Set current player
 			currentPlayer = 0;
-			
-			
+				
+				
 			//all computerPlayer turns
-			//frame.getControlPanel().setTurn(player3, board.diceRoll());
-			//frame.getControlPanel().setTurn(player4, board.diceRoll());
-			//frame.getControlPanel().setTurn(player5, board.diceRoll());
-			//frame.getControlPanel().setTurn(player6, board.diceRoll());
+			frame.getControlPanel().setTurn(player3, board.diceRoll());
+			frame.getControlPanel().setTurn(player4, board.diceRoll());
+			frame.getControlPanel().setTurn(player5, board.diceRoll());
+			frame.getControlPanel().setTurn(player6, board.diceRoll());
+				
 			
 			
 		});
