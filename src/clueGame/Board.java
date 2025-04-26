@@ -1,15 +1,13 @@
 //TODO add class string
 package clueGame;
 import java.util.*;
-
+import java.util.stream.Collectors;
 import java.awt.Color;
 import java.awt.Graphics;
 
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
-import java.util.Scanner;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
@@ -872,4 +870,12 @@ public class Board {
 		System.out.println(name);
 		return null;
 	}
+
+	public List<String> getNames() {
+	    return cards.stream().filter(c -> c.getCardType() == CardType.SUSPECT).map(Card::getCardName).collect(Collectors.toList());
+	}
+	public List<String> getWeaponNames() {
+	    return cards.stream().filter(c -> c.getCardType() == CardType.WEAPON).map(Card::getCardName).collect(Collectors.toList());
+	}
+
 }

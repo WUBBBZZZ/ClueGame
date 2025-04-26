@@ -65,7 +65,48 @@ public class GameControlPanel extends JPanel {
 				button1.setBackground(Color.CYAN);
 				button1.setOpaque(true);
 				button1.setBorderPainted(true);
-		
+				button1.addActionListener(e -> {
+				    //grab the board & the human
+				    Board board = Board.getInstance();
+				    Player human = board.getPlayers().get(board.getCurrentPlayer());
+
+				    //make sure they’re in a room
+				    BoardCell loc = board.getCell(human.getRow(), human.getCol());
+				    if (!loc.isRoom()) {
+				        JOptionPane.showMessageDialog(
+				            this,
+				            "You must be in a room to make a suggestion!",
+				            "Not in a room",
+				            JOptionPane.WARNING_MESSAGE
+				        );
+				        return;
+				    }
+
+				    //collect the two lists for the combo-boxes
+				    java.util.List<String> people  = board.getNames();
+				    java.util.List<String> weapons = board.getWeaponNames();
+
+				    // show the modal dialog
+				    SuggestionDialog dlg = new SuggestionDialog(
+				        (Frame) SwingUtilities.getWindowAncestor(this),
+				        people,
+				        weapons,
+				        board.getRoom(loc).getName()
+				    );
+				    dlg.setVisible(true);
+
+				    // (e) pull back what they chose
+				    Solution s = dlg.getSuggestion();
+				    if (s != null) {
+				        // update ControlPanel display
+				        setGuess(s.toString());
+				        //board.handleSuggestion(s);
+				    }
+
+				    // (f) re-enable NEXT
+				    button2.setEnabled(true);
+				});
+
 				//JButton, "NEXT"
 				button2 = new JButton("NEXT");
 				button2.setBackground(Color.GRAY);
@@ -73,7 +114,6 @@ public class GameControlPanel extends JPanel {
 				button2.setBorderPainted(true);
 				button2.addActionListener(e -> {
 					ButtonListenerHelper();
-					
 			    });
 		
 			//Lower JPanel (0x2)
@@ -152,7 +192,6 @@ public class GameControlPanel extends JPanel {
 				//Calc targets and show possibilities
 				BoardCell playerLocation = board.getCell(nextPlayer.getRow(), nextPlayer.getCol());
 				board.calcTargets(playerLocation, number);
-				
 				if (nextPlayer.getName().equals("Genji")) {
 					//highlighted squares are only visible to human player
 					board.setIsFinished(false);   
@@ -408,5 +447,92 @@ public class GameControlPanel extends JPanel {
 	        default        -> Color.WHITE;
 	    };
 	}
+	public class Solution {
+	    private String person, weapon, room;
+	    public Solution(String person, String weapon, String room) {
+	        this.person = person;
+	        this.weapon = weapon;
+	        this.room   = room;
+	    }
+	    public String getPerson() { return person; }
+	    public String getWeapon() { return weapon; }
+	    public String getRoom()   { return room;   }
+	    @Override
+	    public String toString() {
+	        return String.format("%s in the %s with the %s", person, room, weapon);
+	    }
+	}
+
+
+	public class SuggestionDialog extends JDialog {
+	    private JComboBox<String> personBox, weaponBox;
+	    private JTextField roomField;
+	    private Solution suggestion = null;
+
+	    public SuggestionDialog(Frame owner,
+	                            java.util.List<String> people,
+	                            java.util.List<String> weapons,
+	                            String currentRoom)
+	    {
+	        super(owner, "Make a Suggestion", true);
+	        setLayout(new GridBagLayout());
+	        GridBagConstraints gbc = new GridBagConstraints();
+	        gbc.insets = new Insets(4,4,4,4);
+	        gbc.fill = GridBagConstraints.HORIZONTAL;
+
+	        // Room (read-only)
+	        gbc.gridx=0; gbc.gridy=0;
+	        add(new JLabel("Room:"), gbc);
+	        roomField = new JTextField(currentRoom);
+	        roomField.setEditable(false);
+	        gbc.gridx=1;
+	        add(roomField, gbc);
+
+	        // Person dropdown
+	        gbc.gridx=0; gbc.gridy=1;
+	        add(new JLabel("Person:"), gbc);
+	        personBox = new JComboBox<>(people.toArray(new String[0]));
+	        gbc.gridx=1;
+	        add(personBox, gbc);
+
+	        // Weapon dropdown
+	        gbc.gridx=0; gbc.gridy=2;
+	        add(new JLabel("Weapon:"), gbc);
+	        weaponBox = new JComboBox<>(weapons.toArray(new String[0]));
+	        gbc.gridx=1;
+	        add(weaponBox, gbc);
+
+	        // Buttons
+	        JPanel buttonRow = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+	        JButton submit = new JButton("Submit");
+	        JButton cancel = new JButton("Cancel");
+	        buttonRow.add(submit);
+	        buttonRow.add(cancel);
+
+	        gbc.gridx=0; gbc.gridy=3;
+	        gbc.gridwidth=2;
+	        add(buttonRow, gbc);
+
+	        // Button logic
+	        submit.addActionListener(e -> {
+	            suggestion = new Solution(
+	                (String)personBox.getSelectedItem(),
+	                (String)weaponBox.getSelectedItem(),
+	                roomField.getText()
+	            );
+	            dispose();
+	        });
+	        cancel.addActionListener(e -> dispose());
+
+	        pack();
+	        setLocationRelativeTo(owner);
+	    }
+
+	    /** @return the Solution chosen, or null if Cancel was hit. */
+	    public Solution getSuggestion() {
+	        return suggestion;
+	    }
+	}
+
 }
 
