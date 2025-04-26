@@ -121,7 +121,7 @@ public class ClueGame extends JFrame {
 	
 	//Each BoardCell in grid will be iterated, and functions will take its
 	//information and draw a correspNnding graphic.
-	Solution solution = new Solution(null, null, null);
+	/*Solution solution = new Solution(null, null, null);
 	while (solution != board.getSolution()) {
 		int roll = board.diceRoll();
 		for(Player player : board.getPlayers()) {
@@ -146,7 +146,7 @@ public class ClueGame extends JFrame {
 				}
 			}
 		}
-	}
+	}*/
 }
 	
 	public class DrawPanel extends JPanel {
