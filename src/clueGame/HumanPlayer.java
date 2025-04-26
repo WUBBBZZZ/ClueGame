@@ -67,8 +67,15 @@ public class HumanPlayer extends Player {
 	}
 	@Override
 	public ArrayList<Card> getWeap() {
-		// TODO Auto-generated method stub
-		return null;
+		ArrayList<Card> temp = new ArrayList<>();
+		for (Card card : seenCards) {
+			if (card.getCardType() == CardType.WEAPON) {
+				temp.add(card);
+			} else {
+				continue;
+			}
+		}
+		return temp;
 	}
 	@Override
 	public ArrayList<Card> getPlayers() {

@@ -28,7 +28,7 @@ import javax.swing.SwingUtilities;
 public class ClueGame extends JFrame {
 
 	private static Board board;
-	
+	private static ClueGame instance;
 	private DrawPanel drawPanel;
 	private GameControlPanel controlPanel;
 	private ClueCardsPanel cardsPanel;
@@ -38,6 +38,7 @@ public class ClueGame extends JFrame {
 	public static final int BOX_MARGIN = 30;
 	
 	public ClueGame() {
+		instance = this;
 		board = Board.getInstance();
 		//board.initialize();
 		
@@ -67,13 +68,16 @@ public class ClueGame extends JFrame {
 	public DrawPanel getPanel() {
 		return drawPanel;
 	}
-	
+	public static ClueGame getFrame() {
+		return instance;
+	}
+
 	//Clicking on game board
 	//Also ensure the edge case of no possible moves is handled gracefully
 	public void ClickerHelper() {
 		
 		//board clicked on. Ensure that all possible locations are highlighted on the board
-		
+		//if (controlPanel.get)
 		//if it is human player turn:
 			//if clicked on target:
 				//move player
