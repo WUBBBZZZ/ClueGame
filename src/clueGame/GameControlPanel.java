@@ -425,8 +425,8 @@ public class GameControlPanel extends JPanel {
 			suggestionMade = false;
 		    button1.setEnabled(true);
 		} else {
-	        //suggestionMade = true;
-	        //button1.setEnabled(false);
+	        suggestionMade = true;
+	        button1.setEnabled(false);
 		}
 		playerName = player.getName();
 		playerNameField.setText(playerName);
