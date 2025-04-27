@@ -1,6 +1,9 @@
 package clueGame;
 
 import javax.swing.*;
+
+import clueGame.GameControlPanel.Solution;
+
 import java.awt.*;
 import java.util.List;
 
@@ -56,11 +59,12 @@ public class AccusationDialog extends JDialog {
             accusation = new Solution(
                 (String)personBox.getSelectedItem(),
                 (String)weaponBox.getSelectedItem(),
-                (String)roomBox.getSelectedItem()
+                roomField.getText()
             );
             dispose();
         });
         cancel.addActionListener(e -> dispose());
+
 
         pack();
         setLocationRelativeTo(owner);
