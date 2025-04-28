@@ -2,8 +2,6 @@ package clueGame;
 
 import javax.swing.*;
 
-import clueGame.GameControlPanel.Solution;
-
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -24,6 +22,7 @@ public class GameControlPanel extends JPanel {
 	private JTextField guessField;
 	private JTextField guessResultField;
 	private static JTextField roomField;
+	public Card newCard;
 	
 	private JButton button1;
 	public JButton button2;
@@ -144,7 +143,7 @@ public class GameControlPanel extends JPanel {
 				        } else {
 				        	JOptionPane.showMessageDialog(
 									null,
-									"YOU DIED",
+									"YOU DIED\n Answer was " + board.getSolution().getPersonSol().getCardName() + " " + board.getSolution().getWeaponSol().getCardName() + " " + board.getSolution().getRoomSol().getCardName() + " ",
 									"Git Gud",
 									JOptionPane.INFORMATION_MESSAGE
 									);
@@ -259,6 +258,8 @@ public class GameControlPanel extends JPanel {
 					}
 					button2.setEnabled(false); 
 					Board.getFrame().repaint();
+					
+					
 
 					
 				} else {
@@ -268,9 +269,9 @@ public class GameControlPanel extends JPanel {
 					if (nextPlayer.getSeen().size() == 15)  {
 						JOptionPane.showMessageDialog(
 								null,
-								"Game Over",
 								nextPlayer.getName() + " Knows the solution: "
 										+ board.getSolution().toString(),
+										"Game Over",
 								
 								JOptionPane.INFORMATION_MESSAGE
 								);
@@ -281,154 +282,306 @@ public class GameControlPanel extends JPanel {
 					
 					
 					BoardCell oldCell = board.getCell(nextPlayer.getRow(), nextPlayer.getCol());
-					oldCell.setOccupied(false);
+					
 					int size = board.getTargets().size();
 					Random rand = new Random();
-					int n = rand.nextInt(size);
 					
-					int count = 0;					
-					
-					for (BoardCell cell : board.getTargets()) {
-						if (count == n) {
-							cell.setOccupied(true);
-							nextPlayer.setPos(cell.getRow(), cell.getCol());
-							
-						} 
+					if (size != 0) {
+						oldCell.setOccupied(false);
+						int n = rand.nextInt(size);
 						
-						count++;
-					}
-					
-					for (BoardCell cell : board.getTargets()) {
-						if (cell.isDoorway()) {
-							board.getCell(nextPlayer.getRow(), nextPlayer.getCol()).setOccupied(false);
-							cell.setOccupied(true);
-							nextPlayer.setPos(cell.getRow(), cell.getCol());
-						} 
-					}
-					
-					for (BoardCell cell : board.getTargets()) {
-						if (cell.isRoom()) {														
-							board.getCell(nextPlayer.getRow(), nextPlayer.getCol()).setOccupied(false);
+						int count = 0;					
+						
+						for (BoardCell cell : board.getTargets()) {
+							if (count == n) {
+								cell.setOccupied(true);
+								nextPlayer.setPos(cell.getRow(), cell.getCol());
+								
+							} 
 							
-							//handle room overlapping problem
-							if (cell.getOccupied() && cell.getInitial() == 'P') {
-								if (nextPlayer.getName().equals("Sombra")) {
-									nextPlayer.setPos(2, 0);
-					    		} else if (nextPlayer.getName().equals("Reinhardt")) {
-					    			nextPlayer.setPos(3, 0);
-					    		} else if (nextPlayer.getName().equals("Doomfist")) {
-					    			nextPlayer.setPos(1, 2);
-					    		} else if (nextPlayer.getName().equals("Mercy")) {
-					    			nextPlayer.setPos(2, 2);
-					    		} else if (nextPlayer.getName().equals("Moira")) {
-					    			nextPlayer.setPos(3, 2);
+							count++;
+						}
+						
+						for (BoardCell cell : board.getTargets()) {
+							if (cell.isDoorway()) {
+								board.getCell(nextPlayer.getRow(), nextPlayer.getCol()).setOccupied(false);
+								cell.setOccupied(true);
+								nextPlayer.setPos(cell.getRow(), cell.getCol());
+							} 
+						}
+						
+						for (BoardCell cell : board.getTargets()) {
+							if (cell.isRoom()) {														
+								board.getCell(nextPlayer.getRow(), nextPlayer.getCol()).setOccupied(false);
+								
+								//handle room overlapping problem
+								if (cell.getOccupied() && cell.getInitial() == 'P') {
+									if (nextPlayer.getName().equals("Sombra")) {
+										nextPlayer.setPos(2, 0);
+						    		} else if (nextPlayer.getName().equals("Reinhardt")) {
+						    			nextPlayer.setPos(3, 0);
+						    		} else if (nextPlayer.getName().equals("Doomfist")) {
+						    			nextPlayer.setPos(1, 2);
+						    		} else if (nextPlayer.getName().equals("Mercy")) {
+						    			nextPlayer.setPos(2, 2);
+						    		} else if (nextPlayer.getName().equals("Moira")) {
+						    			nextPlayer.setPos(3, 2);
+						    		}
+					    		} else if (cell.getOccupied() && cell.getInitial() == 'F') {
+									if (nextPlayer.getName().equals("Sombra")) {
+										nextPlayer.setPos(1, 9);
+						    		} else if (nextPlayer.getName().equals("Reinhardt")) {
+						    			nextPlayer.setPos(2, 9);
+						    		} else if (nextPlayer.getName().equals("Doomfist")) {
+						    			nextPlayer.setPos(3, 9);
+						    		} else if (nextPlayer.getName().equals("Mercy")) {
+						    			nextPlayer.setPos(3, 8);
+						    		} else if (nextPlayer.getName().equals("Moira")) {
+						    			nextPlayer.setPos(3, 7);
+						    		}
+					    		} else if (cell.getOccupied() && cell.getInitial() == 'T') {
+									if (nextPlayer.getName().equals("Sombra")) {
+										nextPlayer.setPos(1, 15);
+						    		} else if (nextPlayer.getName().equals("Reinhardt")) {
+						    			nextPlayer.setPos(2, 15);
+						    		} else if (nextPlayer.getName().equals("Doomfist")) {
+						    			nextPlayer.setPos(3, 14);
+						    		} else if (nextPlayer.getName().equals("Mercy")) {
+						    			nextPlayer.setPos(3, 13);
+						    		} else if (nextPlayer.getName().equals("Moira")) {
+						    			nextPlayer.setPos(2, 13);
+						    		}
+					    		} else if (cell.getOccupied() && cell.getInitial() == 'C') {
+									if (nextPlayer.getName().equals("Sombra")) {
+										nextPlayer.setPos(6, 20);
+						    		} else if (nextPlayer.getName().equals("Reinhardt")) {
+						    			nextPlayer.setPos(6, 19);
+						    		} else if (nextPlayer.getName().equals("Doomfist")) {
+						    			nextPlayer.setPos(5, 19);
+						    		} else if (nextPlayer.getName().equals("Mercy")) {
+						    			nextPlayer.setPos(4, 19);
+						    		} else if (nextPlayer.getName().equals("Moira")) {
+						    			nextPlayer.setPos(3, 20);
+						    		}
+					    		} else if (cell.getOccupied() && cell.getInitial() == 'O') {
+									if (nextPlayer.getName().equals("Sombra")) {
+										nextPlayer.setPos(11, 19);
+						    		} else if (nextPlayer.getName().equals("Reinhardt")) {
+						    			nextPlayer.setPos(12, 19);
+						    		} else if (nextPlayer.getName().equals("Doomfist")) {
+						    			nextPlayer.setPos(13, 19);
+						    		} else if (nextPlayer.getName().equals("Mercy")) {
+						    			nextPlayer.setPos(13, 18);
+						    		} else if (nextPlayer.getName().equals("Moira")) {
+						    			nextPlayer.setPos(13, 17);
+						    		}
+					    		} else if (cell.getOccupied() && cell.getInitial() == 'M') {
+									if (nextPlayer.getName().equals("Sombra")) {
+										nextPlayer.setPos(18, 19);
+						    		} else if (nextPlayer.getName().equals("Reinhardt")) {
+						    			nextPlayer.setPos(19, 19);
+						    		} else if (nextPlayer.getName().equals("Doomfist")) {
+						    			nextPlayer.setPos(20, 19);
+						    		} else if (nextPlayer.getName().equals("Mercy")) {
+						    			nextPlayer.setPos(20, 18);
+						    		} else if (nextPlayer.getName().equals("Moira")) {
+						    			nextPlayer.setPos(20, 17);
+						    		}
+					    		} else if (cell.getOccupied() && cell.getInitial() == 'G') {
+									if (nextPlayer.getName().equals("Sombra")) {
+										nextPlayer.setPos(18, 9);
+						    		} else if (nextPlayer.getName().equals("Reinhardt")) {
+						    			nextPlayer.setPos(19, 9);
+						    		} else if (nextPlayer.getName().equals("Doomfist")) {
+						    			nextPlayer.setPos(20, 9);
+						    		} else if (nextPlayer.getName().equals("Mercy")) {
+						    			nextPlayer.setPos(20, 8);
+						    		} else if (nextPlayer.getName().equals("Moira")) {
+						    			nextPlayer.setPos(20, 7);
+						    		}
+					    		} else if (cell.getOccupied() && cell.getInitial() == 'B') {
+									if (nextPlayer.getName().equals("Sombra")) {
+										nextPlayer.setPos(18, 2);
+						    		} else if (nextPlayer.getName().equals("Reinhardt")) {
+						    			nextPlayer.setPos(19, 2);
+						    		} else if (nextPlayer.getName().equals("Doomfist")) {
+						    			nextPlayer.setPos(19, 1);
+						    		} else if (nextPlayer.getName().equals("Mercy")) {
+						    			nextPlayer.setPos(18, 0);
+						    		} else if (nextPlayer.getName().equals("Moira")) {
+						    			nextPlayer.setPos(17, 0);
+						    		}
+					    		} else if (cell.getOccupied() && cell.getInitial() == 'A') {
+									if (nextPlayer.getName().equals("Sombra")) {
+										nextPlayer.setPos(10, 2);
+						    		} else if (nextPlayer.getName().equals("Reinhardt")) {
+						    			nextPlayer.setPos(11, 2);
+						    		} else if (nextPlayer.getName().equals("Doomfist")) {
+						    			nextPlayer.setPos(11, 1);
+						    		} else if (nextPlayer.getName().equals("Mercy")) {
+						    			nextPlayer.setPos(11, 0);
+						    		} else if (nextPlayer.getName().equals("Moira")) {
+						    			nextPlayer.setPos(10, 0);
+						    		}
+					    		} else {
+					    			nextPlayer.setPos(cell.getRow(), cell.getCol());
 					    		}
-				    		} else if (cell.getOccupied() && cell.getInitial() == 'F') {
-								if (nextPlayer.getName().equals("Sombra")) {
-									nextPlayer.setPos(1, 9);
-					    		} else if (nextPlayer.getName().equals("Reinhardt")) {
-					    			nextPlayer.setPos(2, 9);
-					    		} else if (nextPlayer.getName().equals("Doomfist")) {
-					    			nextPlayer.setPos(3, 9);
-					    		} else if (nextPlayer.getName().equals("Mercy")) {
-					    			nextPlayer.setPos(3, 8);
-					    		} else if (nextPlayer.getName().equals("Moira")) {
-					    			nextPlayer.setPos(3, 7);
-					    		}
-				    		} else if (cell.getOccupied() && cell.getInitial() == 'T') {
-								if (nextPlayer.getName().equals("Sombra")) {
-									nextPlayer.setPos(1, 15);
-					    		} else if (nextPlayer.getName().equals("Reinhardt")) {
-					    			nextPlayer.setPos(2, 15);
-					    		} else if (nextPlayer.getName().equals("Doomfist")) {
-					    			nextPlayer.setPos(3, 14);
-					    		} else if (nextPlayer.getName().equals("Mercy")) {
-					    			nextPlayer.setPos(3, 13);
-					    		} else if (nextPlayer.getName().equals("Moira")) {
-					    			nextPlayer.setPos(2, 13);
-					    		}
-				    		} else if (cell.getOccupied() && cell.getInitial() == 'C') {
-								if (nextPlayer.getName().equals("Sombra")) {
-									nextPlayer.setPos(6, 20);
-					    		} else if (nextPlayer.getName().equals("Reinhardt")) {
-					    			nextPlayer.setPos(6, 19);
-					    		} else if (nextPlayer.getName().equals("Doomfist")) {
-					    			nextPlayer.setPos(5, 19);
-					    		} else if (nextPlayer.getName().equals("Mercy")) {
-					    			nextPlayer.setPos(4, 19);
-					    		} else if (nextPlayer.getName().equals("Moira")) {
-					    			nextPlayer.setPos(3, 20);
-					    		}
-				    		} else if (cell.getOccupied() && cell.getInitial() == 'O') {
-								if (nextPlayer.getName().equals("Sombra")) {
-									nextPlayer.setPos(11, 19);
-					    		} else if (nextPlayer.getName().equals("Reinhardt")) {
-					    			nextPlayer.setPos(12, 19);
-					    		} else if (nextPlayer.getName().equals("Doomfist")) {
-					    			nextPlayer.setPos(13, 19);
-					    		} else if (nextPlayer.getName().equals("Mercy")) {
-					    			nextPlayer.setPos(13, 18);
-					    		} else if (nextPlayer.getName().equals("Moira")) {
-					    			nextPlayer.setPos(13, 17);
-					    		}
-				    		} else if (cell.getOccupied() && cell.getInitial() == 'M') {
-								if (nextPlayer.getName().equals("Sombra")) {
-									nextPlayer.setPos(18, 19);
-					    		} else if (nextPlayer.getName().equals("Reinhardt")) {
-					    			nextPlayer.setPos(19, 19);
-					    		} else if (nextPlayer.getName().equals("Doomfist")) {
-					    			nextPlayer.setPos(20, 19);
-					    		} else if (nextPlayer.getName().equals("Mercy")) {
-					    			nextPlayer.setPos(20, 18);
-					    		} else if (nextPlayer.getName().equals("Moira")) {
-					    			nextPlayer.setPos(20, 17);
-					    		}
-				    		} else if (cell.getOccupied() && cell.getInitial() == 'G') {
-								if (nextPlayer.getName().equals("Sombra")) {
-									nextPlayer.setPos(18, 9);
-					    		} else if (nextPlayer.getName().equals("Reinhardt")) {
-					    			nextPlayer.setPos(19, 9);
-					    		} else if (nextPlayer.getName().equals("Doomfist")) {
-					    			nextPlayer.setPos(20, 9);
-					    		} else if (nextPlayer.getName().equals("Mercy")) {
-					    			nextPlayer.setPos(20, 8);
-					    		} else if (nextPlayer.getName().equals("Moira")) {
-					    			nextPlayer.setPos(20, 7);
-					    		}
-				    		} else if (cell.getOccupied() && cell.getInitial() == 'B') {
-								if (nextPlayer.getName().equals("Sombra")) {
-									nextPlayer.setPos(18, 2);
-					    		} else if (nextPlayer.getName().equals("Reinhardt")) {
-					    			nextPlayer.setPos(19, 2);
-					    		} else if (nextPlayer.getName().equals("Doomfist")) {
-					    			nextPlayer.setPos(19, 1);
-					    		} else if (nextPlayer.getName().equals("Mercy")) {
-					    			nextPlayer.setPos(18, 0);
-					    		} else if (nextPlayer.getName().equals("Moira")) {
-					    			nextPlayer.setPos(17, 0);
-					    		}
-				    		} else if (cell.getOccupied() && cell.getInitial() == 'A') {
-								if (nextPlayer.getName().equals("Sombra")) {
-									nextPlayer.setPos(10, 2);
-					    		} else if (nextPlayer.getName().equals("Reinhardt")) {
-					    			nextPlayer.setPos(11, 2);
-					    		} else if (nextPlayer.getName().equals("Doomfist")) {
-					    			nextPlayer.setPos(11, 1);
-					    		} else if (nextPlayer.getName().equals("Mercy")) {
-					    			nextPlayer.setPos(11, 0);
-					    		} else if (nextPlayer.getName().equals("Moira")) {
-					    			nextPlayer.setPos(10, 0);
-					    		}
-				    		} else {
-				    			nextPlayer.setPos(cell.getRow(), cell.getCol());
-				    		}
-							cell.setOccupied(true);
-						} 
+								cell.setOccupied(true);
+								//suggestion code
+								for (Card c : board.getCards()) {
+									if (c.getCardName().equals(cell.getRoomName())) {
+										newCard = c;
+										
+									}
+								}
+								
+								Solution compSuggestion = nextPlayer.createSuggestion(newCard);
+								nextPlayer.addSeen(board.handleSuggestion(compSuggestion, nextPlayer));
+								   
+					    		 
+								   //move player to room
+								   for (Player p : board.getPlayers()) {
+									   if (p.getName().equals(compSuggestion.getPersonSol().getCardName())) {
+										   nextPlayer = p;
+									   }
+								   }
+								   if (cell.getInitial() == 'P') {
+										if (nextPlayer.getName().equals("Sombra")) {
+											nextPlayer.setPos(2, 0);
+							    		} else if (nextPlayer.getName().equals("Reinhardt")) {
+							    			nextPlayer.setPos(3, 0);
+							    		} else if (nextPlayer.getName().equals("Doomfist")) {
+							    			nextPlayer.setPos(1, 2);
+							    		} else if (nextPlayer.getName().equals("Mercy")) {
+							    			nextPlayer.setPos(2, 2);
+							    		} else if (nextPlayer.getName().equals("Moira")) {
+							    			nextPlayer.setPos(3, 2);
+							    		} else if (nextPlayer.getName().equals("Genji")) {
+							    			nextPlayer.setPos(1, 0);
+							    		}
+						    		} else if (cell.getInitial() == 'F') {
+										if (nextPlayer.getName().equals("Sombra")) {
+											nextPlayer.setPos(1, 9);
+							    		} else if (nextPlayer.getName().equals("Reinhardt")) {
+							    			nextPlayer.setPos(2, 9);
+							    		} else if (nextPlayer.getName().equals("Doomfist")) {
+							    			nextPlayer.setPos(3, 9);
+							    		} else if (nextPlayer.getName().equals("Mercy")) {
+							    			nextPlayer.setPos(3, 8);
+							    		} else if (nextPlayer.getName().equals("Moira")) {
+							    			nextPlayer.setPos(3, 7);
+							    		} else if (nextPlayer.getName().equals("Genji")) {
+							    			nextPlayer.setPos(1, 8);
+							    		}
+						    		} else if (cell.getInitial() == 'T') {
+										if (nextPlayer.getName().equals("Sombra")) {
+											nextPlayer.setPos(1, 15);
+							    		} else if (nextPlayer.getName().equals("Reinhardt")) {
+							    			nextPlayer.setPos(2, 15);
+							    		} else if (nextPlayer.getName().equals("Doomfist")) {
+							    			nextPlayer.setPos(3, 14);
+							    		} else if (nextPlayer.getName().equals("Mercy")) {
+							    			nextPlayer.setPos(3, 13);
+							    		} else if (nextPlayer.getName().equals("Moira")) {
+							    			nextPlayer.setPos(2, 13);
+							    		} else if (nextPlayer.getName().equals("Genji")) {
+							    			nextPlayer.setPos(1, 14);
+							    		}
+						    		} else if (cell.getInitial() == 'C') {
+										if (nextPlayer.getName().equals("Sombra")) {
+											nextPlayer.setPos(6, 20);
+							    		} else if (nextPlayer.getName().equals("Reinhardt")) {
+							    			nextPlayer.setPos(6, 19);
+							    		} else if (nextPlayer.getName().equals("Doomfist")) {
+							    			nextPlayer.setPos(5, 19);
+							    		} else if (nextPlayer.getName().equals("Mercy")) {
+							    			nextPlayer.setPos(4, 19);
+							    		} else if (nextPlayer.getName().equals("Moira")) {
+							    			nextPlayer.setPos(3, 20);
+							    		} else if (nextPlayer.getName().equals("Genji")) {
+							    			nextPlayer.setPos(4, 20);
+							    		}
+						    		} else if (cell.getInitial() == 'O') {
+										if (nextPlayer.getName().equals("Sombra")) {
+											nextPlayer.setPos(11, 19);
+							    		} else if (nextPlayer.getName().equals("Reinhardt")) {
+							    			nextPlayer.setPos(12, 19);
+							    		} else if (nextPlayer.getName().equals("Doomfist")) {
+							    			nextPlayer.setPos(13, 19);
+							    		} else if (nextPlayer.getName().equals("Mercy")) {
+							    			nextPlayer.setPos(13, 18);
+							    		} else if (nextPlayer.getName().equals("Moira")) {
+							    			nextPlayer.setPos(13, 17);
+							    		} else if (nextPlayer.getName().equals("Genji")) {
+							    			nextPlayer.setPos(11, 18);
+							    		}
+						    		} else if (cell.getInitial() == 'M') {
+										if (nextPlayer.getName().equals("Sombra")) {
+											nextPlayer.setPos(18, 19);
+							    		} else if (nextPlayer.getName().equals("Reinhardt")) {
+							    			nextPlayer.setPos(19, 19);
+							    		} else if (nextPlayer.getName().equals("Doomfist")) {
+							    			nextPlayer.setPos(20, 19);
+							    		} else if (nextPlayer.getName().equals("Mercy")) {
+							    			nextPlayer.setPos(20, 18);
+							    		} else if (nextPlayer.getName().equals("Moira")) {
+							    			nextPlayer.setPos(20, 17);
+							    		} else if (nextPlayer.getName().equals("Genji")) {
+							    			nextPlayer.setPos(18, 18);
+							    		}
+						    		} else if (cell.getInitial() == 'G') {
+										if (nextPlayer.getName().equals("Sombra")) {
+											nextPlayer.setPos(18, 9);
+							    		} else if (nextPlayer.getName().equals("Reinhardt")) {
+							    			nextPlayer.setPos(19, 9);
+							    		} else if (nextPlayer.getName().equals("Doomfist")) {
+							    			nextPlayer.setPos(20, 9);
+							    		} else if (nextPlayer.getName().equals("Mercy")) {
+							    			nextPlayer.setPos(20, 8);
+							    		} else if (nextPlayer.getName().equals("Moira")) {
+							    			nextPlayer.setPos(20, 7);
+							    		} else if (nextPlayer.getName().equals("Genji")) {
+							    			nextPlayer.setPos(18, 8);
+							    		}
+						    		} else if (cell.getInitial() == 'B') {
+										if (nextPlayer.getName().equals("Sombra")) {
+											nextPlayer.setPos(18, 2);
+							    		} else if (nextPlayer.getName().equals("Reinhardt")) {
+							    			nextPlayer.setPos(19, 2);
+							    		} else if (nextPlayer.getName().equals("Doomfist")) {
+							    			nextPlayer.setPos(19, 1);
+							    		} else if (nextPlayer.getName().equals("Mercy")) {
+							    			nextPlayer.setPos(18, 0);
+							    		} else if (nextPlayer.getName().equals("Moira")) {
+							    			nextPlayer.setPos(17, 0);
+							    		} else if (nextPlayer.getName().equals("Genji")) {
+							    			nextPlayer.setPos(17, 2);
+							    		}
+						    		} else if (cell.getInitial() == 'A') {
+										if (nextPlayer.getName().equals("Sombra")) {
+											nextPlayer.setPos(10, 2);
+							    		} else if (nextPlayer.getName().equals("Reinhardt")) {
+							    			nextPlayer.setPos(11, 2);
+							    		} else if (nextPlayer.getName().equals("Doomfist")) {
+							    			nextPlayer.setPos(11, 1);
+							    		} else if (nextPlayer.getName().equals("Mercy")) {
+							    			nextPlayer.setPos(11, 0);
+							    		} else if (nextPlayer.getName().equals("Moira")) {
+							    			nextPlayer.setPos(10, 0);
+							    		} else if (nextPlayer.getName().equals("Genji")) {
+							    			nextPlayer.setPos(9, 2);
+							    		}
+						    		} 
+							} 
+						}
+						
+						Board.getFrame().repaint();
 					}
 					
-					Board.getFrame().repaint();
 					
-					//make suggestion?
+					
+					
+					
 				}
 				
 			} else {
@@ -523,6 +676,7 @@ public class GameControlPanel extends JPanel {
 	        default        -> Color.WHITE;
 	    };
 	}
+	/*
 	public class Solution {
 	    private String person, weapon, room;
 	    public Solution(String person, String weapon, String room) {
@@ -538,12 +692,13 @@ public class GameControlPanel extends JPanel {
 	        return String.format("%s in the %s with the %s", person, room, weapon);
 	    }
 	}
+	*/
 
 
 	public class SuggestionDialog extends JDialog {
 	    private JComboBox<String> personBox, weaponBox;
 	    
-	    private Solution suggestion = null;
+	    private String[] suggestion;
 
 	    public SuggestionDialog(Frame owner,
 	                            java.util.List<String> people,
@@ -591,11 +746,11 @@ public class GameControlPanel extends JPanel {
 
 	        // Button logic
 	        submit.addActionListener(e -> {
-	            suggestion = new Solution(
-	                (String)personBox.getSelectedItem(),
-	                (String)weaponBox.getSelectedItem(),
-	                roomField.getText()
-	            );
+	            suggestion = new String[3];
+	            suggestion[0] = (String)personBox.getSelectedItem();
+	            suggestion[1] = (String)weaponBox.getSelectedItem();
+	            suggestion[2] = roomField.getText();
+	            
 	            dispose();
 	        });
 	        cancel.addActionListener(e -> dispose());
@@ -605,7 +760,7 @@ public class GameControlPanel extends JPanel {
 	    }
 
 	    /** @return the Solution chosen, or null if Cancel was hit. */
-	    public Solution getSuggestion() {
+	    public String[] getSuggestion() {
 	        return suggestion;
 	    }
 	}

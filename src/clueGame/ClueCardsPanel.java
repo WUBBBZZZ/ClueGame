@@ -191,8 +191,12 @@ public class ClueCardsPanel extends JPanel {
 		boolean n;
 		for (Card c : player1.getSeen()) {
 			n = false;
+			if (c == null) {
+				break;
+			}
 			for (Card d : ClueCardsPanel.checkSeen) {
-				if (c.getCardName().equals(d.getCardName())) {
+				
+				if (c.getCardName().equals(d.getCardName()) && c != null) {
 					n = true;
 				}
 			}

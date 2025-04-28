@@ -72,15 +72,7 @@ public class Board {
 	//Main method. Will be where the game is actually run.
 	public static void main(String[] args) {
 
-		//Automated testing tbd
 		
-		//to make a .jar file:
-		/*
-		 * 1. file -> export -> java -> runnable JAR
-		 * 2. Launch configuration: one that runs clueGame.Board.
-		 * 3. Export destination: ClueGame.jar.
-		 * 4. Handle libraries; package required libraries into JAR
-		 */
 		
 		SwingUtilities.invokeLater(() -> {
 			
@@ -92,10 +84,18 @@ public class Board {
 					);
 			
 			//sounds
-			String[] songs = {"PolitikZ.wav", "PolitikZGat.wav"};
+			String[] songs = {"PolitikZ.wav", "PolitikZGat.wav", "fnaf.wav"};
+			Clip bgm;
 			Random rand = new Random();
-			int n = rand.nextInt(2);
-			Clip bgm = Sound.loadClip(songs[n]);
+			int n = rand.nextInt(100);
+			if (n == 1) {
+				bgm = Sound.loadClip(songs[0]);
+			} else if (n == 2) {
+				bgm = Sound.loadClip(songs[1]);
+			} else {
+				bgm = Sound.loadClip(songs[2]);
+			}
+			
 			bgm.loop(Clip.LOOP_CONTINUOUSLY);       // endless background music
 			bgm.start();
 			
@@ -819,7 +819,8 @@ public class Board {
 		}
 		
 	}
-	public String disproveSuggestion(String string1, String string2, String string3, Solution solution) {
+	/*
+	public String disproveSuggestion(Solution solution) {
 		ArrayList<String> disprovable = new ArrayList<String>();
 		if (string1.equals(solution.getRoomSol().getCardName())) {
 			disprovable.add(string1);
@@ -836,6 +837,7 @@ public class Board {
 			return null;
 		}
 	}
+	*/
 	public Player getTestPlayer() {
 		return players.get(2);
 	}
@@ -861,7 +863,9 @@ public class Board {
 			if (player.disproveSuggestion(suggestion) == null) {
 				continue;
 			} else {
+				accuser.setExtraPlayer(player);
 				return player.disproveSuggestion(suggestion);
+				
 			}
 		}
 		return null;

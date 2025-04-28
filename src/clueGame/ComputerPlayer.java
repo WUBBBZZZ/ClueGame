@@ -74,6 +74,13 @@ public Card disproveSuggestion(Solution solution) {
 	@Override
 	public Solution createSuggestion(Card roomProp) {
 	    Random rand = new Random();
+	    for (Card c : unseenCards) {
+	    	if (c.getCardType() == CardType.WEAPON) {
+	    		unseenWeap.add(c);
+	    	} else if (c.getCardType() == CardType.SUSPECT) {
+	    		unseenPlayers.add(c);
+	    	} 
+	    }
 	    // unseenPlayers and unseenWeap are already up-to-date
 	    int x = rand.nextInt(unseenPlayers.size());
 	    int y = rand.nextInt(unseenWeap.size());

@@ -11,6 +11,7 @@ import java.util.HashSet;
 public abstract class Player {
 
 	protected String name;
+	private Player extraPlayer;
 	private BufferedImage sprite;
 	protected String color;
 	protected int row, col;
@@ -50,6 +51,14 @@ public abstract class Player {
 	}
 	public String getName() {
 		return name;
+	}
+	
+	public void setExtraPlayer(Player p) {
+		extraPlayer = p;
+	}
+	
+	public Player getExtraPlayer() {
+		return extraPlayer;
 	}
 	
 	public String getColor() {
@@ -94,12 +103,12 @@ public abstract class Player {
 	    // scale sprite to cell, keep aspect ratio
 	    double scale = Math.min((double) CELL_SIZE / sprite.getWidth(),
 	                            (double) CELL_SIZE / sprite.getHeight());
-	    int sw = (int) (sprite.getWidth()  * scale);
-	    int sh = (int) (sprite.getHeight() * scale);
+	    int sw = (int) (sprite.getWidth()  * scale * 1.5);
+	    int sh = (int) (sprite.getHeight() * scale * 1.5);
 	    int sx = x + (CELL_SIZE - sw) / 2;
 	    int sy = y + (CELL_SIZE - sh) / 2;
 
-	    g.drawImage(sprite, sx, sy, sw, sh, null);
+	    g.drawImage(sprite, sx, y, sw, sh, null);
 	    /*
 	    g.setColor(convertToColor());
 	    g.fillOval(x, y, width, height);

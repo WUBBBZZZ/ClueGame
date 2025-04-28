@@ -24,4 +24,9 @@ public class Solution {
 		return weapon;
 	}
 	
+	@Override
+	public String toString() {
+		return "It was " + person + " in " + room + "with the " + weapon + "!";
+	}
+	
 }

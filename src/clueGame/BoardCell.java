@@ -174,6 +174,10 @@ public class BoardCell {
 		
 	}
 	
+	public String getRoomName() {
+		return name;
+	}
+	
 	public void setHighlighted(boolean flag) {
 		highlighted = flag;
 	}
