@@ -1,14 +1,17 @@
 //TODO add class string
 package clueGame;
 import java.util.*;
-import java.util.stream.Collectors;
+
 import java.awt.Color;
 import java.awt.Graphics;
 
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.Scanner;
 
+import javax.sound.sampled.Clip;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -64,14 +67,21 @@ public class Board {
 	private static ClueGame frame;
 	private static int currentPlayer;
 	private static boolean isFinished;
-
-	public static void setFrame(ClueGame f) {
-	      frame = f;
-	}
+	private boolean gameOver = false;
+	
 	//Main method. Will be where the game is actually run.
 	public static void main(String[] args) {
-		//System.out.println(Art.class.getResource("/art/eldensrings.png"));
 
+		//Automated testing tbd
+		
+		//to make a .jar file:
+		/*
+		 * 1. file -> export -> java -> runnable JAR
+		 * 2. Launch configuration: one that runs clueGame.Board.
+		 * 3. Export destination: ClueGame.jar.
+		 * 4. Handle libraries; package required libraries into JAR
+		 */
+		
 		SwingUtilities.invokeLater(() -> {
 			
 			JOptionPane.showMessageDialog(
@@ -81,6 +91,14 @@ public class Board {
 					JOptionPane.INFORMATION_MESSAGE
 					);
 			
+			//sounds
+			String[] songs = {"PolitikZ.wav", "PolitikZGat.wav"};
+			Random rand = new Random();
+			int n = rand.nextInt(2);
+			Clip bgm = Sound.loadClip(songs[n]);
+			bgm.loop(Clip.LOOP_CONTINUOUSLY);       // endless background music
+			bgm.start();
+			
 			theInstance = Board.getInstance();
 			theInstance.setConfigFiles("ClueLayout.csv", "ClueSetup.txt");
 			theInstance.initialize();
@@ -88,6 +106,7 @@ public class Board {
 			frame = new ClueGame();
 			frame.setVisible(true);
 			isFinished = true;
+			theInstance.setGameOver(false);
 			
 			//get players
 			HumanPlayer player1 = (HumanPlayer) theInstance.players.get(0);
@@ -113,18 +132,19 @@ public class Board {
 			ClueCardsPanel.getCheckSeen().add(player1.getSeen().get(1));
 			ClueCardsPanel.getCheckSeen().add(player1.getSeen().get(2));
 			frame.getCardsPanel().setUp(player1);
-				
+			
 			//now for the Next button
 			//Set current player
 			currentPlayer = 0;
-				
-				
+			
+			
+
+			
 			//all computerPlayer turns
-			frame.getControlPanel().setTurn(player3, board.diceRoll());
-			frame.getControlPanel().setTurn(player4, board.diceRoll());
-			frame.getControlPanel().setTurn(player5, board.diceRoll());
-			frame.getControlPanel().setTurn(player6, board.diceRoll());
-				
+			//frame.getControlPanel().setTurn(player3, board.diceRoll());
+			//frame.getControlPanel().setTurn(player4, board.diceRoll());
+			//frame.getControlPanel().setTurn(player5, board.diceRoll());
+			//frame.getControlPanel().setTurn(player6, board.diceRoll());
 			
 			
 		});
@@ -182,7 +202,6 @@ public class Board {
 		rooms = new ArrayList<String>();
 		colors = new ArrayList<String>();
 		players = new ArrayList<Player>();
-		//frame = new ClueGame();
 	}
 
 	// This method returns the only Board
@@ -199,6 +218,9 @@ public class Board {
 	public void setSolution(Solution newSol) {
 		theSolution = newSol;
 	}
+	
+	
+	
 	//This method is only used for testing purposes, to reset the Board instance per successive test.
 	public static void resetInstance() {
 		theInstance.roomMap.clear();
@@ -865,7 +887,7 @@ public class Board {
         }
     }
 	public Solution getSolution() {
-		return this.theSolution;
+		return theSolution;
 	}
 	public void move(int row, int col, BoardCell target) {
 		BoardCell beg = this.getCell(row, col);
@@ -883,59 +905,20 @@ public class Board {
 		System.out.println(name);
 		return null;
 	}
-
-	public List<String> getNames() {
-	    return cards.stream().filter(c -> c.getCardType() == CardType.SUSPECT).map(Card::getCardName).collect(Collectors.toList());
+	
+	public ArrayList<String> getNames() {
+		return people;
 	}
-	public List<String> getWeaponNames() {
-	    return cards.stream().filter(c -> c.getCardType() == CardType.WEAPON).map(Card::getCardName).collect(Collectors.toList());
+	
+	public ArrayList<String> getWeaponNames() {
+		return weapons;
 	}
-
-	public Card handleSuggestion(Solution sol) {
-	    List<Player> players = this.getPlayers();
-	    int numPlayers = players.size();
-	    int suggesterIdx = this.getCurrentPlayer();
-	    
-	    // Start checking with the next player in turn order
-	    for (int offset = 1; offset < numPlayers; offset++) {
-	        Player p = players.get((suggesterIdx + offset) % numPlayers);
-	        // Collect any matching cards
-	        List<Card> matching = new ArrayList<>();
-	        for (Card c : p.getHand()) {
-	            String name = c.getCardName();
-	            if (name.equals(sol.getPersonSol().getCardName())
-	             || name.equals(sol.getWeaponSol().getCardName())
-	             || name.equals(sol.getRoomSol().getCardName())) {
-	                matching.add(c);
-	            }
-	        }
-	        
-	        if (!matching.isEmpty()) {
-	            // They can disprove—pick one at random
-	            Card shown = matching.get(new Random().nextInt(matching.size()));
-	            
-	            // If the suggester is the human (we assume index 0), record the seen card
-	            if (suggesterIdx == 0 && players.get(0) instanceof HumanPlayer) {
-	                HumanPlayer human = (HumanPlayer)players.get(0);
-	                human.getSeen().add(shown);
-	                
-	                // Also update your ClueCardsPanel (so the GUI list refreshes)
-	                ClueCardsPanel.getCheckSeen().add(shown);
-	                // and redraw it:
-	                ClueGame.getFrame().getCardsPanel().setUp(human);
-	            }
-	            
-	            // Update the GameControlPanel's guess‐result field
-	            ClueGame.getFrame().getControlPanel()
-	                   .setGuessResult(p.getName() + " showed " + shown.getCardName());
-	            
-	            return shown;
-	        }
-	    }
-	    
-	    // Nobody could disprove
-	    ClueGame.getFrame().getControlPanel()
-	           .setGuessResult("No one could disprove your suggestion");
-	    return null;
+	
+	public boolean isGameOver() {
+		return gameOver;
+	}
+	
+	public void setGameOver(boolean g) {
+		 gameOver = g;
 	}
 }

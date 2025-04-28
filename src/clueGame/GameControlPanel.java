@@ -1,10 +1,14 @@
 package clueGame;
 
 import javax.swing.*;
+
+import clueGame.GameControlPanel.Solution;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 public class GameControlPanel extends JPanel {
@@ -19,9 +23,11 @@ public class GameControlPanel extends JPanel {
 	private JTextField rollField;
 	private JTextField guessField;
 	private JTextField guessResultField;
+	private static JTextField roomField;
 	
 	private JButton button1;
 	public JButton button2;
+	private boolean end;
 	
 	private boolean next;
 	private Board board;
@@ -85,6 +91,7 @@ public class GameControlPanel extends JPanel {
 				        );
 				        return;
 				    }
+				    /*
 				    BoardCell loc = board.getCell(human.getRow(), human.getCol());
 				    if (!loc.isRoom()) {
 				        JOptionPane.showMessageDialog(
@@ -95,36 +102,59 @@ public class GameControlPanel extends JPanel {
 				        );
 				        return;
 				    }
-
+				     */
 				    //collect the two lists for the combo-boxes
 				    java.util.List<String> people  = board.getNames();
 				    java.util.List<String> weapons = board.getWeaponNames();
+				    java.util.List<String> rooms = board.getRoomList();
 
 				    // show the modal dialog
-				    SuggestionDialog dlg = new SuggestionDialog(
+				    AccusationDialog dlg = new AccusationDialog(
 				        (Frame) SwingUtilities.getWindowAncestor(this),
 				        people,
 				        weapons,
-				        board.getRoom(loc).getName()
+				        rooms
 				    );
 				    dlg.setVisible(true);
 
 				    // (e) pull back what they chose
-				    Solution s = dlg.getSuggestion();
-				    if (s != null) {
-				        setGuess(s.toString());
+				    if (dlg.getSolution() != null) {
+				        setGuess(dlg.getSolution()[0] + " " + dlg.getSolution()[1] + " " + dlg.getSolution()[2]);
 
 				        // 1) grab your Board singleton
 				        board = Board.getInstance();
 
 				        // 2) look up each Card by name
-				        Card personCard = board.getCard(s.getPerson());
-				        Card weaponCard = board.getCard(s.getWeapon());
-				        Card roomCard   = board.getCard( s.getRoom());
-				        clueGame.Solution sol = new clueGame.Solution(personCard, weaponCard, roomCard);
-				        board.handleSuggestion(sol);
+				        //Card personCard = board.getCard(s.getPerson());
+				        //Card weaponCard = board.getCard(s.getWeapon());
+				        //Card roomCard   = board.getCard( s.getRoom());
+				        //Solution sol = board.getSolution();
+				        end = board.checkAccusation(dlg.getSolution()[0], dlg.getSolution()[1], dlg.getSolution()[2], board.getSolution());
 				        suggestionMade = true;
 				        button1.setEnabled(false);
+				        
+				        //finish game
+				        if (end == true) {
+				        	JOptionPane.showMessageDialog(
+									null,
+									"Congratulations! You won!",
+									"You Won!",
+									JOptionPane.INFORMATION_MESSAGE
+									);
+				        } else {
+				        	JOptionPane.showMessageDialog(
+									null,
+									"YOU DIED",
+									"Git Gud",
+									JOptionPane.INFORMATION_MESSAGE
+									);
+				        }
+				        
+				        
+						new javax.swing.Timer(1000, t -> System.exit(0)).start();
+						return;
+						
+				        
 				    }
 
 				    // (f) re-enable NEXT
@@ -188,6 +218,10 @@ public class GameControlPanel extends JPanel {
 			int n = rand.nextInt(1,7);
 			return n;
 		}
+		
+		public static JTextField getRoomField() {
+	    	return roomField;
+	    }
 	
 	//really this is where the game is run
 	public void ButtonListenerHelper() {
@@ -231,6 +265,17 @@ public class GameControlPanel extends JPanel {
 					board.clearHighlights();
 					
 					//do accusation?
+					if (nextPlayer.getSeen().size() == 15)  {
+						JOptionPane.showMessageDialog(
+								null,
+								"Game Over",
+								nextPlayer.getName() + " Knows the solution: "
+										+ board.getSolution().toString(),
+								
+								JOptionPane.INFORMATION_MESSAGE
+								);
+						new javax.swing.Timer(1000, t -> System.exit(0)).start();
+					}
 					
 					//move
 					
@@ -497,7 +542,7 @@ public class GameControlPanel extends JPanel {
 
 	public class SuggestionDialog extends JDialog {
 	    private JComboBox<String> personBox, weaponBox;
-	    private JTextField roomField;
+	    
 	    private Solution suggestion = null;
 
 	    public SuggestionDialog(Frame owner,
@@ -564,6 +609,77 @@ public class GameControlPanel extends JPanel {
 	        return suggestion;
 	    }
 	}
+	
+	public class AccusationDialog extends JDialog {
+	    private JComboBox<String> personBox, weaponBox, roomBox;
+	    private String[] accusation;
+
+	    public AccusationDialog(Frame owner,
+	                            List<String> people,
+	                            List<String> weapons,
+	                            List<String> rooms)
+	    {
+	        super(owner, "Make an Accusation", true);
+	        setLayout(new GridBagLayout());
+	        GridBagConstraints gbc = new GridBagConstraints();
+	        gbc.insets = new Insets(4,4,4,4);
+	        gbc.fill = GridBagConstraints.HORIZONTAL;
+
+	        // Person dropdown
+	        gbc.gridx = 0; gbc.gridy = 0;
+	        add(new JLabel("Person:"), gbc);
+	        personBox = new JComboBox<>(people.toArray(new String[0]));
+	        gbc.gridx = 1;
+	        add(personBox, gbc);
+
+	        // Weapon dropdown
+	        gbc.gridx = 0; gbc.gridy = 1;
+	        add(new JLabel("Weapon:"), gbc);
+	        weaponBox = new JComboBox<>(weapons.toArray(new String[0]));
+	        gbc.gridx = 1;
+	        add(weaponBox, gbc);
+
+	        // Room dropdown
+	        gbc.gridx = 0; gbc.gridy = 2;
+	        add(new JLabel("Room:"), gbc);
+	        roomBox = new JComboBox<>(rooms.toArray(new String[0]));
+	        gbc.gridx = 1;
+	        add(roomBox, gbc);
+
+	        // Buttons row
+	        JPanel buttonRow = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+	        JButton submit = new JButton("Submit");
+	        JButton cancel = new JButton("Cancel");
+	        buttonRow.add(submit);
+	        buttonRow.add(cancel);
+
+	        gbc.gridx = 0; gbc.gridy = 3;
+	        gbc.gridwidth = 2;
+	        add(buttonRow, gbc);
+
+	        // Button logic
+	        submit.addActionListener(e -> {
+	            accusation = new String[3];
+	            
+	                accusation[0] = (String)personBox.getSelectedItem();
+	                accusation[1] = (String)weaponBox.getSelectedItem();
+	                accusation[2] =(String)roomBox.getSelectedItem();
+	            
+	            dispose();
+	        });
+	        cancel.addActionListener(e -> dispose());
+
+
+	        pack();
+	        setLocationRelativeTo(owner);
+	    }
+
+	    /** @return the chosen accusation, or null if Cancel was hit. */
+	    public String[] getSolution() {
+	        return accusation;
+	    }
+	}
+
 
 }
 
